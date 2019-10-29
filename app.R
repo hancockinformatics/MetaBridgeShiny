@@ -47,7 +47,7 @@ ui <- fluidPage(
   ### Begin the tab bar layout
   navbarPage(
 
-    title = HTML("<img src ='/logo_white.svg' alt='M' height='28'"), #  MetaBridge <sup class='tiny'>BETA</sup>
+    title = HTML("<img src ='logo_white.svg' alt='M' height='28'"), #  MetaBridge <sup class='tiny'>BETA</sup>
     id = "navbarLayout",
 
     # Make sure we use ShinyJS - NEED THIS LINE!
@@ -56,7 +56,7 @@ ui <- fluidPage(
     collapsible = TRUE,
 
 
-    ### Welcome tab/langding page
+    ### Welcome tab/landing page
     tabPanel(
       title = "MetaBridge",
       value = "welcomePanel",
