@@ -6,8 +6,14 @@
 library(shiny)
 library(shinyjs)
 
+# Need to run these lines each time app is published
+# library(BiocManager)
+# options(repos = BiocManager::repositories())
+
 
 # Define UI part of the app -----------------------------------------------
+
+addResourcePath(prefix = "pics", directoryPath = "./www")
 
 ui <- fluidPage(
 
@@ -47,7 +53,7 @@ ui <- fluidPage(
   ### Begin the tab bar layout
   navbarPage(
 
-    title = htmltools::HTML("<img src='/logo_white.svg' alt='M' height='28'"), #  MetaBridge <sup class='tiny'>BETA</sup>
+    title = htmltools::HTML("<img src='pics/logo_white.svg' alt='M' height='28'"), #  MetaBridge <sup class='tiny'>BETA</sup>
     id = "navbarLayout",
 
     # Make sure we use ShinyJS - NEED THIS LINE!
