@@ -30,7 +30,7 @@ keggGenes <- keggGenes %>%
   unique()
 
 load("data/k04_keggPathways.RData")
-load("data/k05_keggHumanPathways_r92.RData")
+load("data/k05_keggHumanPathways.RData")
 
 
 # Load MetaCyc database files ---------------------------------------------
