@@ -999,17 +999,7 @@ server <- function(input, output, session) {
     req(mappedMetabolites())
 
     if (databaseChosen() == "MetaCyc") {
-      mappedMetabolites() %>%
-        mutate(
-          `Reaction Name` = gsub(pattern = "<.*?>", replacement = "", x = `Reaction Name`),
-          `Reaction Name` = gsub(pattern = "&harr;", replacement = "<-->", x = `Reaction Name`),
-          `Reaction Name` = gsub(pattern = "&rarr;", replacement = "-->", x = `Reaction Name`),
-          `Reaction Name` = gsub(pattern = "&larr;", replacement = "<--", x = `Reaction Name`),
-          `Reaction Name` = gsub(pattern = "&alpha;", replacement = "a", x = `Reaction Name`),
-          `Reaction Name` = gsub(pattern = "&beta;", replacement = "b", x = `Reaction Name`),
-          `Reaction Name` = gsub(pattern = "&omega;", replacement = "o", x = `Reaction Name`),
-          `Reaction Name` = gsub(pattern = "&gamma;", replacement = "g", x = `Reaction Name`)
-        )
+      mappedMetabolites() %>% cleanReactions(.)
     } else {
       mappedMetabolites()
     }
