@@ -13,6 +13,8 @@ library(shinyjs)
 
 # Define UI part of the app -----------------------------------------------
 
+# Workaround to ensure logo in top left corner (tab bar) is found/rendered when
+# app is published.
 addResourcePath(prefix = "pics", directoryPath = "./www")
 
 ui <- fluidPage(
@@ -989,6 +991,30 @@ server <- function(input, output, session) {
     updateNavbarPage(session, inputId = "navbarLayout", selected = "vizPanel")
   }, ignoreInit = TRUE)
 
+
+  # Cleaning the mapped data before download, to remove HTML tags from
+  # reactions. Specifically, we are removing any HTML tags, using plain text
+  # arrows, and switching Greek letters.
+  cleanMappedMetabolites <- reactive({
+    req(mappedMetabolites())
+
+    if (databaseChosen() == "MetaCyc") {
+      mappedMetabolites() %>%
+        mutate(
+          `Reaction Name` = gsub(pattern = "<.*?>", replacement = "", x = `Reaction Name`),
+          `Reaction Name` = gsub(pattern = "&harr;", replacement = "<-->", x = `Reaction Name`),
+          `Reaction Name` = gsub(pattern = "&rarr;", replacement = "-->", x = `Reaction Name`),
+          `Reaction Name` = gsub(pattern = "&larr;", replacement = "<--", x = `Reaction Name`),
+          `Reaction Name` = gsub(pattern = "&alpha;", replacement = "a", x = `Reaction Name`),
+          `Reaction Name` = gsub(pattern = "&beta;", replacement = "b", x = `Reaction Name`),
+          `Reaction Name` = gsub(pattern = "&omega;", replacement = "o", x = `Reaction Name`),
+          `Reaction Name` = gsub(pattern = "&gamma;", replacement = "g", x = `Reaction Name`)
+        )
+    } else {
+      mappedMetabolites()
+    }
+  })
+
   # Export the data.
   output$downloadMappingData <- downloadHandler(
     # Name file format: `originalFilename_mapped_dbChosen.savetype`.
@@ -1007,7 +1033,7 @@ server <- function(input, output, session) {
     },
     content = function(file) {
       write_delim(
-        mappedMetabolites(),
+        cleanMappedMetabolites(),
         file,
         delim = switch(
           input$saveType,
