@@ -55,7 +55,7 @@ ui <- fluidPage(
   ### Begin the tab bar layout
   navbarPage(
 
-    title = htmltools::HTML("<img src='pics/logo_white.svg' alt='M' height='28'"), #  MetaBridge <sup class='tiny'>BETA</sup>
+    title = htmltools::HTML("<img src='pics/logo_white.svg' alt='M' height='28'"), # MetaBridge <sup class='tiny'>BETA</sup>
     id = "navbarLayout",
 
     # Make sure we use ShinyJS - NEED THIS LINE!
@@ -76,8 +76,11 @@ ui <- fluidPage(
 
         h1("Welcome"),
 
+        tags$hr(),
+
         tags$div(
           class = "logoWrapper",
+
           tags$p(
             "Welcome to MetaBridge, a web tool for network-based integrative ",
             "analysis of metabolomics data. Here you can upload a set of metabolites ",
@@ -104,7 +107,6 @@ ui <- fluidPage(
           div(
             # Buttons linking to various tabs of the app. To see how these
             # buttons are hidden, refer to `www/js/client.js`.
-
             # First the button which shows the app loading, then links to the
             # Upload panel.
             actionButton(
@@ -118,7 +120,7 @@ ui <- fluidPage(
             # Horizontal spacer
             HTML("&nbsp;&nbsp;&nbsp;"),
 
-            # Linking to the Tutorials page.
+            # Linking to the Tutorials page
             actionButton(
               inputId = "tutorial",
               label = "Tutorial",
@@ -131,7 +133,7 @@ ui <- fluidPage(
             # Horizontal spacer
             HTML("&nbsp;&nbsp;&nbsp;"),
 
-            # Button linking straight to the about page.
+            # Button linking straight to the about page
             actionButton(
               inputId = "about",
               label = "About",
@@ -155,7 +157,7 @@ ui <- fluidPage(
       tags$div(
         class = "col-sm-3 manual-sidebar",
 
-        # Separate form 'wells' within the sidebar
+        # Separate form 'wells' within the sidebar (custom CSS class)
         tags$form(
           class = "well",
           tags$p(
@@ -193,11 +195,7 @@ ui <- fluidPage(
           radioButtons(
             inputId = "sep",
             label = "Separator",
-            choices = c(
-              Comma = ",",
-              Tab = "\t",
-              Semicolon = ";"
-            ),
+            choices = c(Comma = ",", Tab = "\t", Semicolon = ";"),
             selected = ","
           ),
 
@@ -229,8 +227,10 @@ ui <- fluidPage(
       tags$div(
         class = "col-sm-3 manual-sidebar",
         id = "mapPanelSidebar",
+
         tags$form(
           class = "well",
+
           tags$p(
             "Choose a database to map with. MetaCyc has higher quality annotations, ",
             "but KEGG may yield more hits. If you map via KEGG, you also have the ",
@@ -297,6 +297,7 @@ ui <- fluidPage(
         tags$div(
           class = "jumbotron",
           tags$h1("Tutorial"),
+          tags$hr(),
           tags$div(
             class = "logoWrapper",
             tags$h2("Network-Based Integrative Analysis with MetaBridge"),
@@ -339,6 +340,7 @@ ui <- fluidPage(
         tags$div(
           class = "jumbotron",
           tags$h1("About"),
+          tags$hr(),
           tags$div(
             class = "logoWrapper",
             tags$p(
@@ -356,7 +358,7 @@ ui <- fluidPage(
 
             tags$p(
               "For help, you can post an issue at the ",
-              tags$a(href = "https://github.com/travis-m-blimkie/metabridge_shiny", "Github page.")
+              tags$a(href = "https://github.com/travis-m-blimkie/MetaBridgeShiny", "Github page.")
             ),
             tags$p(
               "MetaBridge uses the following databases and R packages:"
@@ -584,6 +586,18 @@ server <- function(input, output, session) {
   # preselected column, effectively making it impossible to switch columns!
   output$idSelector <- renderUI({
     tags$div(
+
+      tags$p(
+        "Select the ID type you would like to use in the mapping. This should ",
+        "match the IDs in the selected column."
+      ),
+      tags$p(
+        "We recommend using MetaCyc (HMDB) or KEGG IDs, as these will ",
+        "yield the best results."
+      ),
+
+      tags$br(),
+
       selectInput(
         "idType",
         "ID Type",
