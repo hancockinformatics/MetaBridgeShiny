@@ -19,6 +19,7 @@ load("data/examples.RData")
 
 # Load KEGG database files ------------------------------------------------
 
+# KEGG updated on/around November 1st, 2019
 load("data/k00_keggCompounds_r92.RData")
 load("data/k02b_keggEnzymeShortNames_r92.RData")
 

@@ -294,13 +294,19 @@ ui <- fluidPage(
       tabPanel(
         title = "Tutorial",
         value = "tutorialPanel",
+
         tags$div(
           class = "jumbotron",
+
           tags$h1("Tutorial"),
+
           tags$hr(),
+
           tags$div(
             class = "logoWrapper",
+
             tags$h2("Network-Based Integrative Analysis with MetaBridge"),
+
             tags$p(
               "Below you will find a sample workflow for integrating your ",
               "metabolomics data with transcriptomics or proteomics data via ",
@@ -310,6 +316,7 @@ ui <- fluidPage(
                 "target='_blank'>GitHub</a>."
               ))
             ),
+
             tags$ol(
               tags$li(tags$a(
                 "Metabolite Preprocessing",
@@ -326,6 +333,7 @@ ui <- fluidPage(
             )
           )
         ),
+
         div(
           class = "col-lg-10 tutorial",
           # class = 'tutorial',
@@ -337,12 +345,17 @@ ui <- fluidPage(
       tabPanel(
         value = "aboutPanel",
         title = "About",
+
         tags$div(
           class = "jumbotron",
+
           tags$h1("About"),
+
           tags$hr(),
+
           tags$div(
             class = "logoWrapper",
+
             tags$p(
               "MetaBridge was designed by Samuel Hinshaw and Travis Blimkie at the ",
               tags$a(href = "http://cmdr.ubc.ca/bobh/", "Centre for Microbial Diseases and Immunity Research"),
