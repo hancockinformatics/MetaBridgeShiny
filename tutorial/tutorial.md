@@ -142,15 +142,15 @@ Below, you will find an example of each minimum-connected network generated
 
 1. Minimum-connected protein-protein interaction network from MetaBridge-mapped metabolites.
 
-<hr>
+  <hr>
 
-![Transcriptomic Minimum-Connected Network](serve/trans_network.png)
+  ![Transcriptomic Minimum-Connected Network](serve/trans_network.png)
 
 2. Minimum-connected protein-protein interaction network from gene expression data.
 
-<hr>
+  <hr>
 
-![Integrated Minimum-Connected Network](serve/combined_network.png)
+  ![Integrated Minimum-Connected Network](serve/combined_network.png)
 
 3. Minimum-connected protein-protein interaction network from combined gene list.
 
