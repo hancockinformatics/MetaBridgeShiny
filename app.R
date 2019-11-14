@@ -1135,7 +1135,7 @@ server <- function(input, output, session) {
         )),
         selectInput(
           inputId = "pathwaysPicked",
-          label = "Pathway",
+          label = "",
           choices = selectedRowAttrs$pathwaysOfSelectedCompound$namedPway,
           selectize = FALSE
         ),
@@ -1153,7 +1153,7 @@ server <- function(input, output, session) {
         )),
         selectInput(
           inputId = "pathwaysPicked",
-          label = "Pathway",
+          label = "",
           choices = selectedRowAttrs$pathwaysOfSelectedCompound$pathwayName,
           selectize = FALSE
         )
