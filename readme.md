@@ -1,4 +1,4 @@
-[<img src="www/logo_dark_small.svg" align="right"/>](https://travis-m-blimkie.shinyapps.io/MetaBridgeShiny)
+[<img src="www/logo_dark_hex.svg" align="right"/>](https://travis-m-blimkie.shinyapps.io/MetaBridgeShiny)
 
 # **MetaBridge**
 
