@@ -103,6 +103,11 @@ ui <- fluidPage(
             "with protein-protein interaction networks created from other ",
             "omics types."
           ),
+          tags$p(
+            "Click the button below to Get Started! If you'd like to learn more ",
+            "about how MetaBridge can be used, check the Tutorial. For more ",
+            "information, refer to the About page."
+          ),
 
           br(),
 
@@ -168,7 +173,8 @@ ui <- fluidPage(
             "out our example dataset."
           ),
 
-          # Define custom style for the file upload button ("Browse...")
+          # Define custom style for the file upload button ("Browse...") so we
+          # can choose the colour.
           tags$style(".btn-file {
                      background-color: #2c3e50;
                      border-color: #2c3e50;
@@ -314,8 +320,8 @@ ui <- fluidPage(
               "metabolomics data with transcriptomics or proteomics data via ",
               "network methodologies. You can also view this tutorial on ",
               HTML(paste0(
-                "<a href='https://github.com/travis-m-blimkie/MetaBridgeShiny/blob/master/tutorial/tutorial.md' ",
-                "target='_blank'>GitHub</a>."
+                "<a href='https://github.com/travis-m-blimkie/MetaBridgeShiny/",
+                "blob/master/tutorial/tutorial.md' target='_blank'>GitHub</a>."
               ))
             ),
 
@@ -361,10 +367,8 @@ ui <- fluidPage(
             tags$p(
               "MetaBridge was designed by Samuel Hinshaw and Travis Blimkie at the ",
               tags$a(href = "http://cmdr.ubc.ca/bobh/", "Centre for Microbial Diseases and Immunity Research"),
-              " at The University of British Columbia.",
-              "MetaBridge was published in",
-              tags$em("Bioinformatics"),
-              " (doi: ",
+              " at The University of British Columbia, and published in",
+              tags$em("Bioinformatics"), " (doi: ",
               tags$a(href = "https://doi.org/10.1093/bioinformatics/bty331", "10.1093/bioinformatics/bty331"),
               "). Please cite this paper when using MetaBridge in your analyses. ",
               "A protocol was also published in ", tags$em("Current Protocols in Bioinformatics"),
@@ -385,42 +389,42 @@ ui <- fluidPage(
                 tags$dt(
                   tags$a(href = "https://metacyc.org/", "MetaCyc v23")
                 ),
-                tags$dd("Curated database for human metabolomic data"),
+                tags$dd("Curated database for human metabolomic data."),
 
                 # KEGG
                 tags$dt(
                   tags$a(href = "https://www.genome.jp/kegg/", "KEGG Release 92")
                 ),
-                tags$dd("Large database containing multiple data types"),
+                tags$dd("Large database containing multiple data types."),
 
                 # Pathview
                 tags$dt(
                   tags$a(href = "https://doi.org/10.1093/bioinformatics/btt285", "Pathview")
                 ),
-                tags$dd("Pathway-based data integration and visualization"),
+                tags$dd("Pathway-based data integration and visualization."),
 
                 # Shiny
                 tags$dt(
                   tags$a(href = "https://shiny.rstudio.com/", "Shiny")
                 ),
-                tags$dd("Web Application Framework for R"),
+                tags$dd("Web application framework for R."),
 
                 # ShinyCSSLoaders
                 tags$dt(
                   tags$a(href = "https://github.com/andrewsali/shinycssloaders", "shinycssloaders")
                 ),
-                tags$dd("Animated loaders for shiny outputs"),
+                tags$dd("Animated loaders for shiny outputs."),
 
                 # ShinyJS
                 tags$dt(
                   tags$a(href = "https://deanattali.com/shinyjs/", "shinyjs")
                 ),
-                tags$dd("Easily Improve the User Experience of Your Shiny Apps in Seconds"),
+                tags$dd("Improve the user experience of your Shiny apps in seconds."),
 
                 # Tidyverse
                 tags$dt(
                   tags$a(href = "https://www.tidyverse.org/", "The Tidyverse"),
-                  tags$dd("An opinionated collection of R packages designed for data science. ")
+                  tags$dd("A collection of R packages designed for data science.")
                 )
               )
             )
