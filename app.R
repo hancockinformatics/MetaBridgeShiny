@@ -312,7 +312,7 @@ ui <- fluidPage(
               "metabolomics data with transcriptomics or proteomics data via ",
               "network methodologies. You can also view this tutorial on ",
               HTML(paste0(
-                "<a href='https://github.com/samhinshaw/metabridge_shiny/blob/master/tutorial/tutorial.md' ",
+                "<a href='https://github.com/travis-m-blimkie/MetaBridgeShiny/blob/master/tutorial/tutorial.md' ",
                 "target='_blank'>GitHub</a>."
               ))
             ),
