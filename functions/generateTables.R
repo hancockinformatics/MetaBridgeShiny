@@ -171,7 +171,6 @@ generateKEGGMetabTable <- function(mappingObject,
     filteredMappedMetaboliteTable <- mappingObject$data %>%
       filter(!!(namedIDType) == !!(quotedSelectedMetab))
 
-
     return(filteredMappedMetaboliteTable)
   }
 }

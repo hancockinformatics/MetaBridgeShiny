@@ -22,6 +22,8 @@ ui <- fluidPage(
   # Useful colours which match the flatly theme:
   # Dark blue   #2c3e50
   # Turquoise   #18bc9c
+  # Light blue  #3498db
+  # DT blue     #0075b0
   # White       #fff
 
   # Head linking to Flatly bootstrap theme and my personal tweaks.
@@ -133,12 +135,12 @@ ui <- fluidPage(
             # Horizontal spacer
             HTML("&nbsp;&nbsp;&nbsp;"),
 
-            # Button linking straight to the about page
+            # Button linking straight to the About page
             actionButton(
               inputId = "about",
               label = "About",
               class = "btn-primary btn-lg btn-tooltip btn-hidden", # btn-tooltip
-              style = "color: #2c3e50; background-color: #fff; border-color: #2c3e50; width: 155px",
+              style = "color: #fff; background-color: #3498db; border-color: #3498db; width: 155px",
               `data-position` = "bottom",
               title = "Learn more about MetaBridge."
             )
@@ -601,15 +603,11 @@ server <- function(input, output, session) {
     tags$div(
 
       tags$p(
-        "Select the ID type you would like to use in the mapping. This should ",
-        "match the IDs in the selected column."
-      ),
-      tags$p(
-        "We recommend using MetaCyc (HMDB) or KEGG IDs, as these will ",
-        "yield the best results."
+        "Select the ID type you would like to use in the mapping. We recommend ",
+        "using MetaCyc (HMDB) or KEGG IDs, as these will yield the best results."
       ),
 
-      tags$br(),
+      # tags$br(),
 
       selectInput(
         "idType",
@@ -1019,9 +1017,9 @@ server <- function(input, output, session) {
   }, ignoreInit = TRUE)
 
 
-  # Cleaning the mapped data before download, to remove HTML tags from
-  # reactions. Specifically, we are removing any HTML tags, using plain text
-  # arrows, and switching Greek letters.
+  # Cleaning the mapped MetaCyc (not KEGG) data before download, to remove HTML
+  # tags from reactions. Specifically, we are removing any HTML tags, using
+  # plain text arrows, and switching Greek letters to English versions.
   cleanMappedMetabolites <- reactive({
     req(mappedMetabolites())
 
@@ -1131,7 +1129,7 @@ server <- function(input, output, session) {
       tags$div(
         tags$h4(paste0(
           "Pathways for ",
-          selectedRowAttrs$selectedCompoundName
+          stringr::str_to_title(selectedRowAttrs$selectedCompoundName)
         )),
         selectInput(
           inputId = "pathwaysPicked",
