@@ -89,7 +89,7 @@ Download your full mapping results (example table below).
 
 ### 1. Upload Mapped Genes
 
-Visit [NetworkAnalyst](http://www.networkanalyst.ca) and start with [A list of genes or proteins](http://www.networkanalyst.ca/faces/Secure/network/SignatureView.xhtml) input.
+Visit [NetworkAnalyst](http://www.networkanalyst.ca) and start with [a list of genes or proteins](http://www.networkanalyst.ca/faces/Secure/network/SignatureView.xhtml) input.
 
 [![Select A list of genes or proteins](serve/select_list.png)](http://www.networkanalyst.ca)
 
