@@ -213,6 +213,7 @@ ui <- fluidPage(
             class = "btn btn-link btn-med btn-tooltip",
             `data-position` = "right",
             label = tags$b("Try Examples"),
+            style = "font-size:110%",
             title = "Try an example dataset from MetaboAnalyst"
           )
         ),
@@ -570,7 +571,7 @@ server <- function(input, output, session) {
     scrollX = "100%",
     # AMAZING! Crucial argument to make sure DT doesn't overflow vertical
     # scrolling options.
-    scrollY = "450px",
+    scrollY = "456px",
     scrollCollapse = TRUE,
     paging = FALSE
   ),
@@ -606,10 +607,10 @@ server <- function(input, output, session) {
   output$idSelector <- renderUI({
     tags$div(
 
-      tags$p(
+      tags$p(HTML(
         "Select the ID type you would like to use in the mapping. We recommend ",
-        "using MetaCyc (HMDB) or KEGG IDs, as these will yield the best results."
-      ),
+        "using <b>HMDB</b> or <b>KEGG</b>, as these will yield the best results."
+      )),
 
       # tags$br(),
 
