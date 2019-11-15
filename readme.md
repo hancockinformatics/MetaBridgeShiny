@@ -1,6 +1,8 @@
-[<img src="www/logo_light_hex.svg" align="right"  height="80px"/>](https://travis-m-blimkie.shinyapps.io/MetaBridgeShiny)
+[<img src="www/logo_light_hex.svg" align="right"  height="120px"/>](https://travis-m-blimkie.shinyapps.io/MetaBridgeShiny)
 
 # **MetaBridge**
+
+<br>
 
 ## **Description**
 
