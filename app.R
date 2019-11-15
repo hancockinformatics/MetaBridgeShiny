@@ -95,14 +95,14 @@ ui <- fluidPage(
           ),
           tags$p(
             "To start, you'll want a set of metabolites as",
-            "HMDB, KEGG, PubChem, or CAS IDs. We recommend ",
+            "HMDB, KEGG, PubChem, or CAS IDs. We recommend",
             tags$a("MetaboAnalyst", href = "http://www.metaboanalyst.ca"),
-            " for metabolomics data processing and ID conversion. "
+            "for metabolomics data processing and ID conversion. "
           ),
           tags$p(
             "With the output of MetaBridge, you can create a ",
             "protein-protein interaction network representative ",
-            "of your metabolomics data. We recommend ",
+            "of your metabolomics data. We recommend",
             tags$a("NetworkAnalyst", href = "http://www.networkanalyst.ca"),
             "for generation of these networks and for network-based integration ",
             "with protein-protein interaction networks created from other ",
@@ -375,16 +375,21 @@ ui <- fluidPage(
               tags$a(href = "http://cmdr.ubc.ca/bobh/", "Centre for Microbial Diseases and Immunity Research"),
               " at The University of British Columbia, and published in",
               tags$em("Bioinformatics"), " (doi: ",
-              tags$a(href = "https://doi.org/10.1093/bioinformatics/bty331", "10.1093/bioinformatics/bty331"),
+              tags$a(href = "https://doi.org/10.1093/bioinformatics/bty331",
+                     "10.1093/bioinformatics/bty331",
+                     .noWS = "after"),
               "). Please cite this paper when using MetaBridge in your analyses. ",
-              "A protocol was also published in ", tags$em("Current Protocols in Bioinformatics"),
-              " (doi: ", tags$a(href = "", "doi_number"), ")."
+              "A protocol was also published in ",
+              tags$em("Current Protocols in Bioinformatics"),
+              "(doi:",
+              tags$a(href = "", "doi_number", .noWS = "after"), ")."
             ),
 
             tags$p(
               "For help, you can post an issue at the ",
               tags$a(href = "https://github.com/travis-m-blimkie/MetaBridgeShiny", "Github page.")
             ),
+            tags$br(),
             tags$p(
               "MetaBridge uses the following databases and R packages:"
             ),
@@ -393,44 +398,44 @@ ui <- fluidPage(
 
                 # MetaCyc
                 tags$dt(
-                  tags$a(href = "https://metacyc.org/", "MetaCyc v23")
+                  tags$a(href = "https://metacyc.org/", "MetaCyc v23"),
+                  tags$dd("Curated database for human metabolomic data.")
                 ),
-                tags$dd("Curated database for human metabolomic data."),
 
                 # KEGG
                 tags$dt(
-                  tags$a(href = "https://www.genome.jp/kegg/", "KEGG Release 92")
+                  tags$a(href = "https://www.genome.jp/kegg/", "KEGG Release 92"),
+                  tags$dd("Large database containing multiple data types.")
                 ),
-                tags$dd("Large database containing multiple data types."),
-
-                # Pathview
-                tags$dt(
-                  tags$a(href = "https://doi.org/10.1093/bioinformatics/btt285", "Pathview")
-                ),
-                tags$dd("Pathway-based data integration and visualization."),
 
                 # Shiny
                 tags$dt(
-                  tags$a(href = "https://shiny.rstudio.com/", "Shiny")
+                  tags$a(href = "https://shiny.rstudio.com/", "Shiny"),
+                  tags$dd("Web application framework for R.")
                 ),
-                tags$dd("Web application framework for R."),
 
                 # ShinyCSSLoaders
                 tags$dt(
-                  tags$a(href = "https://github.com/andrewsali/shinycssloaders", "shinycssloaders")
+                  tags$a(href = "https://github.com/andrewsali/shinycssloaders", "shinycssloaders"),
+                  tags$dd("Animated loaders for shiny outputs.")
                 ),
-                tags$dd("Animated loaders for shiny outputs."),
 
                 # ShinyJS
                 tags$dt(
-                  tags$a(href = "https://deanattali.com/shinyjs/", "shinyjs")
+                  tags$a(href = "https://deanattali.com/shinyjs/", "shinyjs"),
+                  tags$dd("Improve the user experience of your Shiny apps in seconds.")
                 ),
-                tags$dd("Improve the user experience of your Shiny apps in seconds."),
 
                 # Tidyverse
                 tags$dt(
-                  tags$a(href = "https://www.tidyverse.org/", "The Tidyverse"),
+                  tags$a(href = "https://www.tidyverse.org/", "tidyverse"),
                   tags$dd("A collection of R packages designed for data science.")
+                ),
+
+                # Pathview
+                tags$dt(
+                  tags$a(href = "https://doi.org/10.1093/bioinformatics/btt285", "Pathview"),
+                  tags$dd("Pathway-based data integration and visualization.")
                 )
               )
             )
