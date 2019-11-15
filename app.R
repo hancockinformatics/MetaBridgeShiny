@@ -56,14 +56,19 @@ ui <- fluidPage(
 
   ### Begin the tab bar layout
   navbarPage(
-
     title = htmltools::HTML("<img src='pics/logo_white.svg' alt='M' height='28'"), # MetaBridge <sup class='tiny'>BETA</sup>
     id = "navbarLayout",
-
-    # Make sure we use ShinyJS - NEED THIS LINE!
-    header = tagList(useShinyjs()),
+    position = "fixed-top",
     windowTitle = "MetaBridge",
     collapsible = TRUE,
+
+    # Make sure we enable ShinyJS. We also add the `tags$style()` call to add
+    # space between the navbar and body content; otherwise the navbar would
+    # overlap the elements below it.
+    header = tagList(
+      useShinyjs(),
+      tags$style(type = "text/css", "body {padding-top: 100px;}")
+    ),
 
 
     ### Welcome tab/landing page
@@ -173,8 +178,8 @@ ui <- fluidPage(
             "out our example dataset."
           ),
 
-          # Define custom style for the file upload button ("Browse...") so we
-          # can choose the colour.
+          # Re-define custom style for the file upload button ("Browse...") so
+          # we can choose the colour via some CSS styling.
           tags$style(".btn-file {
                      background-color: #2c3e50;
                      border-color: #2c3e50;
