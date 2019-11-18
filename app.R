@@ -6,6 +6,16 @@
 library(shiny)
 library(shinyjs)
 
+
+# Useful colours which match the flatly theme:
+# Dark blue     #2c3e50
+# Turquoise     #18bc9c
+# Light blue    #3498db
+# DT blue       #0075b0
+# Grey          #ecf0f1
+# White         #fff
+
+
 # Need to run these lines each time app is published
 # library(BiocManager)
 # options(repos = BiocManager::repositories())
@@ -18,13 +28,6 @@ library(shinyjs)
 addResourcePath(prefix = "pics", directoryPath = "./www")
 
 ui <- fluidPage(
-
-  # Useful colours which match the flatly theme:
-  # Dark blue   #2c3e50
-  # Turquoise   #18bc9c
-  # Light blue  #3498db
-  # DT blue     #0075b0
-  # White       #fff
 
   # Head linking to Flatly bootstrap theme and my personal tweaks.
   tags$head(
@@ -91,13 +94,14 @@ ui <- fluidPage(
           tags$p(
             "Welcome to MetaBridge, a web tool for network-based integrative ",
             "analysis of metabolomics data. Here you can upload a set of metabolites ",
-            "and identify the directly interacting enzymes for network integration. "
+            "and identify the directly interacting enzymes for network integration."
           ),
           tags$p(
             "To start, you'll want a set of metabolites as",
             "HMDB, KEGG, PubChem, or CAS IDs. We recommend",
             tags$a("MetaboAnalyst", href = "http://www.metaboanalyst.ca"),
-            "for metabolomics data processing and ID conversion. "
+            "for metabolomics data processing, as well as ID conversion ",
+            "if you have only compound names."
           ),
           tags$p(
             "With the output of MetaBridge, you can create a ",
@@ -105,8 +109,7 @@ ui <- fluidPage(
             "of your metabolomics data. We recommend",
             tags$a("NetworkAnalyst", href = "http://www.networkanalyst.ca"),
             "for generation of these networks and for network-based integration ",
-            "with protein-protein interaction networks created from other ",
-            "omics types."
+            "with protein-protein interaction networks created from other omics types."
           ),
           tags$p(
             "Click the button below to Get Started! If you'd like to learn more ",
@@ -114,7 +117,7 @@ ui <- fluidPage(
             "information, refer to the About page."
           ),
 
-          br(),
+          tags$br(),
 
           div(
             # Buttons linking to various tabs of the app. To see how these
@@ -180,15 +183,17 @@ ui <- fluidPage(
 
           # Re-define custom style for the file upload button ("Browse...") so
           # we can choose the colour via some CSS styling.
-          tags$style(".btn-file {
-                     background-color: #2c3e50;
-                     border-color: #2c3e50;
-                     }"),
+          # Have moved this to www/css/user.css for consistency with other
+          # custom stylings.
+          # tags$style(".btn-file {
+          #            background-color: #2c3e50;
+          #            border-color: #2c3e50;
+          #            }"),
 
           # Upload handling
           fileInput(
             inputId = "metaboliteUpload",
-            label = "Upload Metabolites",
+            label   = "Upload Metabolites",
             accept = c(
               "text/csv",
               "text/comma-separated-values,text/plain",
@@ -372,17 +377,24 @@ ui <- fluidPage(
 
             tags$p(
               "MetaBridge was designed by Samuel Hinshaw and Travis Blimkie at the ",
-              tags$a(href = "http://cmdr.ubc.ca/bobh/", "Centre for Microbial Diseases and Immunity Research"),
+              tags$a(href = "http://cmdr.ubc.ca/bobh/",
+                     "Centre for Microbial Diseases and Immunity Research"),
               " at The University of British Columbia, and published in",
-              tags$em("Bioinformatics"), " (doi: ",
-              tags$a(href = "https://doi.org/10.1093/bioinformatics/bty331",
-                     "10.1093/bioinformatics/bty331",
-                     .noWS = "after"),
-              "). Please cite this paper when using MetaBridge in your analyses. ",
-              "A protocol was also published in ",
+              tags$em("Bioinformatics"),
+              " (doi: ",
+              tags$a(
+                href = "https://doi.org/10.1093/bioinformatics/bty331",
+                "10.1093/bioinformatics/bty331",
+                .noWS = "after"
+              ),
+              "). Please cite this paper when using MetaBridge in your analyses.",
+              " A protocol was also published in ",
               tags$em("Current Protocols in Bioinformatics"),
               "(doi:",
-              tags$a(href = "", "doi_number", .noWS = "after"), ")."
+              tags$a(href = "",
+                     "doi_number",
+                     .noWS = "after"),
+              ")."
             ),
 
             tags$p(
@@ -390,9 +402,9 @@ ui <- fluidPage(
               tags$a(href = "https://github.com/travis-m-blimkie/MetaBridgeShiny", "Github page.")
             ),
             tags$br(),
-            tags$p(
-              "MetaBridge uses the following databases and R packages:"
-            ),
+
+            tags$p("MetaBridge uses the following databases and R packages:"),
+
             tags$p(
               tags$dl(
 
@@ -553,10 +565,13 @@ server <- function(input, output, session) {
     if (is.null(metaboliteObject())) {
       return(NULL)
     }
-    tags$p(
-      class = "conditional-help",
-      "Check below to see that your data has been uploaded properly.  ",
-      "If so, click a column and ID type and proceed to the 'Map' tab!"
+    tagList(
+      tags$h4(
+        class = "conditional-help",
+        "Check below to see that your data has been uploaded properly.  ",
+        "If so, click a column and ID type and proceed to the 'Map' tab!"
+      ),
+      tags$br()
     )
   })
 
@@ -625,11 +640,11 @@ server <- function(input, output, session) {
       # tags$br(),
 
       selectInput(
-        "idType",
-        "ID Type",
-        width = "50%",
-        choices = c("HMDB", "KEGG", "PubChem", "CAS", "MetaCyc Object ID" = "Compound"),
-        selected = preSelectedIDType(),
+        inputId   = "idType",
+        label     = "ID Type",
+        width     = "50%",
+        choices   = c("HMDB", "KEGG", "PubChem", "CAS", "MetaCyc Object ID" = "Compound"),
+        selected  = preSelectedIDType(),
         selectize = FALSE
       ),
       # Include button to proceed
@@ -849,6 +864,7 @@ server <- function(input, output, session) {
 
       # Otherwise, generate our table depending on the chosen database! As with
       # `generateSummaryTable()`, these functions come from "generateTables.R"
+
     } else if (databaseChosen() == "KEGG") {
       if (mappingSummary$dbChosen != "KEGG") {
         cat("DATABASE WAS NOT KEGG, NULL RETURNING...")
@@ -863,6 +879,7 @@ server <- function(input, output, session) {
         ) %>% mappedMetaboliteTable()
         # Otherwise proceed with generated the metabolite table.
       }
+
     } else if (databaseChosen() == "MetaCyc") {
       # If our summary table was somehow not updated yet, exit.
       if (mappingSummary$dbChosen != "MetaCyc") {
@@ -887,6 +904,7 @@ server <- function(input, output, session) {
   output$mappedMetaboliteTable <- DT::renderDataTable({
     if (is.null(mappingObject()) | is.null(selectedMetab())) {
       return(data.frame())
+
     } else if (mappingObject()$status == "success") {
       # Only render if we had non-null, non-error, non-empty results.
       mappedMetaboliteTable() %>% hyperlinkTable(databaseChosen())
@@ -908,11 +926,13 @@ server <- function(input, output, session) {
         return(NULL)
         # If we had an error, change the header to reflect that these are
         # intermediate results.
+
       } else if (
         mappingObject()$status == "error" | mappingObject()$status == "empty"
       ) {
         tags$h3("Intermediate Results")
         # Only render if we had non-null, non-error, non-empty results.
+
       } else {
         tagList(
           tags$hr(),
@@ -935,21 +955,20 @@ server <- function(input, output, session) {
     if (!is.null(mappedMetabolites())) {
       tags$form(
         class = "well",
-        tags$p("Download a copy of your full mapping results. "),
+        tags$p("Download a copy of your full mapping results."),
         radioButtons(
-          "saveType",
-          "Download Results",
-          choices = c(
-            "Comma-Separated Values" = "csv",
-            "Tab-Separated Values" = "tsv"
-          ),
+          inputId = "saveType",
+          label   = "Save results as:",
+          choices = c("Comma-Delimited" = "csv",
+                      "Tab-Delimited"   = "tsv"),
           selected = "csv"
         ),
+
         # ...with a tooltip.
         downloadButton(
           "downloadMappingData",
           tags$b("Download"),
-          style = "color: #fff; background-color: #2c3e50; border-color: #2c3e50",
+          style = "color: #fff; background-color: #3498db; border-color: #3498db",
           class = "btn-med btn-tooltip",
           title = "Download your full mapping results",
         )
