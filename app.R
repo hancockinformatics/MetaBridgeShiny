@@ -60,7 +60,7 @@ ui <- fluidPage(
 
   ### Begin the tab bar layout
   navbarPage(
-    title = htmltools::HTML("<img src='pics/logo_white.svg' alt='M' height='28'"), # MetaBridge <sup class='tiny'>BETA</sup>
+    title = htmltools::HTML("<img src='pics/logo_white.svg' alt='M' height='28'"), # <sup class='tiny'>BETA</sup>
     id = "navbarLayout",
     position = "fixed-top",
     windowTitle = "MetaBridge",
