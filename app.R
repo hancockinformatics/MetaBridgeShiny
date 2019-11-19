@@ -16,7 +16,8 @@ library(shinyjs)
 # White         #fff
 
 
-# Need to run these lines each time app is published
+# TODO Need to run these lines each time app is published so packages from
+# Bioconductor can be found by Shiny.
 # library(BiocManager)
 # options(repos = BiocManager::repositories())
 
@@ -67,10 +68,10 @@ ui <- fluidPage(
 
     # Make sure we enable ShinyJS. We also add the `tags$style()` call to add
     # space between the navbar and body content; otherwise the navbar would
-    # overlap the elements below it.
+    # overlap the elements below it (caused by fixed navbar).
     header = tagList(
       useShinyjs(),
-      tags$style(type = "text/css", "body {padding-top: 100px;}")
+      tags$style(type = "text/css", "body {padding-top: 80px;}")
     ),
 
 
@@ -181,19 +182,11 @@ ui <- fluidPage(
             "out our example dataset."
           ),
 
-          # Re-define custom style for the file upload button ("Browse...") so
-          # we can choose the colour via some CSS styling.
-          # Have moved this to www/css/user.css for consistency with other
-          # custom stylings.
-          # tags$style(".btn-file {
-          #            background-color: #2c3e50;
-          #            border-color: #2c3e50;
-          #            }"),
-
-          # Upload handling
+          # Upload handling. Note that the "Browse..." button is customized in
+          # `www/css/user.css`
           fileInput(
             inputId = "metaboliteUpload",
-            label   = "Upload Metabolites",
+            label = "Upload Metabolites",
             accept = c(
               "text/csv",
               "text/comma-separated-values,text/plain",
@@ -251,13 +244,12 @@ ui <- fluidPage(
           class = "well",
 
           tags$p(
-            "Choose a database to map with. MetaCyc has higher quality annotations, ",
-            "but KEGG may yield more hits. If you map via KEGG, you also have the ",
-            "option to visualize your results."
+            "Choose a database to map with. MetaCyc has higher quality ",
+            "annotations, but KEGG may yield more hits. If you map via KEGG, ",
+            "you also have the option to visualize your results."
           ),
 
-          # For now just allow one database. Later we can allow multiple
-          # mappings at once...
+          # Choose database for mapping.
           radioButtons(
             "dbChosen",
             "Choose Database",
@@ -535,7 +527,7 @@ server <- function(input, output, session) {
   }, ignoreInit = TRUE, ignoreNULL = TRUE)
 
   # Read file when any of (fileInput, checkboxInput, radioButtons) states
-  # change...
+  # change.
   observeEvent({
     input$metaboliteUpload
     input$sep
@@ -546,8 +538,8 @@ server <- function(input, output, session) {
         file = input$metaboliteUpload$datapath,
         col_names = input$header,
         delim = input$sep
-      ) %>% metaboliteObject() # ...and save to the reactiveVal...
-      # ...then wipe mapping objects.
+      ) %>% metaboliteObject() # Save to the reactiveVal...
+      # ...then wipe mapping objects for a fresh start.
       mappingObject(NULL)
       mappedMetabolites(NULL)
       mappingObject(NULL)
@@ -559,7 +551,7 @@ server <- function(input, output, session) {
   }, ignoreNULL = TRUE, ignoreInit = TRUE)
 
 
-  # Once data is populated, render help text to the user...
+  # Once data is populated, render help text to the user,...
   output$uploadSuccess <- renderUI({
     input$tryExamples # ...making sure the "Try Examples" button is a dependency
     if (is.null(metaboliteObject())) {
@@ -648,6 +640,7 @@ server <- function(input, output, session) {
         selectize = FALSE
       ),
       # Include button to proceed
+
       actionButton(
         inputId = "continueToMap",
         label   = tags$b("Proceed"),
@@ -953,9 +946,10 @@ server <- function(input, output, session) {
   # Once table exists, render the save panel...
   output$saveMappingPanel <- renderUI({
     if (!is.null(mappedMetabolites())) {
+
       tags$form(
         class = "well",
-        tags$p("Download a copy of your full mapping results."),
+        tags$p("Download your full mapping results below."),
         radioButtons(
           inputId = "saveType",
           label   = "Save results as:",
@@ -969,10 +963,11 @@ server <- function(input, output, session) {
           "downloadMappingData",
           tags$b("Download"),
           style = "color: #fff; background-color: #3498db; border-color: #3498db",
-          class = "btn-med btn-tooltip",
+          class = "btn-med btn-tooltip", # rightAlign
           title = "Download your full mapping results",
         )
       )
+
     }
   })
 

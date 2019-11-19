@@ -102,6 +102,12 @@
   padding-bottom: 0;
 }
 
+/* Change the font colour in the dropdown menua */
+.dropdown-menu > li > a {
+  color: #2c3e50;
+}
+
+
 /* We wrap a div around the content within jumbotron to use a background image
 within the background fill of the hero element */
 
@@ -167,7 +173,12 @@ within the background fill of the hero element */
   height: 100% !important;
 }
 
-/* Indent defined list terms */
+/* Indent defined list terms, without needing to use bullets */
 dl dd {
   margin-left: 1em;
+}
+
+.rightAlign {
+  position: absolute;
+  right: 0;
 }
