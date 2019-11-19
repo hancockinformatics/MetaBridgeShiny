@@ -380,13 +380,6 @@ ui <- fluidPage(
                 .noWS = "after"
               ),
               "). Please cite this paper when using MetaBridge in your analyses.",
-              " A protocol was also published in ",
-              tags$em("Current Protocols in Bioinformatics"),
-              "(doi:",
-              tags$a(href = "",
-                     "doi_number",
-                     .noWS = "after"),
-              ")."
             ),
 
             tags$p(
