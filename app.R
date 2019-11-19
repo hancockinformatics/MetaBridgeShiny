@@ -348,8 +348,6 @@ ui <- fluidPage(
               " (doi: ",
               tags$a(href = "https://doi.org/10.1093/bioinformatics/bty331", "10.1093/bioinformatics/bty331"),
               "). Please cite this paper when using MetaBridge in your analyses. ",
-              "A protocol was also published in ", tags$em("Current Protocols in Bioinformatics"),
-              " (doi: ", tags$a(href = "", "doi_number"), ")."
             ),
 
             tags$p(
