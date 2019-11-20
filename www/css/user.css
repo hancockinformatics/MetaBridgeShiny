@@ -183,7 +183,7 @@ dl dd {
 }
 
 /* Attempts at getting the download button on the right */
-.rightAlign {
+.btn-right {
   position: absolute;
   right: 0;
   margin-right: 0.70em;

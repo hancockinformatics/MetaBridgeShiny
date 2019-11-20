@@ -956,7 +956,7 @@ server <- function(input, output, session) {
           "downloadMappingData",
           tags$b("Download"),
           style = "color: #fff; background-color: #3498db; border-color: #3498db",
-          class = "btn-med btn-tooltip rightAlign",
+          class = "btn-med btn-tooltip btn-right",
           title = "Download your full mapping results",
         ),
 
