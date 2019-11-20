@@ -956,11 +956,16 @@ server <- function(input, output, session) {
           "downloadMappingData",
           tags$b("Download"),
           style = "color: #fff; background-color: #3498db; border-color: #3498db",
-          class = "btn-med btn-tooltip", # rightAlign
+          class = "btn-med btn-tooltip rightAlign",
           title = "Download your full mapping results",
-        )
-      )
+        ),
 
+        # These breaks are only needed because we right-align the download
+        # button. Without them, the button will not stay within the bounds of
+        # the form/well UI object.
+        tags$br(),
+        tags$br()
+      )
     }
   })
 
