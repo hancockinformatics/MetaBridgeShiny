@@ -374,12 +374,14 @@ ui <- fluidPage(
               " at The University of British Columbia, and published in",
               tags$em("Bioinformatics"),
               " (doi: ",
+
               tags$a(
                 href = "https://doi.org/10.1093/bioinformatics/bty331",
                 "10.1093/bioinformatics/bty331",
                 .noWS = "after"
               ),
               "). Please cite this paper when using MetaBridge in your analyses.",
+
             ),
 
             tags$p(
