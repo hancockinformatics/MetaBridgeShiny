@@ -1,15 +1,29 @@
-# MetaBridge
+[<img src="www/logo_light_hex.svg" align="right"  height="120px"/>](https://travis-m-blimkie.shinyapps.io/MetaBridgeShiny)
 
-## Description
+# **MetaBridge**
 
-MetaBridge is a data integration system for integration of metabolomics data with other omics types, chiefly transcriptomics and proteomics.
+<br>
 
-## Usage
+## **Description**
 
-MetaBridge is designed to facilitate integrative analysis by identifying the enzymes that directly interact with metabolites of interest. A pipeline may be designed as such:
+MetaBridge is a [Shiny](https://shiny.rstudio.com/)-based data integration
+system for integration of metabolomics data with other omics types, chiefly
+transcriptomics and proteomics.
 
-![Pipeline Schema](./figure.png)
+## **Usage**
 
-### Tutorial
+MetaBridge is designed to facilitate integrative analysis by identifying the
+enzymes that directly interact with metabolites of interest, yielding genes
+which may then be integrated with results from other omics methods. A pipeline
+may be designed as such:
 
-To learn how to use MetaBridge as part of a network-based integrative analysis workflow, please read our [tutorial](./tutorial/tutorial.md).
+![](./figure.png)
+
+## **Tutorial**
+
+To learn how to use MetaBridge as part of a network-based integrative analysis
+workflow, please read our [tutorial](./tutorial/tutorial.md). For a more
+detailed guide, see our publication in [*Current Protocols in
+Bioinformatics*]().
+
+<br>

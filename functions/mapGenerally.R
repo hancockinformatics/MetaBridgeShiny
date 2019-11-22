@@ -112,7 +112,7 @@ mapMetaCyc <- function(importDF, col, idType) {
     } else {
       # Otherwise proceed as normal
       this <- inner_join(mappingDF$data, metaCycDBLinks, by = idType) %>%
-        select(idType, Compound) %>%
+        select(idType, Compound, HMDB, KEGG) %>%
         rename("compound" = Compound)
     }
 
@@ -265,6 +265,8 @@ mapMetaCyc <- function(importDF, col, idType) {
       select(
         idType,
         Compound,
+        HMDB,
+        KEGG,
         Reaction,
         `Reaction Name`,
         `MetaCyc Gene`,

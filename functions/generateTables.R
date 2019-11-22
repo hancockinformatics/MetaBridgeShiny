@@ -28,7 +28,7 @@ generateSummaryTable <- function(mappingObject,
   } else if (dbChosen == "MetaCyc") {
 
     table <- mappingObject$data %>%
-      group_by(!!sym(idType), Compound) %>%
+      group_by(!!sym(idType), HMDB, KEGG, Compound) %>%
       summarize(
         "# Reactions" = n_distinct(`Reaction`, na.rm = TRUE),
         "# Genes (MetaCyc)" = n_distinct(`MetaCyc Gene`, na.rm = TRUE),
@@ -44,7 +44,7 @@ generateSummaryTable <- function(mappingObject,
   } else if (dbChosen == "KEGG") {
 
     table <- mappingObject$data %>%
-      group_by(KEGG, !!sym(idType), Compound) %>%
+      group_by(!!sym(idType), KEGG, Compound) %>%
       summarize(
         "# Enzymes" = n_distinct(`Enzyme`, na.rm = TRUE),
         "# Gene Names" = n_distinct(`Gene Name`, na.rm = TRUE),
@@ -170,7 +170,6 @@ generateKEGGMetabTable <- function(mappingObject,
     # Filter the full mapping table based on chosen compund
     filteredMappedMetaboliteTable <- mappingObject$data %>%
       filter(!!(namedIDType) == !!(quotedSelectedMetab))
-
 
     return(filteredMappedMetaboliteTable)
   }

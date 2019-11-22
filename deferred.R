@@ -19,18 +19,18 @@ load("data/examples.RData")
 
 # Load KEGG database files ------------------------------------------------
 
-load("data/k00_keggCompounds.RData")
-# load('data/k01_keggEnzymes.RData')
-load("data/k02b_keggEnzymeShortNames.RData") # Use the shorter names for now
+# KEGG updated on/around November 1st, 2019
+load("data/k00_keggCompounds_r92.RData")
+load("data/k02b_keggEnzymeShortNames_r92.RData")
 
-load("data/k03_keggGenes.RData")
 # For the moment, only keep enzyme-gene relationships
+load("data/k03_keggGenes_r92.RData")
 keggGenes <- keggGenes %>%
   dplyr::select(-KEGG) %>%
   unique()
 
-load("data/k04_keggPathways.RData")
-load("data/k05_keggHumanPathways.RData")
+load("data/k04_keggPathways_r92.RData")
+load("data/k05_keggHumanPathways_r92.RData")
 
 
 # Load MetaCyc database files ---------------------------------------------
