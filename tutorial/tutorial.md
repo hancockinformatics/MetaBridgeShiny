@@ -16,7 +16,7 @@ interest and their corresponding metabolite IDs. We recommend
 
 Upload your metabolites to [MetaBridge](https://www.metabridge.org) and select your metabolites for mapping.
 
-[![Upload Metabolites](serve/upload2.png)](https://www.metabridge.org)
+[![Upload Metabolites](serve/Upload2.png)](https://www.metabridge.org)
 
 ### 2. Map Metabolites
 
