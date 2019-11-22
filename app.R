@@ -619,7 +619,8 @@ server <- function(input, output, session) {
 
       tags$p(HTML(
         "Select the ID type you would like to use in the mapping. We recommend ",
-        "using <b>HMDB</b> or <b>KEGG</b>, as these will yield the best results."
+        "using <b>HMDB</b> or <b>KEGG</b>, as these will yield the best results.",
+        "Ensure the ID selected here matches the highlighted column."
       )),
 
       # tags$br(),
@@ -995,7 +996,7 @@ server <- function(input, output, session) {
         if (databaseChosen() == "KEGG" & !is.null(selectedMetab())) {
           actionButton(
             inputId = "visualizeButton",
-            label = "Visualize",
+            label = tags$b("Visualize"),
             class = "btn btn-med btn-tooltip",
             style = "color: #fff; background-color: #2c3e50; border-color: #2c3e50;",
             title = "Visualize your results with pathview"
@@ -1004,7 +1005,7 @@ server <- function(input, output, session) {
         } else {
           actionButton(
             inputId = "visualizeButton",
-            label = "Visualize",
+            label = tags$b("Visualize"),
             class = "btn btn-med btn-tooltip disabled",
             title = "Select a metabolite from the summary table"
           )
