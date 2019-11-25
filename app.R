@@ -60,7 +60,7 @@ ui <- fluidPage(
 
   ### Begin the tab bar layout
   navbarPage(
-    title = htmltools::HTML("<img src='pics/logo_white.svg' alt='M' height='28'"), # <sup class='tiny'>BETA</sup>
+    title = htmltools::HTML("<img src='pics/logo_white.svg' alt='' height='28'"), # <sup class='tiny'>BETA</sup>
     id = "navbarLayout",
     position = "fixed-top",
     windowTitle = "MetaBridge",
@@ -72,6 +72,13 @@ ui <- fluidPage(
     header = tagList(
       useShinyjs(),
       tags$style(type = "text/css", "body {padding-top: 80px;}")
+    ),
+
+    footer = tagList(
+      tags$footer(
+        htmltools::HTML("<img src='pics/hancock-lab-logo.svg'"),
+        style = "width: 100%; padding-left: 2%; box-sizing: border-box;"
+      )
     ),
 
 
@@ -93,9 +100,10 @@ ui <- fluidPage(
           class = "logoWrapper",
 
           tags$p(
-            "Welcome to MetaBridge, a web tool for network-based integrative ",
-            "analysis of metabolomics data. Here you can upload a set of metabolites ",
-            "and identify the directly interacting enzymes for network integration."
+            "Welcome to MetaBridge v1.2, a user-friendly web tool for ",
+            "network-based integrative analysis of metabolomics data. Here you ",
+            "can upload a set of metabolites and identify the directly ",
+            "interacting enzymes for network integration."
           ),
           tags$p(
             "To start, you'll want a set of metabolites as",
@@ -112,6 +120,13 @@ ui <- fluidPage(
             "for generation of these networks and for network-based integration ",
             "with protein-protein interaction networks created from other omics types."
           ),
+
+          tags$p(
+            "MetaBridge was developed at the ",
+            tags$a("Hancock Lab", href = "http://cmdr.ubc.ca/bobh/"),
+            "using data from MetaCyc (Version 23.0) and KEGG (Release 92)."
+          ),
+
           tags$p(
             "Click the button below to Get Started! If you'd like to learn more ",
             "about how MetaBridge can be used, check the Tutorial. For more ",
