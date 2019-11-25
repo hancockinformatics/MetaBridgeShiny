@@ -74,12 +74,12 @@ ui <- fluidPage(
       tags$style(type = "text/css", "body {padding-top: 80px;}")
     ),
 
-    footer = tagList(
-      tags$footer(
-        htmltools::HTML("<img src='pics/hancock-lab-logo.svg'"),
-        style = "width: 100%; padding-left: 2%; box-sizing: border-box;"
-      )
-    ),
+    # footer = tagList(
+    #   tags$footer(
+    #     htmltools::HTML("<img src='pics/hancock-lab-logo.svg'"),
+    #     style = "width: 99%; padding-left: 2%; box-sizing: border-box;"
+    #   )
+    # ),
 
 
     ### Welcome tab/landing page
@@ -175,6 +175,11 @@ ui <- fluidPage(
             )
           )
         )
+      ),
+      # Separate div to include the lab logo below the main section
+      tags$div(
+        style = "padding-top: 7vw; padding-bottom: 10px",
+        tags$footer(htmltools::HTML("<img src='pics/hancock-lab-logo.svg'"))
       )
     ),
 
