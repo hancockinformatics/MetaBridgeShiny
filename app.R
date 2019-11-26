@@ -213,8 +213,8 @@ ui <- fluidPage(
           # Header in file?
           checkboxInput(
             inputId = "header",
-            label = "Header",
-            value = TRUE
+            label   = "Header",
+            value   = TRUE
           ),
 
           # TSV or CSV?
@@ -362,7 +362,6 @@ ui <- fluidPage(
 
         div(
           class = "col-lg-10 tutorial",
-          # class = 'tutorial',
           includeMarkdown("tutorial/tutorial.md")
         )
       ),
@@ -723,7 +722,6 @@ server <- function(input, output, session) {
 
   # When the map button is clicked, update the `dbChosen()`.
   observeEvent(input$mapButton, {
-    # Change the `dbChosen()` reactive value.
     databaseChosen(input$dbChosen)
 
     # Clear any pre-existing alerts

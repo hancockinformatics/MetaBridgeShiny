@@ -84,6 +84,20 @@ matchHMDB <- function(hmdbID) {
 
 
 
+# Pattern/replacement pairs for next function. Maybe should be moved into app.R
+# or deferred.R?
+find_replace <- c(
+  "<.*?>" = "",
+  "&harr;" = "<-->",
+  "&rarr;" = "-->",
+  "&larr;" = "<--",
+  "&alpha;" = "a",
+  "&beta;"  = "b",
+  "&omega;" = "o",
+  "&gamma;" = "g"
+)
+
+
 #' cleanReactions
 #'
 #' @param metabTable
@@ -93,17 +107,12 @@ matchHMDB <- function(hmdbID) {
 #' @export
 #'
 #' Removes any HTML tags in reaction names. Also replaces arrow marks with plain
-#' text version, along with Greek letters.
+#' text version, along with Greek letters. Using above-defined named vector so
+#' we can perform multiple sets of pattern-replacement in a single call to
+#' str_replace_all().
 #'
 cleanReactions <- function(metabTable) {
   metabTable %>% mutate(
-    `Reaction Name` = gsub(pattern = "<.*?>", replacement = "", x = `Reaction Name`),
-    `Reaction Name` = gsub(pattern = "&harr;", replacement = "<-->", x = `Reaction Name`),
-    `Reaction Name` = gsub(pattern = "&rarr;", replacement = "-->", x = `Reaction Name`),
-    `Reaction Name` = gsub(pattern = "&larr;", replacement = "<--", x = `Reaction Name`),
-    `Reaction Name` = gsub(pattern = "&alpha;", replacement = "a", x = `Reaction Name`),
-    `Reaction Name` = gsub(pattern = "&beta;", replacement = "b", x = `Reaction Name`),
-    `Reaction Name` = gsub(pattern = "&omega;", replacement = "o", x = `Reaction Name`),
-    `Reaction Name` = gsub(pattern = "&gamma;", replacement = "g", x = `Reaction Name`)
+    `Reaction Name` = stringr::str_replace_all(`Reaction Name`, find_replace)
   )
 }
