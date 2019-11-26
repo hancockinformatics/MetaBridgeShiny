@@ -22,8 +22,6 @@ may be designed as such:
 ## **Tutorial**
 
 To learn how to use MetaBridge as part of a network-based integrative analysis
-workflow, please read our [tutorial](./tutorial/tutorial.md). For a more
-detailed guide, see our publication in [*Current Protocols in
-Bioinformatics*]().
+workflow, please read our [tutorial](./tutorial/tutorial.md).
 
 <br>
