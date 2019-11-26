@@ -74,14 +74,6 @@ ui <- fluidPage(
       tags$style(type = "text/css", "body {padding-top: 80px;}")
     ),
 
-    # footer = tagList(
-    #   tags$footer(
-    #     htmltools::HTML("<img src='pics/hancock-lab-logo.svg'"),
-    #     style = "width: 99%; padding-left: 2%; box-sizing: border-box;"
-    #   )
-    # ),
-
-
     ### Welcome tab/landing page
     tabPanel(
       title = "MetaBridge",
@@ -541,8 +533,7 @@ server <- function(input, output, session) {
     databaseChosen(NULL)
   }, ignoreInit = TRUE, ignoreNULL = TRUE)
 
-  # Read file when any of (fileInput, checkboxInput, radioButtons) states
-  # change.
+  # Read file when any of (fileInput, checkboxInput, radioButtons) states change.
   observeEvent({
     input$metaboliteUpload
     input$sep
@@ -644,8 +635,6 @@ server <- function(input, output, session) {
         "using <b>HMDB</b> or <b>KEGG</b>, as these will yield the best results.",
         "Ensure the ID selected here matches the highlighted column."
       )),
-
-      # tags$br(),
 
       selectInput(
         inputId   = "idType",
@@ -768,7 +757,7 @@ server <- function(input, output, session) {
   ############################# End ##############################
 
 
-  # THREE STEP RENDER PROCESS - PART 1
+  # THREE STEP RENDER PROCESS, PART 1 - MAPPING SUMMARY TABLE
   # 1. Generate Table from `generateTables.R::generateSummaryTable()`, depending
   #    only on the mapButton click.
   # 2. Render the generated table with DT::renderDataTable(). This is separate
@@ -846,7 +835,7 @@ server <- function(input, output, session) {
   ############################# End ##############################
 
 
-  # THREE STEP RENDER PROCESS - PART 2
+  # THREE STEP RENDER PROCESS, PART 2 - METABOLITE SPECIFIC TABLE
   # 1. Generate Table from `generateTables.R::generateSummaryTable()`, depending
   #    only on the mapButton click.
   # 2. Render the generated table with DT::renderDataTable(). This is separate
@@ -952,6 +941,10 @@ server <- function(input, output, session) {
       DT::dataTableOutput("mappedMetaboliteTable")
     )
   })
+
+
+  ############################# End ##############################
+
 
   # Watch for the "Try Again" button that will be rendered if an error occurs in
   # the mapping.
@@ -1248,6 +1241,7 @@ server <- function(input, output, session) {
       alt = paste0("Pathway map of KEGG Pathway ", input$pathwaysPicked)
     ))
   }, deleteFile = TRUE)
+
 
   # Render entire UI for `vizPanel`.
   output$vizPanelUI <- renderUI({
