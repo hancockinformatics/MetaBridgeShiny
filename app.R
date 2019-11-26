@@ -176,10 +176,13 @@ ui <- fluidPage(
           )
         )
       ),
-      # Separate div to include the lab logo below the main section
+      # Separate div to include the lab logo below the main section. Also made
+      # into a clickable link!
       tags$div(
         style = "padding-top: 7vw; padding-bottom: 10px",
-        tags$footer(htmltools::HTML("<img src='pics/hancock-lab-logo.svg'"))
+        tags$footer(htmltools::HTML(
+          "<a href = 'http://cmdr.ubc.ca/bobh/'> <img src = 'pics/hancock-lab-logo.svg'"
+        ))
       )
     ),
 
@@ -394,21 +397,18 @@ ui <- fluidPage(
               " at The University of British Columbia, and published in",
               tags$em("Bioinformatics"),
               " (doi: ",
-
               tags$a(
                 href = "https://doi.org/10.1093/bioinformatics/bty331",
                 "10.1093/bioinformatics/bty331",
                 .noWS = "after"
               ),
-              "). Please cite this paper when using MetaBridge in your analyses.",
-
+              "). Please cite this paper when using MetaBridge in your analyses."
             ),
 
             tags$p(
               "For help, you can post an issue at the ",
-              tags$a(href = "https://github.com/travis-m-blimkie/MetaBridgeShiny", "Github page.")
+              tags$a(href = "https://github.com/travis-m-blimkie/MetaBridgeShiny", "Github page."),
             ),
-            tags$br(),
 
             tags$p("MetaBridge uses the following databases and R packages:"),
 
