@@ -181,7 +181,7 @@ ui <- fluidPage(
       tags$div(
         style = "padding-top: 7vw; padding-bottom: 10px",
         tags$footer(htmltools::HTML(
-          "<a href = 'http://cmdr.ubc.ca/bobh/'> <img src = 'pics/hancock-lab-logo.svg'"
+          "<a href='http://cmdr.ubc.ca/bobh/'> <img src = 'pics/hancock-lab-logo.svg'> </a>"
         ))
       )
     ),
