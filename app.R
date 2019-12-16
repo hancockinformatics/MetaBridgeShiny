@@ -398,7 +398,7 @@ ui <- fluidPage(
 
             tags$p(
               "For help, you can post an issue at the ",
-              tags$a(href = "https://github.com/travis-m-blimkie/MetaBridgeShiny", "Github page."),
+              tags$a(href = "https://github.com/hancockinformatics/MetaBridgeShiny", "Github page."),
             ),
 
             tags$p("MetaBridge uses the following databases and R packages:"),
