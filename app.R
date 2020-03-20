@@ -678,7 +678,11 @@ server <- function(input, output, session) {
     }
   })
 
-  observeEvent(input$uploadedDataTable_columns_selected, {
+  observeEvent({
+  	input$uploadedDataTable_columns_selected
+  	input$sep
+  	input$header
+  	}, {
     # DataTables indexes by 0, so we add one...
     columnIndex <- input$uploadedDataTable_columns_selected + 1
     # ...then pick the column name!
