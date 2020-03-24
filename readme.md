@@ -1,4 +1,4 @@
-[<img src="www/logo_light_hex.svg" align="right"  height="120px"/>](https://metabridge.org)
+[<img src="www/logo_light_hex.png" align="right"  height="120px"/>](https://metabridge.org)
 
 # **MetaBridge**
 
