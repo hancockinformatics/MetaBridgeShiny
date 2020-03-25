@@ -10,6 +10,12 @@ MetaBridge is a [Shiny](https://shiny.rstudio.com/)-based data integration
 system for integration of metabolomics data with other omics types, chiefly
 transcriptomics and proteomics.
 
+## **Publications**
+
+* MetaBridge: An Integrative Multi‐Omics Tool for Metabolite‐Enzyme Mapping. *Current Protocols in Bioinformatics.* doi: [10.1002/cpbi.98](https://doi.org/10.1002/cpbi.98)
+
+* MetaBridge: enabling network-based integrative analysis via direct protein interactors of metabolites. *Bioinformatics.* doi: [10.1093.bioinformatics/bty331](https://doi.org/10.1093/bioinformatics/bty331)
+
 ## **Usage**
 
 MetaBridge is designed to facilitate integrative analysis by identifying the
