@@ -122,7 +122,8 @@ ui <- fluidPage(
           tags$p(
             "Click the button below to Get Started! If you'd like to learn more ",
             "about how MetaBridge can be used, check the Tutorial. For more ",
-            "information, refer to the About page."
+            "information, or how to get help if you run into an error, ",
+            "refer to the About page."
           ),
 
           tags$br(),
@@ -417,7 +418,7 @@ ui <- fluidPage(
 
             tags$p(
               "For help, you can post an issue at the ",
-              tags$a(href = "https://github.com/hancockinformatics/MetaBridgeShiny", "Github page."),
+              tags$a(href = "https://github.com/hancockinformatics/MetaBridgeShiny/issues", "Github page."),
             ),
 
             tags$p("MetaBridge uses the following databases and R packages:"),
