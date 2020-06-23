@@ -112,7 +112,7 @@ mapMetaCyc <- function(importDF, col, idType) {
     } else {
       # Otherwise proceed as normal
       this <- inner_join(mappingDF$data, metaCycDBLinks, by = idType) %>%
-        select(all_of(idType), Compound, HMDB, KEGG) %>% # here
+        select(idType, Compound, HMDB, KEGG) %>%
         rename("compound" = Compound)
     }
 
@@ -263,7 +263,7 @@ mapMetaCyc <- function(importDF, col, idType) {
       by = c("MetaCyc Gene" = "geneID")
     ) %>%
       select(
-        all_of(idType), # here
+        idType,
         Compound,
         HMDB,
         KEGG,
@@ -504,7 +504,7 @@ mapKEGG <- function(importDF, col, idType) {
              "Gene Name" = symbol,
              "Entrez" = entrez) %>%
       select(KEGG,  # Use select to reorder
-             all_of(idType), # here
+             idType,
              Compound,
              Enzyme,
              `Enzyme Name`,
@@ -592,8 +592,7 @@ mapGenerally <- function(importDF, col, db, idType) {
     mappingAlert(status = "error",
                  message = paste0("Something went wrong when mapping your metabolites, ",
                                   "probably an error with the database parameter."),
-                 suggest = c("Please see the About page for a link to Github, ",
-                             "where you can submit an issue to get help."))
+                 suggest = "Please tweet to us to report this issue!")
   }
 
 
