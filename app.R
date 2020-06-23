@@ -639,7 +639,8 @@ server <- function(input, output, session) {
         inputId   = "idType",
         label     = "ID Type",
         width     = "50%",
-        choices   = c("HMDB", "KEGG", "PubChem", "CAS", "MetaCyc Object ID" = "Compound"),
+        # choices   = c("HMDB", "KEGG", "PubChem", "CAS", "MetaCyc Object ID" = "Compound"),
+        choices   = c("HMDB", "KEGG"),
         selected  = preSelectedIDType(),
         selectize = FALSE
       ),
