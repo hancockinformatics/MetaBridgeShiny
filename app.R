@@ -172,6 +172,7 @@ ui <- fluidPage(
       # into a clickable link!
       tags$div(
         style = "padding-top: 5vw; padding-bottom: 10px; padding-right: 10px",
+        # style = "position: fixed; bottom: 0; padding-top: 10px; padding-bottom: 10px; padding-right: 10px",
         tags$footer(htmltools::HTML(
           "<a href='http://cmdr.ubc.ca/bobh/'> <img src = 'pics/hancock-lab-logo.svg'> </a>"
         ))
@@ -394,6 +395,25 @@ ui <- fluidPage(
                 .noWS = "after"
               ),
               "). Please cite this paper when using MetaBridge in your analyses."
+            ),
+
+            tags$p(
+              "We also have a step-by-step guide on how to use MetaBridge ",
+              "published in ", tags$em("Current Protocols in Bioinformatics."),
+              "This includes how to process data prior to uploading to ",
+              "MetaBridge, as well as an example on building a protein-protein ",
+              "interaction (PPI) network from MetaBridge results using ",
+              tags$a(
+                href = "https://networkanalyst.ca",
+                "NetworkAnalyst"
+              ),
+              ". The full protocol is available at doi: ",
+              tags$a(
+                href = "https://doi.org/10.1002/cpbi.98",
+                "10.1002/cpbi.98",
+                .noWS = "after"
+              ),
+              "."
             ),
 
             tags$p(
