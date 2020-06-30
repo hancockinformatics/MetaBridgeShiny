@@ -6,8 +6,8 @@
 
 ## **Description**
 
-MetaBridge is a [Shiny](https://shiny.rstudio.com/)-based data integration
-system for integration of metabolomics data with other omics types, chiefly
+MetaBridge is a [Shiny](https://shiny.rstudio.com/)-based application for 
+integration of metabolomics data with other omics types, chiefly
 transcriptomics and proteomics.
 
 ## **Publications**
