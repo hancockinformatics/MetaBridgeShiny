@@ -112,7 +112,7 @@ mapMetaCyc <- function(importDF, col, idType) {
     } else {
       # Otherwise proceed as normal
       this <- inner_join(mappingDF$data, metaCycDBLinks, by = idType) %>%
-        select(idType, Compound, HMDB, KEGG) %>%
+        select(all_of(idType), Compound, HMDB, KEGG) %>% # here
         rename("compound" = Compound)
     }
 
@@ -263,7 +263,7 @@ mapMetaCyc <- function(importDF, col, idType) {
       by = c("MetaCyc Gene" = "geneID")
     ) %>%
       select(
-        idType,
+        all_of(idType),
         Compound,
         HMDB,
         KEGG,
@@ -441,9 +441,12 @@ mapKEGG <- function(importDF, col, idType) {
     # Mapping if using KEGG IDs
   } else if (idType == "KEGG") {
 
+    keggToHMDB <- metaCycDBLinks %>% select(KEGG, HMDB) %>% drop_na(KEGG)
+
     # Join compound name (to be scraped) to compound IDs here. Name the column
     # 'Compound'
-    this <- left_join(mappingDF$data, keggCompounds, by = "KEGG")
+    this <- left_join(mappingDF$data, keggCompounds, by = "KEGG") %>%
+      left_join(., keggToHMDB, by = "KEGG")
 
     keggIDs <- list(status = "success",
                     data = this,
@@ -504,7 +507,8 @@ mapKEGG <- function(importDF, col, idType) {
              "Gene Name" = symbol,
              "Entrez" = entrez) %>%
       select(KEGG,  # Use select to reorder
-             idType,
+             HMDB,
+             # all_of(idType),
              Compound,
              Enzyme,
              `Enzyme Name`,
