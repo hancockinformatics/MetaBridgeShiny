@@ -2,7 +2,7 @@
 # Load the first couple libraries -----------------------------------------
 
 # Most libraries and functions are loaded through a call to `deferred.R` at the
-# beginning of the `server()` function (#429).
+# beginning of the `server()` function (approx. #488).
 library(shiny)
 library(shinyjs)
 
