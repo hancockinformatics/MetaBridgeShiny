@@ -99,7 +99,7 @@ ui <- fluidPage(
           ),
           tags$p(
             "To start, you'll want a set of metabolites as",
-            "HMDB, KEGG, PubChem, or CAS IDs. We recommend",
+            "HMDB or KEGG IDs. We recommend",
             tags$a("MetaboAnalyst", href = "http://www.metaboanalyst.ca"),
             "for metabolomics data processing, as well as ID conversion ",
             "if you have only compound names."
@@ -122,7 +122,8 @@ ui <- fluidPage(
           tags$p(
             "Click the button below to Get Started! If you'd like to learn more ",
             "about how MetaBridge can be used, check the Tutorial. For more ",
-            "information, refer to the About page."
+            "information, including where to report bugs or other problems, ",
+            "please refer to the About page."
           ),
 
           tags$br(),
@@ -171,11 +172,11 @@ ui <- fluidPage(
       # Separate div to include the lab logo below the main section. Also made
       # into a clickable link!
       tags$div(
-        style = "padding-top: 5vw; padding-bottom: 10px; padding-right: 10px",
-        # style = "position: fixed; bottom: 0; padding-top: 10px; padding-bottom: 10px; padding-right: 10px",
-        tags$footer(htmltools::HTML(
-          "<a href='http://cmdr.ubc.ca/bobh/'> <img src = 'pics/hancock-lab-logo.svg'> </a>"
-        ))
+        style = "padding: 10px; float: right;",
+        # style = "position: fixed; bottom: 0; padding: 10px;",
+        htmltools::HTML(
+          "<a href='http://cmdr.ubc.ca/bobh/'> <img src = 'pics/hancock-lab-logo-2.svg'> </a>"
+        )
       )
     ),
 
