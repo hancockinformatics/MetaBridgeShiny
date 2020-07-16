@@ -1,4 +1,4 @@
-[<img src="www/logo_light_hex.png" align="right"  height="120px"/>](https://metabridge.org)
+[<img src="www/logo_blue_small.svg" align="right"  height="100px"/>](https://metabridge.org)
 
 # **MetaBridge**
 
@@ -12,9 +12,9 @@ transcriptomics and proteomics.
 
 ## **Publications**
 
-* MetaBridge: An Integrative Multi‐Omics Tool for Metabolite‐Enzyme Mapping. *Current Protocols in Bioinformatics.* doi: [10.1002/cpbi.98](https://doi.org/10.1002/cpbi.98)
-
 * MetaBridge: enabling network-based integrative analysis via direct protein interactors of metabolites. *Bioinformatics.* doi: [10.1093.bioinformatics/bty331](https://doi.org/10.1093/bioinformatics/bty331)
+
+* MetaBridge: An Integrative Multi‐Omics Tool for Metabolite‐Enzyme Mapping. *Current Protocols in Bioinformatics.* doi: [10.1002/cpbi.98](https://doi.org/10.1002/cpbi.98)
 
 ## **Usage**
 
@@ -28,6 +28,9 @@ may be designed as such:
 ## **Tutorial**
 
 To learn how to use MetaBridge as part of a network-based integrative analysis
-workflow, please read our [tutorial](./tutorial/tutorial.md).
+workflow, please read our [tutorial](./tutorial/tutorial.md). For a more
+detailed guide on using MetaBridge you can read our
+[publication](https://doi.org/10.1002/cpbi.98) in *Current Protocols in
+Bioinformatics*.
 
 <br>
