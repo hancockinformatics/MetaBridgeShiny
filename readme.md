@@ -23,7 +23,7 @@ enzymes that directly interact with metabolites of interest, yielding genes
 which may then be integrated with results from other omics methods. A pipeline
 may be designed as such:
 
-![](./figure_colour_v5.svg)
+![](./figure_colour_v5.png)
 
 ## **Tutorial**
 
