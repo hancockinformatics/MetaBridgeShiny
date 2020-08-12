@@ -41,6 +41,6 @@ This app utilizes SemVer as outlined [here](https://semver.org/spec/v2.0.0.html)
 
 <br>
 
-[<img src="www/hancock-lab-logo-2.svg" align="right"/>]()
+[<img src="www/hancock-lab-logo-2.svg" align="right"/>](http://cmdr.ubc.ca/bobh/)
 
 <br>
