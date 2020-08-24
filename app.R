@@ -6,6 +6,9 @@
 library(shiny)
 library(shinyjs)
 
+# Get current git branch
+branch <- git2r::repository_head() %>% unclass() %>% purrr::pluck("name")
+
 
 # Useful colours which match the flatly theme:
 # Dark blue     #2c3e50
@@ -402,12 +405,13 @@ ui <- fluidPage(
               "published in ", tags$em("Current Protocols in Bioinformatics."),
               "This includes how to process data prior to uploading to ",
               "MetaBridge, as well as an example on building a protein-protein ",
-              "interaction (PPI) network from MetaBridge results using ",
+              "interaction (PPI) network from MetaBridge results using",
               tags$a(
                 href = "https://networkanalyst.ca",
-                "NetworkAnalyst"
+                "NetworkAnalyst",
+                .noWS = "after"
               ),
-              ". The full protocol is available at doi: ",
+              ". The full protocol is available at doi:",
               tags$a(
                 href = "https://doi.org/10.1002/cpbi.98",
                 "10.1002/cpbi.98",
@@ -417,8 +421,12 @@ ui <- fluidPage(
             ),
 
             tags$p(
-              "For help, you can post an issue at the ",
-              tags$a(href = "https://github.com/hancockinformatics/MetaBridgeShiny", "Github page."),
+              "This version of the app is based on the", tags$b(branch),
+              "Github branch. For help, you can post an issue at the ",
+              tags$a(
+                href = "https://github.com/hancockinformatics/MetaBridgeShiny/issues",
+                "Github page."
+              ),
             ),
 
             tags$p("MetaBridge uses the following databases and R packages:"),
