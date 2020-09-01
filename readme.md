@@ -33,14 +33,10 @@ Bioinformatics*.
 
 ## **Authors**
 MetaBridge was developed by Sam Hinshaw, as part of his work at the REW Hancock
-Lab at the University of British Columbia. Further refinements and updates were
-done by Travis Blimkie, also a member of the REW Hancock Lab.
+Lab at the University of British Columbia. Further updates and ongoing 
+maintenance are done by Travis Blimkie, also a member of the REW Hancock Lab.
 
 ## **Versioning**
 This app utilizes SemVer as outlined [here](https://semver.org/spec/v2.0.0.html).
 
-<br>
-
 [<img src="www/hancock-lab-logo-2.svg" align="right"/>](http://cmdr.ubc.ca/bobh/)
-
-<br>
