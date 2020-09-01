@@ -6,10 +6,6 @@
 library(shiny)
 library(shinyjs)
 
-# Get current git branch
-branch <- git2r::repository_head() %>% unclass() %>% purrr::pluck("name")
-
-
 # Useful colours which match the flatly theme:
 # Dark blue     #2c3e50
 # Turquoise     #18bc9c
@@ -17,7 +13,6 @@ branch <- git2r::repository_head() %>% unclass() %>% purrr::pluck("name")
 # DT blue       #0075b0
 # Grey          #ecf0f1
 # White         #fff
-
 
 # TODO Need to run these lines each time app is published so packages from
 # Bioconductor can be found by Shiny.
@@ -234,7 +229,7 @@ ui <- fluidPage(
             inputId = "tryExamples",
             class = "btn btn-link btn-med btn-tooltip",
             `data-position` = "right",
-            label = tags$b("Try Examples"),
+            label = tags$b("Try Example"),
             style = "font-size:110%",
             title = "Try an example dataset from MetaboAnalyst"
           )
@@ -421,8 +416,8 @@ ui <- fluidPage(
             ),
 
             tags$p(
-              "This version of the app is based on the", tags$b(branch),
-              "Github branch. For help, you can post an issue at the ",
+              "If you encounter any bugs or run into other troubles, you can ",
+              "post an issue at the ",
               tags$a(
                 href = "https://github.com/hancockinformatics/MetaBridgeShiny/issues",
                 "Github page."
