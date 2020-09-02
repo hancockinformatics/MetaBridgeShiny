@@ -4,17 +4,22 @@
 
 <br>
 
-MetaBridge is a [Shiny](https://shiny.rstudio.com/)-based application for 
+MetaBridge is a [Shiny](https://shiny.rstudio.com/)-based application for
 integration of metabolomics data with other omics data types, chiefly
-transcriptomics and proteomics. It leverages publicly available data from
-both [MetaCyc](https://metacyc.org/) and [KEGG](https://www.genome.jp/kegg/) to map input metabolites to genes, through pathways
-and reactions in which the metabolite is involved.
+transcriptomics and proteomics. It leverages publicly available data from both
+[MetaCyc](https://metacyc.org/) and [KEGG](https://www.genome.jp/kegg/) to map
+input metabolites to genes, through pathways and reactions in which the
+metabolite is involved.
 
 ## **Publications**
 
-* MetaBridge: enabling network-based integrative analysis via direct protein interactors of metabolites. *Bioinformatics.* doi: [10.1093.bioinformatics/bty331](https://doi.org/10.1093/bioinformatics/bty331)
+* MetaBridge: enabling network-based integrative analysis via direct protein
+interactors of metabolites. 2018. *Bioinformatics.* doi:
+[10.1093.bioinformatics/bty331](https://doi.org/10.1093/bioinformatics/bty331)
 
-* MetaBridge: An Integrative Multi‐Omics Tool for Metabolite‐Enzyme Mapping. *Current Protocols in Bioinformatics.* doi: [10.1002/cpbi.98](https://doi.org/10.1002/cpbi.98)
+* MetaBridge: An Integrative Multi‐Omics Tool for Metabolite‐Enzyme Mapping.
+2020. *Current Protocols in Bioinformatics.* doi:
+[10.1002/cpbi.98](https://doi.org/10.1002/cpbi.98)
 
 ## **Usage**
 MetaBridge is designed to facilitate integrative analysis by identifying the
@@ -35,8 +40,5 @@ Bioinformatics*.
 MetaBridge was developed by Sam Hinshaw, as part of his work at the REW Hancock
 Lab at the University of British Columbia. Further updates and ongoing 
 maintenance are done by Travis Blimkie, also a member of the REW Hancock Lab.
-
-## **Versioning**
-This app utilizes SemVer as outlined [here](https://semver.org/spec/v2.0.0.html).
 
 [<img src="www/hancock-lab-logo-2.svg" align="right"/>](http://cmdr.ubc.ca/bobh/)
