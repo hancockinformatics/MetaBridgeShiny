@@ -17,8 +17,8 @@
    height="8.8908453in"
    inkscape:version="0.92.3 (2405546, 2018-03-11)"
    inkscape:export-filename="/home/travis/Documents/Repositories/MetaBridgeShiny/www/logo_light_hex.png"
-   inkscape:export-xdpi="96"
-   inkscape:export-ydpi="96">
+   inkscape:export-xdpi="200"
+   inkscape:export-ydpi="200">
   <metadata
      id="metadata11">
     <rdf:RDF>
@@ -44,9 +44,9 @@
      inkscape:window-height="710"
      id="namedview9"
      showgrid="false"
-     inkscape:zoom="0.44354728"
-     inkscape:cx="708.08332"
-     inkscape:cy="334.11224"
+     inkscape:zoom="0.31363529"
+     inkscape:cx="-252.15408"
+     inkscape:cy="364.96577"
      inkscape:window-x="37"
      inkscape:window-y="22"
      inkscape:window-maximized="1"
@@ -87,30 +87,10 @@
        x2="27.534374"
        y2="31.066019"
        gradientUnits="userSpaceOnUse" />
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient831"
-       id="linearGradient836"
-       gradientUnits="userSpaceOnUse"
-       x1="14.594593"
-       y1="53.498386"
-       x2="23.707123"
-       y2="37.90189"
-       gradientTransform="matrix(8.1783917,0,0,8.1633789,-424.24587,-649.9029)" />
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient831"
-       id="linearGradient836-1"
-       gradientUnits="userSpaceOnUse"
-       x1="14.594593"
-       y1="53.498386"
-       x2="25.331261"
-       y2="35.21508"
-       gradientTransform="matrix(8.1783917,0,0,8.1633789,-218.19498,462.48688)" />
   </defs>
   <path
      sodipodi:type="star"
-     style="opacity:1;fill:#2c3e50;fill-opacity:1;stroke:none;stroke-width:0.89318466;stroke-linecap:butt;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+     style="opacity:1;fill:#18bc9c;fill-opacity:1;stroke:none;stroke-width:0.89318466;stroke-linecap:butt;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
      id="path818"
      sodipodi:sides="6"
      sodipodi:cx="-51.023994"
@@ -125,20 +105,8 @@
      d="M -20.135908,40.380665 -50.98652,58.235545 -81.874607,40.445571 -81.912081,4.8007166 -51.061468,-13.054164 -20.173382,4.7358097 Z"
      transform="matrix(11.218509,0,0,11.173322,943.94422,174.10066)" />
   <path
-     transform="rotate(149.46237)"
-     d="m -452.77541,-473.28333 a 297.26855,299.84799 0 0 1 298.14297,1.38166 297.26855,299.84799 0 0 1 147.0014523,261.63787 l -297.2545423,-2.91149 z"
-     sodipodi:end="0.0097100359"
-     sodipodi:start="4.1916793"
-     sodipodi:ry="299.84799"
-     sodipodi:rx="297.26855"
-     sodipodi:cy="-213.17529"
-     sodipodi:cx="-304.88553"
-     sodipodi:type="arc"
-     id="path825"
-     style="opacity:0.25;fill:url(#linearGradient836);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;stroke-linecap:butt;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
-  <path
      sodipodi:type="star"
-     style="opacity:1;fill:none;fill-opacity:1;stroke:#0e151a;stroke-width:2.1560638;stroke-linecap:butt;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+     style="opacity:0.99;fill:none;fill-opacity:1;stroke:#2c3e50;stroke-width:2.1560638;stroke-linecap:butt;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
      id="path818-8"
      sodipodi:sides="6"
      sodipodi:cx="-51.023994"
@@ -152,21 +120,9 @@
      inkscape:randomized="0"
      d="M -20.135908,40.380665 -50.98652,58.235545 -81.874607,40.445571 -81.912081,4.8007166 -51.061468,-13.054164 -20.173382,4.7358097 Z"
      transform="matrix(11.621901,0,0,11.568569,964.51048,165.41859)" />
-  <path
-     transform="rotate(-30.53763)"
-     d="M -246.72456,639.1065 A 297.26855,299.84799 0 0 1 51.418412,640.48816 297.26855,299.84799 0 0 1 198.41986,902.12603 L -98.834679,899.21454 Z"
-     sodipodi:end="0.0097100359"
-     sodipodi:start="4.1916793"
-     sodipodi:ry="299.84799"
-     sodipodi:rx="297.26855"
-     sodipodi:cy="899.21454"
-     sodipodi:cx="-98.834679"
-     sodipodi:type="arc"
-     id="path825-0"
-     style="opacity:0.25;fill:url(#linearGradient836-1);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;stroke-linecap:butt;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
   <g
      id="g845"
-     transform="translate(16.61783,50.662311)">
+     transform="translate(19.717838,54.088539)">
     <path
        style="fill:#ffffff;stroke-width:0.99999976"
        inkscape:connector-curvature="0"
@@ -176,13 +132,13 @@
     <text
        transform="scale(1.0019671,0.99803677)"
        id="text830"
-       y="533.61865"
-       x="11.425523"
-       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:102.30875397px;line-height:1.25;font-family:'DejaVu Serif';-inkscape-font-specification:'DejaVu Serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:0.99999982"
+       y="552.59717"
+       x="14.012386"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:124.62123108px;line-height:1.25;font-family:'Font Awesome 5 Free';-inkscape-font-specification:'Font Awesome 5 Free, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none"
        xml:space="preserve"><tspan
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:102.30875397px;font-family:'DejaVu Serif';-inkscape-font-specification:'DejaVu Serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;stroke:#ffffff;stroke-width:0.99999982"
-         y="533.61865"
-         x="11.425523"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:124.62123108px;font-family:'Font Awesome 5 Free';-inkscape-font-specification:'Font Awesome 5 Free, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;stroke:#ffffff;stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none"
+         y="552.59717"
+         x="14.012386"
          id="tspan828"
          sodipodi:role="line">MetaBridge</tspan></text>
   </g>

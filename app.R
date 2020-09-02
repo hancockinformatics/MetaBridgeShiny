@@ -2,10 +2,9 @@
 # Load the first couple libraries -----------------------------------------
 
 # Most libraries and functions are loaded through a call to `deferred.R` at the
-# beginning of the `server()` function (#429).
+# beginning of the `server()` function (approx. #488).
 library(shiny)
 library(shinyjs)
-
 
 # Useful colours which match the flatly theme:
 # Dark blue     #2c3e50
@@ -14,7 +13,6 @@ library(shinyjs)
 # DT blue       #0075b0
 # Grey          #ecf0f1
 # White         #fff
-
 
 # TODO Need to run these lines each time app is published so packages from
 # Bioconductor can be found by Shiny.
@@ -99,7 +97,7 @@ ui <- fluidPage(
           ),
           tags$p(
             "To start, you'll want a set of metabolites as",
-            "HMDB, KEGG, PubChem, or CAS IDs. We recommend",
+            "HMDB or KEGG IDs. We recommend",
             tags$a("MetaboAnalyst", href = "http://www.metaboanalyst.ca"),
             "for metabolomics data processing, as well as ID conversion ",
             "if you have only compound names."
@@ -122,7 +120,8 @@ ui <- fluidPage(
           tags$p(
             "Click the button below to Get Started! If you'd like to learn more ",
             "about how MetaBridge can be used, check the Tutorial. For more ",
-            "information, refer to the About page."
+            "information, including where to report bugs or other problems, ",
+            "please refer to the About page."
           ),
 
           tags$br(),
@@ -171,11 +170,10 @@ ui <- fluidPage(
       # Separate div to include the lab logo below the main section. Also made
       # into a clickable link!
       tags$div(
-        style = "padding-top: 5vw; padding-bottom: 10px; padding-right: 10px",
-        # style = "position: fixed; bottom: 0; padding-top: 10px; padding-bottom: 10px; padding-right: 10px",
-        tags$footer(htmltools::HTML(
-          "<a href='http://cmdr.ubc.ca/bobh/'> <img src = 'pics/hancock-lab-logo.svg'> </a>"
-        ))
+        style = "position: fixed; bottom: 0px; padding-bottom: 10px;",
+        htmltools::HTML(
+          "<a href='http://cmdr.ubc.ca/bobh/'> <img src='pics/hancock-lab-logo-2.svg'> </a>"
+        )
       )
     ),
 
@@ -231,7 +229,7 @@ ui <- fluidPage(
             inputId = "tryExamples",
             class = "btn btn-link btn-med btn-tooltip",
             `data-position` = "right",
-            label = tags$b("Try Examples"),
+            label = tags$b("Try Example"),
             style = "font-size:110%",
             title = "Try an example dataset from MetaboAnalyst"
           )
@@ -402,12 +400,13 @@ ui <- fluidPage(
               "published in ", tags$em("Current Protocols in Bioinformatics."),
               "This includes how to process data prior to uploading to ",
               "MetaBridge, as well as an example on building a protein-protein ",
-              "interaction (PPI) network from MetaBridge results using ",
+              "interaction (PPI) network from MetaBridge results using",
               tags$a(
                 href = "https://networkanalyst.ca",
-                "NetworkAnalyst"
+                "NetworkAnalyst",
+                .noWS = "after"
               ),
-              ". The full protocol is available at doi: ",
+              ". The full protocol is available at doi:",
               tags$a(
                 href = "https://doi.org/10.1002/cpbi.98",
                 "10.1002/cpbi.98",
@@ -417,8 +416,12 @@ ui <- fluidPage(
             ),
 
             tags$p(
-              "For help, you can post an issue at the ",
-              tags$a(href = "https://github.com/hancockinformatics/MetaBridgeShiny", "Github page."),
+              "If you encounter any bugs or run into other troubles, you can ",
+              "post an issue at the ",
+              tags$a(
+                href = "https://github.com/hancockinformatics/MetaBridgeShiny/issues",
+                "Github page."
+              ),
             ),
 
             tags$p("MetaBridge uses the following databases and R packages:"),
