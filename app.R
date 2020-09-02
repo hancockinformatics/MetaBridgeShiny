@@ -23,7 +23,7 @@ library(shinyjs)
 # Define UI part of the app -----------------------------------------------
 
 # Workaround to ensure logo in top left corner (tab bar) is found/rendered when
-# app is published.
+# app is published to ShinyAppsIO.
 addResourcePath(prefix = "pics", directoryPath = "./www")
 
 ui <- fluidPage(
@@ -40,20 +40,7 @@ ui <- fluidPage(
     tags$link(rel = "icon", type = "image/png", sizes = "16x16", href = "/favicon-16x16.png"),
     tags$link(rel = "manifest", href = "/manifest.json"),
     tags$link(rel = "mask-icon", href = "/safari-pinned-tab.svg", color = "#303e4e"),
-    tags$meta(name = "theme-color", content = "#303e4e"),
-
-    HTML(
-      "<!-- Global site tag (gtag.js) - Google Analytics -->
-      <script async src='https://www.googletagmanager.com/gtag/js?id=UA-123892284-1'></script>
-      <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'UA-123892284-1');
-      </script>
-      "
-    )
+    tags$meta(name = "theme-color", content = "#303e4e")
   ),
 
   ### Begin the tab bar layout
@@ -1333,7 +1320,8 @@ server <- function(input, output, session) {
         tags$div(
           class = "col-sm-9",
           tags$h2("Pathway View", class = "tab-header"),
-          imageOutput("pathwayView") %>% withSpinner(type = 8, color = "#303E4E")
+          imageOutput("pathwayView") %>% withSpinner(type = 8, color = "#303E4E"),
+          tags$br()
         )
       )
     }
