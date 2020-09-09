@@ -157,7 +157,7 @@ ui <- fluidPage(
       # Separate div to include the lab logo below the main section. Also made
       # into a clickable link!
       tags$div(
-        style = "position: fixed; bottom: 0px; padding-bottom: 10px;",
+        style = "padding-top: 90px; padding-bottom: 5px;",
         htmltools::HTML(
           "<a href='http://cmdr.ubc.ca/bobh/'> <img src='pics/hancock-lab-logo-2.svg'> </a>"
         )
