@@ -232,7 +232,7 @@ hyperlinkTable <- function(table, dbChosen) {
       ))
   }
 
-  # Compund names and MetaCyc database
+  # Compound names and MetaCyc database
   if ("Compound" %in% colnames(table) && dbChosen == "MetaCyc") {
     table <- table %>%
       mutate(Compound = paste0(

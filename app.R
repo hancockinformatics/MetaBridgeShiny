@@ -45,9 +45,11 @@ ui <- fluidPage(
 
   ### Begin the tab bar layout
   navbarPage(
-    title = htmltools::HTML("<img src='pics/logo_white.svg' alt='' height='28'"), # <sup class='tiny'>BETA</sup>
-    id = "navbarLayout",
-    position = "fixed-top",
+    title       = htmltools::HTML(
+      "<img src='pics/logo_white.svg' alt='' height='28'"
+    ),
+    id          = "navbarLayout",
+    position    = "fixed-top",
     windowTitle = "MetaBridge",
     collapsible = TRUE,
 
@@ -132,11 +134,11 @@ ui <- fluidPage(
             # Linking to the Tutorials page
             actionButton(
               inputId = "tutorial",
-              label = "Tutorial",
-              class = "btn-success btn-lg btn-tooltip btn-hidden", # btn-tooltip
-              `data-position` = "bottom",
-              style = "width: 155px",
-              title = "Learn how to use MetaBridge for integrative analysis."
+              label   = "Tutorial",
+              class   = "btn-success btn-lg btn-tooltip btn-hidden", # btn-tooltip
+              style   = "width: 155px",
+              title   = "Learn how to use MetaBridge for integrative analysis.",
+              `data-position` = "bottom"
             ),
 
             # Horizontal spacer
@@ -368,9 +370,11 @@ ui <- fluidPage(
             class = "logoWrapper",
 
             tags$p(
-              "MetaBridge was designed by Samuel Hinshaw and Travis Blimkie at the ",
-              tags$a(href = "http://cmdr.ubc.ca/bobh/",
-                     "Centre for Microbial Diseases and Immunity Research"),
+              "MetaBridge was designed by Samuel Hinshaw & Travis Blimkie at the ",
+              tags$a(
+                href = "http://cmdr.ubc.ca/bobh/",
+                "Centre for Microbial Diseases and Immunity Research"
+              ),
               " at The University of British Columbia, and published in",
               tags$em("Bioinformatics"),
               " (doi: ",
@@ -477,9 +481,10 @@ ui <- fluidPage(
 server <- function(input, output, session) {
 
   # Wait for sessionInitialized to load packages. This does not have to be
-  # defined in your UI, as the input will be passed via Shiny.onInputChange()
+  # defined in your UI, as the input will be passed via `Shiny.onInputChange()`
   observeEvent(input$sessionInitialized, {
     source("deferred.R")
+
     # After packages loaded, run button transform to signal ready states.
     runjs("handlers.initGetStarted();")
   }, ignoreNULL = TRUE, ignoreInit = TRUE, once = TRUE)
@@ -633,8 +638,8 @@ server <- function(input, output, session) {
   })
 
   # This has to be rendered separately from the column picker panel. Otherwise,
-  # the entire column picker panel has to be re-rendered when the preselected ID
-  # type gets updated, which resets the entire panel, which reverts to the
+  # the entire column picker panel has to be re-rendered when the preselected
+  # ID type gets updated, which resets the entire panel, which reverts to the
   # preselected column, effectively making it impossible to switch columns!
   output$idSelector <- renderUI({
     tags$div(
@@ -642,13 +647,16 @@ server <- function(input, output, session) {
       tags$p(HTML(
         "Select the ID type you would like to use in the mapping. We recommend ",
         "using <b>HMDB</b> or <b>KEGG</b>, as these will yield the best results.",
-        "Ensure the ID selected here matches the highlighted column."
+        "Ensure the ID selected here matches the highlighted column before ",
+        "clicking the 'Proceed' button."
       )),
 
       selectInput(
         inputId   = "idType",
         label     = "ID Type",
         width     = "50%",
+        # Reduced the possible input ID types since HMDB and KEGG are the most
+        # reliable.
         # choices   = c("HMDB", "KEGG", "PubChem", "CAS", "MetaCyc Object ID" = "Compound"),
         choices   = c("HMDB", "KEGG"),
         selected  = preSelectedIDType(),
@@ -1045,7 +1053,7 @@ server <- function(input, output, session) {
   # Client-side JS to enable/disable "Visualize" tab! Also disables the
   # "Visualize" tab in the navbar when visualization is not possible. Make sure
   # that we have a tooltip explaining why the "Visualization" tab is disabled. A
-  # lot of this refers to code in `www/js/client.js`.
+  # lot of this refers to code in "www/js/client.js".
   observeEvent(input$mapButton, {
     if (databaseChosen() == "KEGG" & !is.null(selectedMetab())) {
       runjs("$(\"a[data-value='vizPanel']\").parent().removeClass('disabled');")
@@ -1221,7 +1229,7 @@ server <- function(input, output, session) {
         list(
           src = "./logo_background.svg",
           contentType = "image/svg",
-          width = 512,
+          width  = 512,
           height = 512,
           alt = "pathway placeholder"
         )
@@ -1244,7 +1252,7 @@ server <- function(input, output, session) {
       cpd = selectedRowAttrs$selectedCompound
     )
 
-    # Return a list containing the filename. Render image at 1000px and then
+    # Return a list containing the file name. Render image at 1000px and then
     # constrain image to `div` in CSS.
     return(list(
       src = filename,

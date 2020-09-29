@@ -66,7 +66,7 @@ source(file.path("functions", "alertFunctions.R"), local = TRUE)$value
 source(file.path("functions", "generateTables.R"), local = TRUE)$value
 
 
-# Set global DataTables options -------------------------------------------
+# Set global DT options ---------------------------------------------------
 
 options(
   DT.options = list(

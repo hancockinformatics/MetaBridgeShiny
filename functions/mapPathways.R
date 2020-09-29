@@ -49,9 +49,9 @@ mapKEGGPathways <- function(idType,
     magrittr::extract2("Gene Name")
 
   return(list(
-    "selectedCompound" = selectedMetab,
-    "selectedCompoundName" = selectedMetabName,
-    "genesOfSelectedCompound" = genesOfInterest,
+    "selectedCompound"           = selectedMetab,
+    "selectedCompoundName"       = selectedMetabName,
+    "genesOfSelectedCompound"    = genesOfInterest,
     "pathwaysOfSelectedCompound" = pathwaysOfInterest
   ))
 }
@@ -109,9 +109,9 @@ mapMetaCycPathways <- function(idType,
     dplyr::filter(reaction %in% !!(selectedReaction))
 
   return(list(
-    "selectedCompound" = selectedMetab,
-    "selectedCompoundName" = selectedMetabName,
-    "genesOfSelectedCompound" = genesOfInterest,
+    "selectedCompound"           = selectedMetab,
+    "selectedCompoundName"       = selectedMetabName,
+    "genesOfSelectedCompound"    = genesOfInterest,
     "pathwaysOfSelectedCompound" = pathwaysOfInterest
   ))
 }

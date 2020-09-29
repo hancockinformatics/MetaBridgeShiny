@@ -47,7 +47,7 @@ notEmpty <- function(vector) {
 #'
 matchHMDB <- function(hmdbID) {
 
-  # Make sure the ID is a character amd starts with 'HMDB' or 'hmdb' Look at the
+  # Make sure the ID is a character and starts with 'HMDB' or 'hmdb' Look at the
   # syntax very carefully here, the parentheses are IMPORTANT
   if (!is.character(hmdbID) | !(str_detect(hmdbID, "^HMDB") | str_detect(hmdbID, "^hmdb"))) {
     return(NA)
@@ -74,7 +74,7 @@ matchHMDB <- function(hmdbID) {
     newID <- paste0("HMDB", str_sub(hmdbID, start = -5, end = -1))
     return(newID)
 
-  # If there is an edge case where the ID is not 9 or 11 charactesr in length(),
+  # If there is an edge case where the ID is not 9 or 11 characters in length(),
   # also return NA
   } else {
     return(NA)
