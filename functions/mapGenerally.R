@@ -663,7 +663,7 @@ mapGenerally <- function(importDF, col, db, idType) {
   # Mapping if KEGG is selected
   if (db == "KEGG") {
     mappedMetabolites <- mapKEGG(
-      imprtDF = importDF,
+      importDF = importDF,
       col     = col,
       idType  = idType
     )
