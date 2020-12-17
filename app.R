@@ -179,11 +179,11 @@ ui <- fluidPage(
           tags$p(
             "Upload a plain-text spreadsheet (CSV or TSV) containing ",
             "your metabolites of interest in a single column, or try ",
-            "out our example dataset."
+            "out our example dataset using the link below."
           ),
 
           # Upload handling. Note that the "Browse..." button is customized in
-          # `www/css/user.css`
+          # "www/css/user.css"
           fileInput(
             inputId = "metaboliteUpload",
             label = "Upload Metabolites",
@@ -296,10 +296,9 @@ ui <- fluidPage(
       uiOutput("vizPanelUI")
     ),
 
-    # Finally, the 'More' Panel, with about, help, etc.
+    # Finally, the "More" Panel, with about, help, etc.
     navbarMenu(
-      # Overall title which contains links to the specific tabs
-      "Help",
+      title = "Help",
 
       ### Tutorial Page
       tabPanel(
@@ -367,20 +366,21 @@ ui <- fluidPage(
             class = "logoWrapper",
 
             tags$p(
-              "MetaBridge was designed by Samuel Hinshaw & Travis Blimkie at the ",
+              "MetaBridge was designed by Samuel Hinshaw, and is maintained ",
+              "by Travis Blimkie at the ",
               tags$a(
                 href = "http://cmdr.ubc.ca/bobh/",
                 "Centre for Microbial Diseases and Immunity Research"
               ),
-              " at The University of British Columbia, and published in",
-              tags$em("Bioinformatics"),
+              " at The University of British Columbia. It was ",
+              "originally published in ", tags$em("Bioinformatics"),
               " (doi: ",
               tags$a(
                 href = "https://doi.org/10.1093/bioinformatics/bty331",
                 "10.1093/bioinformatics/bty331",
                 .noWS = "after"
               ),
-              "). Please cite this paper when using MetaBridge in your analyses."
+              "); please cite this paper when using MetaBridge in your analyses."
             ),
 
             tags$p(
@@ -412,7 +412,11 @@ ui <- fluidPage(
               ),
             ),
 
-            tags$p("MetaBridge uses the following databases and R packages:"),
+            tags$br(),
+
+            tags$p(tags$b(
+              "MetaBridge uses the following databases and R packages:"
+            )),
 
             tags$p(
               tags$dl(
