@@ -1,4 +1,4 @@
-[<img src="www/logo_blue_small.svg" align="right"  height="75px"/>](https://metabridge.org)
+[<img src="www/logo_blue_small.svg" align="right" top=0 height="75px"/>](https://metabridge.org)
 
 # **MetaBridge**
 
@@ -13,13 +13,9 @@ metabolite is involved.
 
 ## **Publications**
 
-* MetaBridge: enabling network-based integrative analysis via direct protein
-interactors of metabolites. 2018. *Bioinformatics.* doi:
-[10.1093.bioinformatics/bty331](https://doi.org/10.1093/bioinformatics/bty331)
+* [MetaBridge: enabling network-based integrative analysis via direct protein interactors of metabolites](https://doi.org/10.1093/bioinformatics/bty331). 2018. *Bioinformatics.*
 
-* MetaBridge: An Integrative Multi‐Omics Tool for Metabolite‐Enzyme Mapping.
-2020. *Current Protocols in Bioinformatics.* doi:
-[10.1002/cpbi.98](https://doi.org/10.1002/cpbi.98)
+* [MetaBridge: An Integrative Multi‐Omics Tool for Metabolite‐Enzyme Mapping](https://doi.org/10.1002/cpbi.98). 2020. *Current Protocols in Bioinformatics.*
 
 ## **Usage**
 MetaBridge is designed to facilitate integrative analysis by identifying the
@@ -27,7 +23,7 @@ enzymes that directly interact with metabolites of interest, yielding genes
 which may then be integrated with results from other omics methods. A pipeline
 may be designed as such:
 
-![](./figure_colour_v5.png)
+![](./figure_colour_v5.svg)
 
 ## **Tutorial**
 To learn how to use MetaBridge as part of a network-based integrative analysis
