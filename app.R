@@ -14,7 +14,8 @@ library(shinyjs)
 # Grey          #ecf0f1
 # White         #fff
 
-# TODO Need to run these lines each time app is published so packages from
+# TODO
+# Need to run these lines each time app is published so packages from
 # Bioconductor can be found by Shiny.
 # library(BiocManager)
 # options(repos = BiocManager::repositories())
@@ -45,7 +46,7 @@ ui <- fluidPage(
 
   ### Begin the tab bar layout
   navbarPage(
-    title       = htmltools::HTML(
+    title = htmltools::HTML(
       "<img src='pics/logo_white.svg' alt='' height='28'"
     ),
     id          = "navbarLayout",
@@ -80,8 +81,8 @@ ui <- fluidPage(
 
           tags$p(
             "Welcome to MetaBridge v1.2, a user-friendly web tool for ",
-            "network-based integrative analysis of metabolomics data. Here you ",
-            "can upload a set of metabolites and identify the directly ",
+            "network-based integrative analysis of metabolomics data. Here ",
+            "you can upload a set of metabolites and identify the directly ",
             "interacting enzymes for network integration."
           ),
           tags$p(
@@ -96,28 +97,23 @@ ui <- fluidPage(
             "protein-protein interaction network representative ",
             "of your metabolomics data. We recommend",
             tags$a("NetworkAnalyst", href = "http://www.networkanalyst.ca"),
-            "for generation of these networks and for network-based integration ",
-            "with protein-protein interaction networks created from other omics types."
+            "for generation of these networks and for network-based ",
+            "integration with protein-protein interaction networks created ",
+            "from other omics types."
           ),
 
           tags$p(
-            "MetaBridge was developed at the ",
-            tags$a("Hancock Lab", href = "http://cmdr.ubc.ca/bobh/"),
-            "using data from MetaCyc (Version 23.0) and KEGG (Release 92)."
-          ),
-
-          tags$p(
-            "Click the button below to Get Started! If you'd like to learn more ",
-            "about how MetaBridge can be used, check the Tutorial. For more ",
-            "information, including where to report bugs or other problems, ",
-            "please refer to the About page."
+            "Click the button below to Get Started! If you'd like to learn ",
+            "more about how MetaBridge can be used, check the Tutorial. For ",
+            "more information, including where to report bugs or other ",
+            "problems, please refer to the About page."
           ),
 
           tags$br(),
 
           div(
             # Buttons linking to various tabs of the app. To see how these
-            # buttons are hidden, refer to `www/js/client.js`.
+            # buttons are hidden, refer to "www/js/client.js".
             # First the button which shows the app loading, then links to the
             # Upload panel.
             actionButton(
@@ -159,10 +155,11 @@ ui <- fluidPage(
       # Separate div to include the lab logo below the main section. Also made
       # into a clickable link!
       tags$div(
-        style = "padding-top: 90px; padding-bottom: 5px;",
-        htmltools::HTML(
-          "<a href='http://cmdr.ubc.ca/bobh/'> <img src='pics/hancock-lab-logo-2.svg'> </a>"
-        )
+        style = "position:fixed; bottom:0px; padding-bottom:10px",
+        htmltools::HTML(paste0(
+          "<a href='http://cmdr.ubc.ca/bobh/'> ",
+          "<img src='pics/hancock-lab-logo-2.svg'> </a>"
+        ))
       )
     ),
 
