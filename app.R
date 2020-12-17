@@ -488,7 +488,7 @@ server <- function(input, output, session) {
 
     # After packages loaded, run button transform to signal ready states.
     runjs("handlers.initGetStarted();")
-  }, ignoreNULL = TRUE, ignoreInit = TRUE, once = TRUE)
+  }, ignoreInit = TRUE, once = TRUE)
 
 
   ################################################
@@ -546,9 +546,10 @@ server <- function(input, output, session) {
     mappingSummary$dbChosen <- NULL
     mappedMetaboliteTable(NULL)
     databaseChosen(NULL)
-  }, ignoreInit = TRUE, ignoreNULL = TRUE)
+  }, ignoreInit = TRUE)
 
-  # Read file when any of (fileInput, checkboxInput, radioButtons) states change.
+  # Read file when any of fileInput, checkboxInput, or radioButtons states
+  # change
   observeEvent({
     input$metaboliteUpload
     input$sep
@@ -569,7 +570,7 @@ server <- function(input, output, session) {
       mappedMetaboliteTable(NULL)
       databaseChosen(NULL)
     }
-  }, ignoreNULL = TRUE, ignoreInit = TRUE)
+  }, ignoreInit = TRUE)
 
 
   # Once data is populated, render help text to the user,...
@@ -607,15 +608,14 @@ server <- function(input, output, session) {
     pageLength = 10,
     lengthMenu = c(5, 10, 15, 20),
     scrollX = "100%",
-    # AMAZING! Crucial argument to make sure DT doesn't overflow vertical
-    # scrolling options.
     scrollY = "456px",
     scrollCollapse = TRUE,
     paging = FALSE
   ),
   rownames = FALSE,
   selection = list(
-    mode = "single", target = "column",
+    mode     = "single",
+    target   = "column",
     selected = 0
   ),
   style = "bootstrap",
@@ -646,10 +646,10 @@ server <- function(input, output, session) {
     tags$div(
 
       tags$p(HTML(
-        "Select the ID type you would like to use in the mapping. We recommend ",
-        "using <b>HMDB</b> or <b>KEGG</b>, as these will yield the best results.",
-        "Ensure the ID selected here matches the highlighted column before ",
-        "clicking the 'Proceed' button."
+        "Select the ID type you would like to use in the mapping. We ",
+        "recommend using <b>HMDB</b> or <b>KEGG</b>, as these will yield the ",
+        "best results. Ensure the ID selected here matches the highlighted ",
+        "column before clicking the 'Proceed' button."
       )),
 
       selectInput(
@@ -657,14 +657,13 @@ server <- function(input, output, session) {
         label     = "ID Type",
         width     = "50%",
         # Reduced the possible input ID types since HMDB and KEGG are the most
-        # reliable.
-        # choices   = c("HMDB", "KEGG", "PubChem", "CAS", "MetaCyc Object ID" = "Compound"),
+        # reliable, and supporting many ID types is difficult.
         choices   = c("HMDB", "KEGG"),
         selected  = preSelectedIDType(),
         selectize = FALSE
       ),
-      # Include button to proceed
 
+      # Include button to proceed
       actionButton(
         inputId = "continueToMap",
         label   = tags$b("Proceed"),
@@ -681,7 +680,7 @@ server <- function(input, output, session) {
     # Change on button click (uploaded file or example data)...
     input$tryExamples
     input$metaboliteUpload
-    # ...OR on header change.
+    # ...or on header and separator change.
     input$sep
     input$header
   }, {
@@ -720,10 +719,10 @@ server <- function(input, output, session) {
   # If the selected ID type is a column name in the data frame, preselect that
   # column for use in mapping.
   observeEvent(columnPicked(), {
-    if (tolower(columnPicked()) %in% c("cas", "pubchem", "hmdb", "kegg")) {
+    if (tolower(columnPicked()) %in% c("hmdb", "kegg")) {
       preSelectedIDType(columnPicked())
     }
-  }, ignoreNULL = TRUE, ignoreInit = TRUE)
+  }, ignoreInit = TRUE)
 
   # Switch to `Map` panel when "Proceed" is clicked on the `Upload` tab
   observeEvent(input$continueToMap, {
@@ -742,7 +741,7 @@ server <- function(input, output, session) {
   })
 
   # Here's where the heavy lifting takes place! We now take the column the user
-  # specified and map the IDs to genes!
+  # specified and map the IDs to genes.
 
   # When the map button is clicked, update the `dbChosen()`.
   observeEvent(input$mapButton, {
@@ -755,9 +754,9 @@ server <- function(input, output, session) {
     # "functions/mapGenerally.R".
     mappingOutput <- mapGenerally(
       importDF = metaboliteObject(),
-      col = columnPicked(),
-      db = databaseChosen(),
-      idType = idTypeChosen()
+      col      = columnPicked(),
+      db       = databaseChosen(),
+      idType   = idTypeChosen()
     )
 
     # Assign just the mapped data to our reactive value...
@@ -769,7 +768,7 @@ server <- function(input, output, session) {
 
     # Create new alert bubble with the status message.
     mappingAlert(
-      status = mappingOutput$status,
+      status  = mappingOutput$status,
       message = mappingOutput$message,
       suggest = mappingOutput$suggest
     )
@@ -780,14 +779,14 @@ server <- function(input, output, session) {
 
 
   # THREE STEP RENDER PROCESS, PART 1 - MAPPING SUMMARY TABLE
-  # 1. Generate Table from `generateTables.R::generateSummaryTable()`, depending
-  #    only on the mapButton click.
+  # 1. Generate table from `generateSummaryTable()`, depending only on the
+  #    mapButton click.
   # 2. Render the generated table with DT::renderDataTable(). This is separate
   #    from #1 because we need to assign the reactive table object to its own
   #    output object.
   # 3. Render the entire UI surrounding the table and insert the rendered DT.
 
-  # STEP ONE
+  # 1. Generate Table
   # ~~~~~~~~~~
   # Show a summary table of the mapped metabolites (just number of genes, etc.)
   # This calls `generateSummaryTable()` from "functions/generateTables.R" and
@@ -802,7 +801,7 @@ server <- function(input, output, session) {
     mappingSummary$dbChosen <- results$dbChosen
   })
 
-  # STEP TWO
+  # 2. Render Generated Table
   # ~~~~~~~~~~
   # Once metabolites have been mapped, render the results.
   output$mappingSummaryTable <- DT::renderDataTable({
@@ -815,7 +814,7 @@ server <- function(input, output, session) {
   selection = "single"
   )
 
-  # STEP THREE
+  # 3. Render UI
   # ~~~~~~~~~~
   # Render the panel separately so we have reactive control over all the UI
   # elements surrounding the table, not just the table itself.
@@ -858,15 +857,14 @@ server <- function(input, output, session) {
 
 
   # THREE STEP RENDER PROCESS, PART 2 - METABOLITE SPECIFIC TABLE
-  # 1. Generate Table from `generateTables.R::generateSummaryTable()`, depending
+  # 1. Generate table from `generateTables.R::generateSummaryTable()`, depending
   #    only on the mapButton click.
   # 2. Render the generated table with DT::renderDataTable(). This is separate
   #    from #1 because we need to assign the reactive table object to its own
   #    output Object.
   # 3. Render the entire UI surrounding the table and insert the rendered DT.
 
-  # STEP ONE
-  # Generate table
+  # 1. Generate Table
   # ~~~~~~~~~~
   # Now, show the filtered (unsummarized) table, based on what metabolite user
   # clicked on.
@@ -917,8 +915,7 @@ server <- function(input, output, session) {
     }
   })
 
-  # STEP TWO
-  # Render generated table
+  # 2. Render Generated Table
   # ~~~~~~~~~~
   # Once metabolites have been mapped, render the results!
   output$mappedMetaboliteTable <- DT::renderDataTable({
@@ -937,9 +934,10 @@ server <- function(input, output, session) {
   selection = "single"
   )
 
-  # STEP THREE
-  # Render entire UI output, including the rendered table.
+  # 3. Render UI
   # ~~~~~~~~~~
+  # Now render the whole UI that surrounds the table, along with the table
+  # itself
   output$fullMappingResultsPanel <- renderUI({
     tags$div(
       if (is.null(mappingObject())) {
@@ -959,7 +957,7 @@ server <- function(input, output, session) {
           tags$h3("Per-Metabolite Mapping Results")
         )
       },
-      # Rendered table from STEP TWO goes here!
+      # Rendered table from "2." goes here!
       DT::dataTableOutput("mappedMetaboliteTable")
     )
   })
@@ -972,7 +970,7 @@ server <- function(input, output, session) {
   # the mapping.
   observeEvent(input$remap, {
     updateNavbarPage(session, inputId = "navbarLayout", selected = "uploadPanel")
-  }, ignoreInit = TRUE, ignoreNULL = TRUE)
+  }, ignoreInit = TRUE)
 
   # Once table exists, render the save panel...
   output$saveMappingPanel <- renderUI({
@@ -1027,31 +1025,32 @@ server <- function(input, output, session) {
           "If you mapped against KEGG, you have the option",
           "to visualize your results with pathview."
         ),
+
         br(),
 
         # If we mapped against KEGG, show "Visualize" button.
         if (databaseChosen() == "KEGG" & !is.null(selectedMetab())) {
           actionButton(
             inputId = "visualizeButton",
-            label = tags$b("Visualize"),
-            class = "btn btn-med btn-tooltip",
-            style = "color: #fff; background-color: #2c3e50; border-color: #2c3e50;",
-            title = "Visualize your results with pathview"
+            label   = tags$b("Visualize"),
+            class   = "btn btn-med btn-tooltip",
+            style   = "color: #fff; background-color: #2c3e50; border-color: #2c3e50;",
+            title   = "Visualize your results with pathview"
           )
         # But if we mapped against MetaCyc disable the "Visualize" button.
         } else {
           actionButton(
             inputId = "visualizeButton",
-            label = tags$b("Visualize"),
-            class = "btn btn-med btn-tooltip disabled",
-            title = "Select a metabolite from the summary table"
+            label   = tags$b("Visualize"),
+            class   = "btn btn-med btn-tooltip disabled",
+            title   = "Select a metabolite from the summary table"
           )
         }
       )
     }
   })
 
-  # Client-side JS to enable/disable "Visualize" tab! Also disables the
+  # Client-side JS to enable/disable "Visualize" tab. Also disables the
   # "Visualize" tab in the navbar when visualization is not possible. Make sure
   # that we have a tooltip explaining why the "Visualization" tab is disabled. A
   # lot of this refers to code in "www/js/client.js".
@@ -1097,7 +1096,7 @@ server <- function(input, output, session) {
 
   # Export the data.
   output$downloadMappingData <- downloadHandler(
-    # Name file format: `originalFilename_mapped_dbChosen.savetype`.
+    # Name file format: `originalfilename_mapped_dbChosen.savetype`.
     filename = function() {
       paste0(
         ifelse(
@@ -1204,8 +1203,8 @@ server <- function(input, output, session) {
         ),
         tags$p("Each pathway may take some time to process."),
         tags$p(
-          "For each pathway, only the compound selected ",
-          "is shown, but ALL mapped genes are shown."
+          "For each pathway, only the compound selected is shown, but ALL ",
+          "mapped genes are shown."
         )
       )
     } else if (databaseChosen() == "MetaCyc") {
