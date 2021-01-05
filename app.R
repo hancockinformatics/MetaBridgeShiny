@@ -158,7 +158,7 @@ ui <- fluidPage(
         style = "position:fixed; bottom:0px; padding-bottom:10px",
         htmltools::HTML(paste0(
           "<a href='http://cmdr.ubc.ca/bobh/'> ",
-          "<img src='pics/hancock-lab-logo-2.svg'> </a>"
+          "<img src='pics/hancock-lab-logo.svg'> </a>"
         ))
       )
     ),
