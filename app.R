@@ -1010,7 +1010,7 @@ server <- function(input, output, session) {
 
 
 
-  # 4.7 Add navigation to Viz tab if using KEGG -----------------------------
+  # 4.7 Add navigation to Viz tab -----------------------------------------
 
   # Navigate to the "Visualize" page when KEGG was the chosen database.
   output$continueToViz <- renderUI({
