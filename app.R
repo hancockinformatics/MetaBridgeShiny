@@ -1,5 +1,5 @@
 
-# Load the first couple libraries -----------------------------------------
+# 1. Load the first couple libraries --------------------------------------
 
 # Most libraries and functions are loaded through a call to `deferred.R` at the
 # beginning of the `server()` function (approx. #488).
@@ -14,14 +14,18 @@ library(shinyjs)
 # Grey          #ecf0f1
 # White         #fff
 
-# TODO
+
+# 2. To-do ----------------------------------------------------------------
+
 # Need to run these lines each time app is published so packages from
 # Bioconductor can be found by Shiny.
 # library(BiocManager)
 # options(repos = BiocManager::repositories())
 
 
-# Define UI part of the app -----------------------------------------------
+
+
+# 3. Define UI code -------------------------------------------------------
 
 # Workaround to ensure logo in top left corner (tab bar) is found/rendered when
 # app is published to ShinyAppsIO.
@@ -44,7 +48,8 @@ ui <- fluidPage(
     tags$meta(name = "theme-color", content = "#303e4e")
   ),
 
-  ### Begin the tab bar layout
+  # * 3.1 Begin the tab bar layout -------------------------------------------
+
   navbarPage(
     title = htmltools::HTML(
       "<img src='pics/logo_white.svg' alt='' height='28'"
@@ -62,7 +67,8 @@ ui <- fluidPage(
       tags$style(type = "text/css", "body {padding-top: 80px;}")
     ),
 
-    ### Welcome tab/landing page
+    # * 3.2 Welcome tab & landing page ------------------------------------
+
     tabPanel(
       title = "MetaBridge",
       value = "welcomePanel",
@@ -164,7 +170,8 @@ ui <- fluidPage(
     ),
 
 
-    ### Upload panel
+    # * 3.3 Upload panel --------------------------------------------------
+
     tabPanel(
       "Upload",
       value = "uploadPanel",
@@ -230,7 +237,8 @@ ui <- fluidPage(
     ),
 
 
-    ### Mapping Panel
+    # * 3.4 Mapping Panel -------------------------------------------------
+
     tabPanel(
       title = "Map",
       value = "mapPanel",
@@ -287,7 +295,8 @@ ui <- fluidPage(
     ),
 
 
-    ### Visualize With Pathview
+    # * 3.5 Visualize With Pathview ---------------------------------------
+
     tabPanel(
       title = "Pathview",
       value = "vizPanel",
@@ -296,11 +305,13 @@ ui <- fluidPage(
       uiOutput("vizPanelUI")
     ),
 
-    # Finally, the "More" Panel, with about, help, etc.
+    # * 3.6 Help Panel & dropdown -----------------------------------------
+
     navbarMenu(
       title = "Help",
 
-      ### Tutorial Page
+      # * * 3.6.1 Tutorial Page -------------------------------------------
+
       tabPanel(
         title = "Tutorial",
         value = "tutorialPanel",
@@ -350,7 +361,8 @@ ui <- fluidPage(
         )
       ),
 
-      ### About page
+      # * * 3.6.2 About page ----------------------------------------------
+
       tabPanel(
         value = "aboutPanel",
         title = "About",
@@ -474,10 +486,9 @@ ui <- fluidPage(
 )
 
 
-###########################################################################
 
 
-# Define the server code --------------------------------------------------
+# 4. Define the server code -----------------------------------------------
 
 server <- function(input, output, session) {
 
@@ -491,12 +502,9 @@ server <- function(input, output, session) {
   }, ignoreInit = TRUE, once = TRUE)
 
 
-  ################################################
-  ##        Define reactive variables           ##
-  ################################################
 
-  # Reactive Values for Metabolite Data. These are isolated into individual
-  # reactive values so we can depend on them for reactive changes.
+  # Define reactive variables. These are isolated into individual reactive
+  # values so we can depend on them for reactive changes.
   metaboliteObject <- reactiveVal()
   mappedMetabolites <- reactiveVal()
   mappingObject <- reactiveVal()
@@ -510,9 +518,8 @@ server <- function(input, output, session) {
   hmdbCol <- reactiveVal()
 
 
-  ################################################
-  ##          Welcome Tab Handlers              ##
-  ################################################
+
+  # 4.1 Welcome tab handlers ----------------------------------------------
 
   # When clicking "Get Started", switch to `Upload` panel
   observeEvent(input$getStarted, {
@@ -530,9 +537,8 @@ server <- function(input, output, session) {
   }, ignoreInit = TRUE)
 
 
-  ################################################
-  ##          Upload Tab Handlers               ##
-  ################################################
+
+  # 4.2 Upload tab handlers -----------------------------------------------
 
   # Inject example data frame when "Try Examples" is clicked
   observeEvent(input$tryExamples, {
@@ -730,9 +736,8 @@ server <- function(input, output, session) {
   }, ignoreInit = TRUE)
 
 
-  ################################################
-  ##                Map Tab Handlers            ##
-  ################################################
+
+  # 4.3 Map tab handlers ----------------------------------------------------
 
   # Store ID type chosen as a reactive variable which only changes when the
   # "Map" button is clicked
@@ -775,10 +780,8 @@ server <- function(input, output, session) {
   }, ignoreInit = TRUE)
 
 
-  ############################# End ##############################
+  # 4.4 Render summarized mapping table -----------------------------------
 
-
-  # THREE STEP RENDER PROCESS, PART 1 - MAPPING SUMMARY TABLE
   # 1. Generate table from `generateSummaryTable()`, depending only on the
   #    mapButton click.
   # 2. Render the generated table with DT::renderDataTable(). This is separate
@@ -853,8 +856,7 @@ server <- function(input, output, session) {
   })
 
 
-  ############################# End ##############################
-
+  # 4.5 Render metabolite-specific table ----------------------------------
 
   # THREE STEP RENDER PROCESS, PART 2 - METABOLITE SPECIFIC TABLE
   # 1. Generate table from `generateTables.R::generateSummaryTable()`, depending
@@ -863,6 +865,7 @@ server <- function(input, output, session) {
   #    from #1 because we need to assign the reactive table object to its own
   #    output Object.
   # 3. Render the entire UI surrounding the table and insert the rendered DT.
+
 
   # 1. Generate Table
   # ~~~~~~~~~~
@@ -963,8 +966,8 @@ server <- function(input, output, session) {
   })
 
 
-  ############################# End ##############################
 
+  # 4.6 Render sidebar to save results ------------------------------------
 
   # Watch for the "Try Again" button that will be rendered if an error occurs in
   # the mapping.
@@ -1005,6 +1008,9 @@ server <- function(input, output, session) {
     }
   })
 
+
+
+  # 4.7 Add navigation to Viz tab if using KEGG -----------------------------
 
   # Navigate to the "Visualize" page when KEGG was the chosen database.
   output$continueToViz <- renderUI({
@@ -1081,6 +1087,9 @@ server <- function(input, output, session) {
   }, ignoreInit = TRUE)
 
 
+
+  # 4.8 Clean and export the data -------------------------------------------
+
   # Cleaning the mapped MetaCyc (not KEGG) data before download, to remove HTML
   # tags from reactions. Specifically, we are removing any HTML tags, using
   # plain text arrows, and switching Greek letters to English versions.
@@ -1124,9 +1133,7 @@ server <- function(input, output, session) {
   )
 
 
-  ################################################
-  ##              Viz Tab Handlers              ##
-  ################################################
+  # 4.9 Viz tab handlers ----------------------------------------------------
 
   # Set up reactive values for:
   # - The selected compound of the clicked row
