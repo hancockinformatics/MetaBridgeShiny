@@ -14,7 +14,7 @@ library(tidyverse)
 
 # Load example data -------------------------------------------------------
 
-load("data/examples.RData")
+load("data/examples_2.RData")
 
 
 # Load KEGG database files ------------------------------------------------
@@ -70,14 +70,10 @@ source(file.path("functions", "generateTables.R"), local = TRUE)$value
 
 options(
   DT.options = list(
-    pageLength = 10,
-    lengthMenu = c(5, 10, 15, 20),
-    # autoWidth = TRUE,
     scrollX = "100%",
-    # Argument to make sure DT doesn't overflow vertical scrolling options
-    scrollY = "300px",
+    scrollY = "30vh",
     scrollCollapse = TRUE,
-    paging = FALSE,
-    dom = "tir"
+    paging  = FALSE,
+    dom     = "tir"
   )
 )
