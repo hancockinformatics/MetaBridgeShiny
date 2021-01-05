@@ -543,7 +543,7 @@ server <- function(input, output, session) {
   # Inject example data frame when "Try Examples" is clicked
   observeEvent(input$tryExamples, {
     # Input examples...
-    metaboliteObject(examples)
+    metaboliteObject(examples_2)
     # ...and wipe mapping objects
     mappingObject(NULL)
     mappedMetabolites(NULL)
@@ -562,11 +562,12 @@ server <- function(input, output, session) {
     input$header
   }, {
     if (!is.null(input$metaboliteUpload)) {
+      # Save to the reactiveVal...
       read_delim(
         file = input$metaboliteUpload$datapath,
         col_names = input$header,
         delim = input$sep
-      ) %>% metaboliteObject() # Save to the reactiveVal...
+      ) %>% metaboliteObject()
       # ...then wipe mapping objects for a fresh start.
       mappingObject(NULL)
       mappedMetabolites(NULL)
@@ -611,12 +612,10 @@ server <- function(input, output, session) {
   },
   # DataTable options
   options = list(
-    pageLength = 10,
-    lengthMenu = c(5, 10, 15, 20),
     scrollX = "100%",
-    scrollY = "456px",
+    scrollY = "50vh",
     scrollCollapse = TRUE,
-    paging = FALSE
+    paging  = FALSE
   ),
   rownames = FALSE,
   selection = list(
@@ -662,8 +661,6 @@ server <- function(input, output, session) {
         inputId   = "idType",
         label     = "ID Type",
         width     = "50%",
-        # Reduced the possible input ID types since HMDB and KEGG are the most
-        # reliable, and supporting many ID types is difficult.
         choices   = c("HMDB", "KEGG"),
         selected  = preSelectedIDType(),
         selectize = FALSE
