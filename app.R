@@ -75,7 +75,7 @@ ui <- fluidPage(
 
       # Main panel that will contain text and links
       tags$div(
-        id = "welcomeHero",
+        id    = "welcomeHero",
         class = "jumbotron",
 
         h1("Welcome"),
@@ -86,7 +86,7 @@ ui <- fluidPage(
           class = "logoWrapper",
 
           tags$p(
-            "Welcome to MetaBridge v1.2, a user-friendly web tool for ",
+            "Welcome to MetaBridge, a user-friendly web tool for ",
             "network-based integrative analysis of metabolomics data. Here ",
             "you can upload a set of metabolites and identify the directly ",
             "interacting enzymes for network integration."
@@ -95,7 +95,7 @@ ui <- fluidPage(
             "To start, you'll want a set of metabolites as",
             "HMDB or KEGG IDs. We recommend",
             tags$a("MetaboAnalyst", href = "http://www.metaboanalyst.ca"),
-            "for metabolomics data processing, as well as ID conversion ",
+            "for metabolomics data processing, as well as ID conversion, ",
             "if you have only compound names."
           ),
           tags$p(
@@ -104,15 +104,14 @@ ui <- fluidPage(
             "of your metabolomics data. We recommend",
             tags$a("NetworkAnalyst", href = "http://www.networkanalyst.ca"),
             "for generation of these networks and for network-based ",
-            "integration with protein-protein interaction networks created ",
-            "from other omics types."
+            "integration with data from other omics types."
           ),
 
           tags$p(
             "Click the button below to Get Started! If you'd like to learn ",
             "more about how MetaBridge can be used, check the Tutorial. For ",
-            "more information, including where to report bugs or other ",
-            "problems, please refer to the About page."
+            "more information, including where to report bugs & problems, or ",
+            "how to cite MetaBridge, please refer to the About page."
           ),
 
           tags$br(),
@@ -396,17 +395,17 @@ ui <- fluidPage(
             ),
 
             tags$p(
-              "We also have a step-by-step guide on how to use MetaBridge ",
-              "published in ", tags$em("Current Protocols in Bioinformatics."),
-              "This includes how to process data prior to uploading to ",
-              "MetaBridge, as well as an example on building a protein-protein ",
-              "interaction (PPI) network from MetaBridge results using",
+              "We also have a protocol on how to use MetaBridge published in ",
+              tags$em("Current Protocols in Bioinformatics."), "It covers how ",
+              "to prepare data for input to MetaBridge, and includes an ",
+              "example of building a protein-protein interaction network from ",
+              "MetaBridge results using",
               tags$a(
                 href = "https://networkanalyst.ca",
                 "NetworkAnalyst",
                 .noWS = "after"
               ),
-              ". The full protocol is available at doi:",
+              ". The article is available at doi:",
               tags$a(
                 href = "https://doi.org/10.1002/cpbi.98",
                 "10.1002/cpbi.98",
@@ -426,9 +425,9 @@ ui <- fluidPage(
 
             tags$br(),
 
-            tags$p(tags$b(
+            tags$p(
               "MetaBridge uses the following databases and R packages:"
-            )),
+            ),
 
             tags$p(
               tags$dl(
@@ -589,8 +588,10 @@ server <- function(input, output, session) {
     tagList(
       tags$h4(
         class = "conditional-help",
-        "Check below to see that your data has been uploaded properly.  ",
-        "If so, click a column and ID type and proceed to the 'Map' tab!"
+        HTML(
+          "Check below to see that your data has been uploaded properly.  If ",
+          "so, click a column and ID type and continue via the <b>Proceed</b> button!"
+        )
       ),
       tags$br()
     )
@@ -610,12 +611,10 @@ server <- function(input, output, session) {
       metaboliteObject()
     }
   },
-  # DataTable options
+  # DataTable options. We only need to provide options which we want different
+  # from our defaults defined in "deferred.R".
   options = list(
-    scrollX = "100%",
-    scrollY = "50vh",
-    scrollCollapse = TRUE,
-    paging  = FALSE
+    scrollY = "50vh"
   ),
   rownames = FALSE,
   selection = list(
@@ -651,19 +650,19 @@ server <- function(input, output, session) {
     tags$div(
 
       tags$p(HTML(
-        "Select the ID type you would like to use in the mapping. We ",
-        "recommend using <b>HMDB</b> or <b>KEGG</b>, as these will yield the ",
+        "Select the ID type you would like to use in the mapping. MetaBridge ",
+        "supports both HMDB or KEGG, as these will yield the ",
         "best results. Ensure the ID selected here matches the highlighted ",
-        "column before clicking the 'Proceed' button."
+        "column before clicking the <b>Proceed</b> button."
       )),
 
-      selectInput(
+      radioButtons(
         inputId   = "idType",
         label     = "ID Type",
         width     = "50%",
-        choices   = c("HMDB", "KEGG"),
-        selected  = preSelectedIDType(),
-        selectize = FALSE
+        choices   = c("HMDB", "KEGG")
+        # selected  = preSelectedIDType(),
+        # selectize = FALSE
       ),
 
       # Include button to proceed
@@ -720,10 +719,13 @@ server <- function(input, output, session) {
   })
 
   # If the selected ID type is a column name in the data frame, preselect that
-  # column for use in mapping.
+  # column for use in mapping. Check that we have a column selected first,
+  # otherwise the second if statement causes an error and the app crashes.
   observeEvent(columnPicked(), {
-    if (tolower(columnPicked()) %in% c("hmdb", "kegg")) {
-      preSelectedIDType(columnPicked())
+    if (length(columnPicked()) != 0) {
+      if (tolower(columnPicked()) %in% c("hmdb", "kegg")) {
+        preSelectedIDType(columnPicked())
+      }
     }
   }, ignoreInit = TRUE)
 

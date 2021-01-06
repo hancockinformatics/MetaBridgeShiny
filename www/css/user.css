@@ -95,6 +95,11 @@
   margin-top: 0;
 }
 
+/* Reduce the padding on jumbotron elements */
+.container .jumbotron, .container-fluid .jumbotron {
+    padding: 40px;
+}
+
 /* Give loading spinners within buttons some room to breathe */
 .btn .fa {
   margin-right: 5px;
