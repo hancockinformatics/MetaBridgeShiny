@@ -161,6 +161,7 @@ within the background fill of the hero element */
 .btn-lg {
   /* margin-top: 5px; */
   margin-bottom: 10px;
+  font-size: 23px;
 }
 
 /* Change the colour of the "Browse..." button so it stands out a bit more */
