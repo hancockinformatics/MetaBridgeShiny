@@ -200,3 +200,8 @@ dl dd {
   right: 0;
   margin-right: 0.70em;
 }
+
+/*Reducing the top margin to give consistent spacing with other elements */
+.checkbox {
+  margin-top: 5px;
+}

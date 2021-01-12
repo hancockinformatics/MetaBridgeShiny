@@ -184,9 +184,9 @@ ui <- fluidPage(
           tags$label("Upload your Metabolites"),
 
           tags$p(HTML(
-            "Select a plain-text spreadsheet (CSV or TSV) containing your ",
-            "metabolites of interest in a single column, or try out our ",
-            "example data using the link below."
+            "Select a plain-text spreadsheet (ending in csv, txt, or tsv) ",
+            "containing your metabolites of interest in a single column. You ",
+            "can also try our example data using the link below."
           ), style = "padding-bottom: 5px;"),
 
           # Upload handling. Note that the "Browse..." button is customized in
@@ -199,11 +199,20 @@ ui <- fluidPage(
               "text/csv",
               "text/comma-separated-values,text/plain",
               ".csv",
-              "text/tab-separated-values"
+              "text/tsv",
+              "text/tab-separated-values,text/plain",
+              ".tsv",
+              "text/txt",
+              "text/tab-separated-values,text/plain",
+              ".txt"
             )
           ),
 
           # Header in file?
+          tags$p(
+            HTML("<b>Does your data contain column names?</b>"),
+            style = "margin-bottom: 0;"
+          ),
           checkboxInput(
             inputId = "header",
             label   = "Header",
@@ -213,7 +222,7 @@ ui <- fluidPage(
           # TSV or CSV?
           radioButtons(
             inputId = "sep",
-            label = "Choose a separator",
+            label = "Choose a separator for your data",
             choices = c(Comma = ",", Tab = "\t", Semicolon = ";"),
             selected = ","
           ),
@@ -255,8 +264,8 @@ ui <- fluidPage(
 
           tags$p(HTML(
             "Select one of the options below. MetaCyc has higher quality ",
-            "annotations, but KEGG may yield more hits. Mapping with KEGG ",
-            "will allow you to visualize your results with <b>Pathview</b>."
+            "annotations, but KEGG may yield more hits and also allow you to ",
+            "visualize your results with <b>Pathview</b>."
           ), style = "padding-bottom: 5px;"),
 
           # Choose database for mapping.
@@ -595,13 +604,14 @@ server <- function(input, output, session) {
         class = "conditional-help",
         HTML(
           "Check below to see that your data has been uploaded properly. If ",
-          "so, click a column, select an ID type and continue via the ",
-          "<b>Proceed</b> button!"
+          "so, click a column, select the matching ID type and continue via ",
+          "the <b>Proceed</b> button!"
         )
       ),
       tags$br()
     )
   })
+
 
   # Once the data is populated, render a preview of the data to the user.
   output$uploadedDataTable <- DT::renderDataTable({
@@ -659,7 +669,7 @@ server <- function(input, output, session) {
       tags$label("Select an ID Type"),
 
       tags$p(HTML(
-        "MetaBridge supports HMDB and KEGG, as yield the best results. Ensure ",
+        "MetaBridge supports mapping with HMDB or KEGG metabolite IDs. Ensure ",
         "the ID selected here matches the highlighted column before clicking ",
         "the <b>Proceed</b> button."
       ), style = "padding-bottom: 5px;"),
@@ -1350,6 +1360,6 @@ server <- function(input, output, session) {
 }
 
 
-# Finally, run the app! ---------------------------------------------------
+# 5. Finally, run the app! ---------------------------------------------------
 
 shinyApp(ui, server)
