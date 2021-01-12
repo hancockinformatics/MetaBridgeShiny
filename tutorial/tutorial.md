@@ -1,4 +1,4 @@
-<h2 id='metabolite-preprocessing'>I. Metabolite Preprocessing (Optional)</h2>
+<h2 id='metabolite-preprocessing'>1. Metabolite Preprocessing (Optional)</h2>
 
 To start using MetaBridge, you need to upload a list of compounds of interest as
 metabolite IDs. If you are starting with raw metabolomics data, you will need to
@@ -10,21 +10,21 @@ interest and their corresponding metabolite IDs. We recommend
 
 ---
 
-<h2 id='metabridge-mapping'>II. <a href="https://www.metabridge.org">MetaBridge</a> Mapping</h2>
+<h2 id='metabridge-mapping'>2. <a href="https://www.metabridge.org">MetaBridge</a> Mapping</h2>
 
-### 1. Upload Metabolites
+### I. Upload Metabolites
 
 Upload your metabolites to [MetaBridge](https://www.metabridge.org) and select your metabolites for mapping.
 
 [![Upload Metabolites](serve/upload_metabridge.png)](https://www.metabridge.org)
 
-### 2. Map Metabolites
+### II. Map Metabolites
 
 Choose a database to map against and view your mapping results.
 
 [![Map Via MetaCyc](serve/mapping2.png)](https://www.metabridge.org)
 
-### 3. Download Results
+### III. Download Results
 
 Download your full mapping results (example table below).
 
@@ -85,9 +85,9 @@ Download your full mapping results (example table below).
 
 ---
 
-<h2 id='networkanalyst'>III. <a href="http://www.networkanalyst.ca">NetworkAnalyst</a></h2>
+<h2 id='networkanalyst'>3. <a href="http://www.networkanalyst.ca">NetworkAnalyst</a></h2>
 
-### 1. Upload Mapped Genes
+### I. Upload Mapped Genes
 
 Visit [NetworkAnalyst](http://www.networkanalyst.ca) and start with [a list of genes or proteins](http://www.networkanalyst.ca/faces/Secure/network/SignatureView.xhtml) input.
 
@@ -118,7 +118,7 @@ IMEX Interactome as your protein-protein interaction database.
 
 ![Choose Protein-Protein Interactions and IMEX Interactome](serve/select_ppis.png)
 
-### 2. Create Networks
+### II. Create Networks
 
 Now, a protein-protein interaction network will be generated based on the data
 you have uploaded. Depending on the size of the dataset you have uploaded, you
@@ -156,7 +156,7 @@ Below, you will find an example of each minimum-connected network generated
 
 <hr>
 
-### 3. NetworkAnalyst Analyses
+### III. NetworkAnalyst Analyses
 
 For each network you create, you can extract various information from the
 network. For example, you can use the [Function Explorer] panel on the righthand
@@ -171,7 +171,7 @@ can download image files of the networks you have created.
 
 ![Batch Selection of Nodes](serve/batch_select.png)
 
-### 4. Further NetworkAnalyst Tools
+### IV. Further NetworkAnalyst Tools
 
 In addition to network creation, you can use NetworkAnalyst's extensive suite of
 tools, such as the [Venn Diagram] or [Chord Diagram] tools to examine overlap of

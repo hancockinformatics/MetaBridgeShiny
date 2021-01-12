@@ -95,8 +95,8 @@ ui <- fluidPage(
             "To start, you'll want a set of metabolites as",
             "HMDB or KEGG IDs. We recommend",
             tags$a("MetaboAnalyst", href = "http://www.metaboanalyst.ca"),
-            "for metabolomics data processing, as well as ID conversion, ",
-            "if you have only compound names."
+            "for metabolomics data processing, as well as ID conversion if ",
+            "you have only compound names."
           ),
           tags$p(
             "With the output of MetaBridge, you can create a ",
@@ -110,7 +110,7 @@ ui <- fluidPage(
           tags$p(
             "Click the button below to Get Started! If you'd like to learn ",
             "more about how MetaBridge can be used, check the Tutorial. For ",
-            "more information, including where to report bugs & problems, or ",
+            "more information, including where to report bugs & problems or ",
             "how to cite MetaBridge, please refer to the About page."
           ),
 
@@ -142,7 +142,6 @@ ui <- fluidPage(
               `data-position` = "bottom"
             ),
 
-            # Horizontal spacer
             HTML("&nbsp;&nbsp;&nbsp;"),
 
             # Button linking straight to the About page
@@ -157,8 +156,8 @@ ui <- fluidPage(
           )
         )
       ),
-      # Separate div to include the lab logo below the main section. Also made
-      # into a clickable link!
+      # Separate div to include the lab logo which serves as a link leading to
+      # the lab website
       tags$div(
         style = "position:fixed; bottom:0px; padding-bottom:10px",
         htmltools::HTML(paste0(
@@ -182,18 +181,21 @@ ui <- fluidPage(
         # Separate form 'wells' within the sidebar (custom CSS class)
         tags$form(
           class = "well",
-          tags$p(
-            "Upload a plain-text spreadsheet (CSV or TSV) containing ",
-            "your metabolites of interest in a single column, or try ",
-            "out our example dataset using the link below."
-          ),
+          tags$label("Upload your Metabolites"),
+
+          tags$p(HTML(
+            "Select a plain-text spreadsheet (CSV or TSV) containing your ",
+            "metabolites of interest in a single column, or try out our ",
+            "example data using the link below."
+          ), style = "padding-bottom: 5px;"),
 
           # Upload handling. Note that the "Browse..." button is customized in
           # "www/css/user.css"
           fileInput(
             inputId = "metaboliteUpload",
-            label = "Upload Metabolites",
-            accept = c(
+            label   = NULL,
+            buttonLabel = list(icon("upload"), "Browse..."),
+            accept  = c(
               "text/csv",
               "text/comma-separated-values,text/plain",
               ".csv",
@@ -211,7 +213,7 @@ ui <- fluidPage(
           # TSV or CSV?
           radioButtons(
             inputId = "sep",
-            label = "Separator",
+            label = "Choose a separator",
             choices = c(Comma = ",", Tab = "\t", Semicolon = ";"),
             selected = ","
           ),
@@ -249,28 +251,32 @@ ui <- fluidPage(
 
         tags$form(
           class = "well",
+          tags$label("Choose a Database"),
 
-          tags$p(
-            "Choose a database to map with. MetaCyc has higher quality ",
-            "annotations, but KEGG may yield more hits. If you map via KEGG, ",
-            "you also have the option to visualize your results."
-          ),
+          tags$p(HTML(
+            "Select one of the options below. MetaCyc has higher quality ",
+            "annotations, but KEGG may yield more hits. Mapping with KEGG ",
+            "will allow you to visualize your results with <b>Pathview</b>."
+          ), style = "padding-bottom: 5px;"),
 
           # Choose database for mapping.
           radioButtons(
             "dbChosen",
-            "Choose Database",
-            choices = c("MetaCyc", "KEGG"),
+            label    = NULL,
+            choices  = c("MetaCyc", "KEGG"),
             selected = "MetaCyc"
           ),
+
+          tags$br(),
 
           # Map!
           actionButton(
             "mapButton",
-            tags$b("Map"),
+            tags$b("Map Metabolites"),
             class = "btn-primary btn-tooltip",
             `data-position` = "right",
-            title = "Map your metabolites to the selected database"
+            title = "Map your metabolites to the selected database",
+            icon = icon("arrows-alt")
           )
         ),
 
@@ -328,12 +334,12 @@ ui <- fluidPage(
             tags$h2("Network-Based Integrative Analysis with MetaBridge"),
 
             tags$p(
-              "Below you will find a sample workflow for integrating your ",
+              "This page covers a sample workflow for integrating your ",
               "metabolomics data with transcriptomics or proteomics data via ",
-              "network methodologies. You can also view this tutorial on ",
+              "network methodologies. You can also view this tutorial on our",
               HTML(paste0(
                 "<a href='https://github.com/travis-m-blimkie/MetaBridgeShiny/",
-                "blob/master/tutorial/tutorial.md' target='_blank'>GitHub</a>."
+                "blob/master/tutorial/tutorial.md' target='_blank'>GitHub page.</a>"
               ))
             ),
 
@@ -349,7 +355,8 @@ ui <- fluidPage(
               tags$li(tags$a(
                 "NetworkAnalyst",
                 href = "#networkanalyst"
-              ))
+              )),
+              style = "font-size: 1.34em;"
             )
           )
         ),
@@ -419,11 +426,9 @@ ui <- fluidPage(
               "post an issue at the ",
               tags$a(
                 href = "https://github.com/hancockinformatics/MetaBridgeShiny/issues",
-                "Github page."
+                "GitHub page."
               ),
             ),
-
-            tags$br(),
 
             tags$p(
               "MetaBridge uses the following databases and R packages:"
@@ -589,8 +594,9 @@ server <- function(input, output, session) {
       tags$h4(
         class = "conditional-help",
         HTML(
-          "Check below to see that your data has been uploaded properly.  If ",
-          "so, click a column and ID type and continue via the <b>Proceed</b> button!"
+          "Check below to see that your data has been uploaded properly. If ",
+          "so, click a column, select an ID type and continue via the ",
+          "<b>Proceed</b> button!"
         )
       ),
       tags$br()
@@ -647,23 +653,24 @@ server <- function(input, output, session) {
   # ID type gets updated, which resets the entire panel, which reverts to the
   # preselected column, effectively making it impossible to switch columns!
   output$idSelector <- renderUI({
-    tags$div(
+    tags$form(
+      class = "well",
+
+      tags$label("Select an ID Type"),
 
       tags$p(HTML(
-        "Select the ID type you would like to use in the mapping. MetaBridge ",
-        "supports both HMDB or KEGG, as these will yield the ",
-        "best results. Ensure the ID selected here matches the highlighted ",
-        "column before clicking the <b>Proceed</b> button."
-      )),
+        "MetaBridge supports HMDB and KEGG, as yield the best results. Ensure ",
+        "the ID selected here matches the highlighted column before clicking ",
+        "the <b>Proceed</b> button."
+      ), style = "padding-bottom: 5px;"),
 
       radioButtons(
         inputId   = "idType",
-        label     = "ID Type",
-        width     = "50%",
+        label     = NULL,
         choices   = c("HMDB", "KEGG")
-        # selected  = preSelectedIDType(),
-        # selectize = FALSE
       ),
+
+      tags$br(),
 
       # Include button to proceed
       actionButton(
@@ -671,7 +678,8 @@ server <- function(input, output, session) {
         label   = tags$b("Proceed"),
         class   = "btn-med btn-tooltip",
         style   = "color: #fff; background-color: #2c3e50; border-color: #2c3e50;",
-        title   = "Proceed to mapping your metabolites"
+        title   = "Proceed to mapping your metabolites",
+        icon    = icon("check")
         # `data-position` = "right"
       )
     )
@@ -974,27 +982,23 @@ server <- function(input, output, session) {
     updateNavbarPage(session, inputId = "navbarLayout", selected = "uploadPanel")
   }, ignoreInit = TRUE)
 
-  # Once table exists, render the save panel...
+  # Once table exists, render the panel with the Download button.
   output$saveMappingPanel <- renderUI({
     if (!is.null(mappedMetabolites())) {
 
       tags$form(
         class = "well",
-        tags$p("Download your full mapping results below."),
-        radioButtons(
-          inputId = "saveType",
-          label   = "Save results as:",
-          choices = c("Comma-Delimited" = "csv",
-                      "Tab-Delimited"   = "tsv"),
-          selected = "csv"
-        ),
+        tags$label("Download your Results"),
 
-        # ...with a tooltip.
+        tags$p("Use the button below to download your full mapping results as ",
+        "a tab-delimited file."),
+
         downloadButton(
           "downloadMappingData",
           tags$b("Download"),
-          style = "color: #fff; background-color: #3498db; border-color: #3498db",
           class = "btn-med btn-tooltip btn-right",
+          style = "color: #fff; background-color: #3498db; border-color: #3498db",
+          `data-position` = "right",
           title = "Download your full mapping results",
         ),
 
@@ -1008,8 +1012,54 @@ server <- function(input, output, session) {
   })
 
 
+  # 4.7 Clean and export the data -------------------------------------------
 
-  # 4.7 Add navigation to Viz tab -----------------------------------------
+  # Cleaning the mapped MetaCyc (not KEGG) data before download, to remove HTML
+  # tags from reactions. Specifically, we are removing any HTML tags, using
+  # plain text arrows, and switching Greek letters to English versions.
+  cleanMappedMetabolites <- reactive({
+    req(mappedMetabolites())
+
+    if (databaseChosen() == "MetaCyc") {
+      mappedMetabolites() %>% cleanReactions(.)
+    } else {
+      mappedMetabolites()
+    }
+  })
+
+  # Export the data.
+  output$downloadMappingData <- downloadHandler(
+    # Name file format: `originalfilename_mapped_dbChosen.savetype`.
+    filename = function() {
+      paste0(
+        ifelse(
+          test = is.null(input$metaboliteUpload),
+          yes = "example_dataset",
+          no = tools::file_path_sans_ext(input$metaboliteUpload$name)
+        ),
+        "_mapped_",
+        databaseChosen(),
+        ".tsv"
+        # input$saveType
+      )
+    },
+    content = function(file) {
+      write_delim(
+        cleanMappedMetabolites(),
+        file,
+        delim = "\t"
+        # delim = switch(
+        #   input$saveType,
+        #   "csv" = ",",
+        #   "tsv" = "\t"
+        # )
+      )
+    }
+  )
+
+
+
+  # 4.8 Add navigation to Viz tab -----------------------------------------
 
   # Navigate to the "Visualize" page when KEGG was the chosen database.
   output$continueToViz <- renderUI({
@@ -1026,6 +1076,7 @@ server <- function(input, output, session) {
       tags$form(
         class = "well",
         tags$label("Visualize Results"),
+
         tags$p(
           "If you mapped against KEGG, you have the option",
           "to visualize your results with pathview."
@@ -1040,7 +1091,8 @@ server <- function(input, output, session) {
             label   = tags$b("Visualize"),
             class   = "btn btn-med btn-tooltip",
             style   = "color: #fff; background-color: #2c3e50; border-color: #2c3e50;",
-            title   = "Visualize your results with pathview"
+            title   = "Visualize your results with pathview",
+            icon    = icon("eye")
           )
         # But if we mapped against MetaCyc disable the "Visualize" button.
         } else {
@@ -1048,7 +1100,8 @@ server <- function(input, output, session) {
             inputId = "visualizeButton",
             label   = tags$b("Visualize"),
             class   = "btn btn-med btn-tooltip disabled",
-            title   = "Select a metabolite from the summary table"
+            title   = "Select a metabolite from the summary table",
+            icon    = icon("eye")
           )
         }
       )
@@ -1084,52 +1137,6 @@ server <- function(input, output, session) {
   observeEvent(input$visualizeButton, {
     updateNavbarPage(session, inputId = "navbarLayout", selected = "vizPanel")
   }, ignoreInit = TRUE)
-
-
-
-  # 4.8 Clean and export the data -------------------------------------------
-
-  # Cleaning the mapped MetaCyc (not KEGG) data before download, to remove HTML
-  # tags from reactions. Specifically, we are removing any HTML tags, using
-  # plain text arrows, and switching Greek letters to English versions.
-  cleanMappedMetabolites <- reactive({
-    req(mappedMetabolites())
-
-    if (databaseChosen() == "MetaCyc") {
-      mappedMetabolites() %>% cleanReactions(.)
-    } else {
-      mappedMetabolites()
-    }
-  })
-
-  # Export the data.
-  output$downloadMappingData <- downloadHandler(
-    # Name file format: `originalfilename_mapped_dbChosen.savetype`.
-    filename = function() {
-      paste0(
-        ifelse(
-          test = is.null(input$metaboliteUpload),
-          yes = "example_dataset",
-          no = tools::file_path_sans_ext(input$metaboliteUpload$name)
-        ),
-        "_mapped_",
-        databaseChosen(),
-        ".",
-        input$saveType
-      )
-    },
-    content = function(file) {
-      write_delim(
-        cleanMappedMetabolites(),
-        file,
-        delim = switch(
-          input$saveType,
-          "csv" = ",",
-          "tsv" = "\t"
-        )
-      )
-    }
-  )
 
 
   # 4.9 Viz tab handlers ----------------------------------------------------
@@ -1207,11 +1214,11 @@ server <- function(input, output, session) {
           choices = selectedRowAttrs$pathwaysOfSelectedCompound$namedPway,
           selectize = FALSE
         ),
-        tags$p("Each pathway may take some time to process."),
-        tags$p(
-          "For each pathway, only the compound selected is shown, but ALL ",
-          "mapped genes are shown."
-        )
+        tags$p("Note that each pathway may take some time to process."),
+        tags$p(HTML(
+          "For each pathway, only the compound selected is shown, but ",
+          "<b>ALL</b> mapped genes are shown."
+        ))
       )
     } else if (databaseChosen() == "MetaCyc") {
       tags$div(
