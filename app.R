@@ -600,6 +600,7 @@ server <- function(input, output, session) {
       return(NULL)
     }
     tagList(
+      tags$h2("Input Data Preview", style = "margin-top: 0; margin-bottom: 0;"),
       tags$h4(
         class = "conditional-help",
         HTML(
@@ -1204,30 +1205,29 @@ server <- function(input, output, session) {
     # Check for results before rendering!
     if (nrow(selectedRowAttrs$pathwaysOfSelectedCompound) == 0) {
       tags$div(
-        tags$h4(
-          paste0(
-            "Pathways for ",
-            selectedRowAttrs$selectedCompoundName
-          )
-        ),
+        tags$h4(tags$b(
+          paste0("Pathways for ", selectedRowAttrs$selectedCompoundName)
+        )),
         tags$p("No pathways found for this compound.")
       )
     } else if (databaseChosen() == "KEGG") {
       tags$div(
-        tags$h4(paste0(
+
+        tags$h4(tags$b(paste0(
           "Pathways for ",
-          stringr::str_to_title(selectedRowAttrs$selectedCompoundName)
-        )),
+          str_to_title(selectedRowAttrs$selectedCompoundName)
+        ))),
+
         selectInput(
           inputId = "pathwaysPicked",
           label = "",
           choices = selectedRowAttrs$pathwaysOfSelectedCompound$namedPway,
           selectize = FALSE
         ),
-        tags$p("Note that each pathway may take some time to process."),
-        tags$p(HTML(
-          "For each pathway, only the compound selected is shown, but ",
-          "<b>ALL</b> mapped genes are shown."
+
+        tags$p(HTML("Note that each pathway may take some time to process. ",
+        "For each pathway, only the compound selected is shown, but <b>ALL",
+        "</b> mapped genes are shown."
         ))
       )
     } else if (databaseChosen() == "MetaCyc") {
