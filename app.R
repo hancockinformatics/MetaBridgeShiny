@@ -56,8 +56,21 @@ ui <- fluidPage(
     windowTitle = "MetaBridge",
     collapsible = TRUE,
 
-    title = htmltools::HTML(
-      "<img src='pics/logo_white.svg' alt='' height='28'"
+    # title = htmltools::HTML(
+    #   "<img src='pics/logo_white.svg' alt='' height='28'"
+    # ),
+    title = div(
+      htmltools::HTML(
+          "<img src='pics/logo_white.svg' alt='' height='28'>"
+        ),
+
+      tags$div(
+        id = "github-img",
+        htmltools::HTML(paste0(
+          "<a href='https://github.com/hancockinformatics/MetaBridgeShiny'> ",
+          "<img src = 'github.svg'> </a>"
+        ))
+      )
     ),
 
     # Make sure we enable ShinyJS. We also add the `tags$style()` call to add

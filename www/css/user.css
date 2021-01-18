@@ -206,3 +206,11 @@ dl dd {
 .checkbox {
   margin-top: 5px;
 }
+
+#github-img{
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  bottom: 0;
+  height: 25px;
+}
