@@ -35,7 +35,9 @@ generateSummaryTable <- function(mappingObject,
         "# Genes (MetaCyc)" = n_distinct(`MetaCyc Gene`, na.rm = TRUE),
         "# Gene Names" = n_distinct(`Gene Name`, na.rm = TRUE),
         "# Genes (Ensembl)" = n_distinct(`Ensembl`, na.rm = TRUE)
-      ) %>% ungroup()
+      ) %>%
+      ungroup() %>%
+      arrange(Compound)
 
     # Return the results for the user, and provide database info
     return(list("table" = table, "dbChosen" = "MetaCyc"))
@@ -51,7 +53,9 @@ generateSummaryTable <- function(mappingObject,
         "# Enzymes" = n_distinct(`Enzyme`, na.rm = TRUE),
         "# Gene Names" = n_distinct(`Gene Name`, na.rm = TRUE),
         "# Genes (Entrez)" = n_distinct(`Entrez`, na.rm = TRUE)
-      ) %>% ungroup()
+      ) %>%
+      ungroup() %>%
+      arrange(Compound)
 
     # Return the results for the user, and provide database info
     return(list("table" = table, "dbChosen" = "KEGG"))
@@ -109,7 +113,8 @@ generateMetaCycMetabTable <- function(mappingObject,
 
     # Filter the mapping object for the selected metabolite
     filteredMappedMetaboliteTable <- mappingObject$data %>%
-      filter(!!(namedIDType) == !!(quotedSelectedMetab))
+      filter(!!(namedIDType) == !!(quotedSelectedMetab)) %>%
+      arrange(`Gene Name`)
 
     # Return the filtered table to the user (i.e. the details behind the summary
     # for that paritular metabolite)
@@ -171,7 +176,8 @@ generateKEGGMetabTable <- function(mappingObject,
 
     # Filter the full mapping table based on chosen compund
     filteredMappedMetaboliteTable <- mappingObject$data %>%
-      filter(!!(namedIDType) == !!(quotedSelectedMetab))
+      filter(!!(namedIDType) == !!(quotedSelectedMetab)) %>%
+      arrange(`Gene Name`)
 
     return(filteredMappedMetaboliteTable)
   }

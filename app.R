@@ -51,13 +51,14 @@ ui <- fluidPage(
   # * 3.1 Begin the tab bar layout -------------------------------------------
 
   navbarPage(
-    title = htmltools::HTML(
-      "<img src='pics/logo_white.svg' alt='' height='28'"
-    ),
     id          = "navbarLayout",
     position    = "fixed-top",
     windowTitle = "MetaBridge",
     collapsible = TRUE,
+
+    title = htmltools::HTML(
+      "<img src='pics/logo_white.svg' alt='' height='28'"
+    ),
 
     # Make sure we enable ShinyJS. We also add the `tags$style()` call to add
     # space between the navbar and body content; otherwise the navbar would
@@ -124,7 +125,7 @@ ui <- fluidPage(
             actionButton(
               inputId = "getStarted",
               label = "Initializing App...",
-              class = "btn-primary btn-lg disabled", # btn-tooltip
+              class = "btn-primary btn-lg disabled",
               `data-position` = "bottom",
               icon("circle-o-notch", class = "fa fa-spin", lib = "font-awesome")
             ),
@@ -136,7 +137,7 @@ ui <- fluidPage(
             actionButton(
               inputId = "tutorial",
               label   = "Tutorial",
-              class   = "btn-success btn-lg btn-tooltip btn-hidden", # btn-tooltip
+              class   = "btn-success btn-lg btn-tooltip btn-hidden",
               style   = "width: 155px",
               title   = "Learn how to use MetaBridge for integrative analysis.",
               `data-position` = "bottom"
@@ -148,8 +149,8 @@ ui <- fluidPage(
             actionButton(
               inputId = "about",
               label = "About",
-              class = "btn-primary btn-lg btn-tooltip btn-hidden", # btn-tooltip
-              style = "color: #fff; background-color: #3498db; border-color: #3498db; width: 155px",
+              class = "btn-info btn-lg btn-tooltip btn-hidden",
+              style = "width: 155px",
               `data-position` = "bottom",
               title = "Learn more about MetaBridge."
             )
@@ -186,11 +187,12 @@ ui <- fluidPage(
           tags$p(HTML(
             "Select a plain-text spreadsheet (ending in csv, txt, or tsv) ",
             "containing your metabolites of interest in a single column. You ",
-            "can also try our example data using the link below."
+            "can also try our example data using the button below."
           ), style = "padding-bottom: 5px;"),
 
           # Upload handling. Note that the "Browse..." button is customized in
-          # "www/css/user.css"
+          # "www/css/user.css". We set the the label to NULL so we can include
+          # an icon along with the text via the "buttonLabel" argument.
           fileInput(
             inputId = "metaboliteUpload",
             label   = NULL,
@@ -227,13 +229,14 @@ ui <- fluidPage(
             selected = ","
           ),
 
+          tags$br(),
+
           # OR, try our example!
-          actionLink(
+          actionButton(
             inputId = "tryExamples",
-            class = "btn btn-link btn-med btn-tooltip",
+            class = "btn-secondary btn-tooltip",
             `data-position` = "right",
-            label = tags$b("Try Example"),
-            style = "font-size:110%",
+            label = tags$b("Try Example Data"),
             title = "Try an example dataset from MetaboAnalyst"
           )
         ),
@@ -687,8 +690,7 @@ server <- function(input, output, session) {
       actionButton(
         inputId = "continueToMap",
         label   = tags$b("Proceed"),
-        class   = "btn-med btn-tooltip",
-        style   = "color: #fff; background-color: #2c3e50; border-color: #2c3e50;",
+        class   = "btn-primary btn-tooltip",
         title   = "Proceed to mapping your metabolites",
         icon    = icon("check")
         # `data-position` = "right"
@@ -1007,8 +1009,7 @@ server <- function(input, output, session) {
         downloadButton(
           "downloadMappingData",
           tags$b("Download"),
-          class = "btn-med btn-tooltip btn-right",
-          style = "color: #fff; background-color: #3498db; border-color: #3498db",
+          class = "btn-info btn-tooltip btn-right",
           `data-position` = "right",
           title = "Download your full mapping results",
         ),
@@ -1093,15 +1094,15 @@ server <- function(input, output, session) {
           "to visualize your results with pathview."
         ),
 
-        br(),
+        tags$br(),
+        tags$br(),
 
         # If we mapped against KEGG, show "Visualize" button.
         if (databaseChosen() == "KEGG" & !is.null(selectedMetab())) {
           actionButton(
             inputId = "visualizeButton",
             label   = tags$b("Visualize"),
-            class   = "btn btn-med btn-tooltip",
-            style   = "color: #fff; background-color: #2c3e50; border-color: #2c3e50;",
+            class   = "btn-med btn-primary btn-tooltip",
             title   = "Visualize your results with pathview",
             icon    = icon("eye")
           )
@@ -1110,7 +1111,7 @@ server <- function(input, output, session) {
           actionButton(
             inputId = "visualizeButton",
             label   = tags$b("Visualize"),
-            class   = "btn btn-med btn-tooltip disabled",
+            class   = "btn-med btn-tooltip disabled",
             title   = "Select a metabolite from the summary table",
             icon    = icon("eye")
           )
