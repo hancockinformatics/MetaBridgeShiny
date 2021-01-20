@@ -280,8 +280,8 @@ ui <- fluidPage(
 
           tags$p(HTML(
             "Select one of the options below. MetaCyc has higher quality ",
-            "annotations, but KEGG may yield more hits and also allow you to ",
-            "visualize your results with <b>Pathview</b>."
+            "annotations, but KEGG may yield more hits, and will also allow ",
+            "you to visualize your results with <b>Pathview</b>."
           ), style = "padding-bottom: 5px;"),
 
           # Choose database for mapping.
@@ -1102,10 +1102,10 @@ server <- function(input, output, session) {
         class = "well",
         tags$label("Visualize Results"),
 
-        tags$p(
+        tags$p(HTML(
           "If you mapped against KEGG, you have the option",
-          "to visualize your results with pathview."
-        ),
+          "to visualize your results with <b>Pathview</b>."
+        )),
 
         tags$br(),
         tags$br(),
