@@ -10,7 +10,7 @@ interest and their corresponding metabolite IDs. We recommend
 
 ---
 
-<h2 id='metabridge-mapping'>2. <a href="https://www.metabridge.org">MetaBridge</a> Mapping</h2>
+<h2 id='metabridge-mapping'>2. MetaBridge Mapping</h2>
 
 ### I. Upload Metabolites
 
