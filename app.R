@@ -15,6 +15,8 @@ library(shinyjs)
 # White         #fff
 
 
+
+
 # 2. To-do ----------------------------------------------------------------
 
 # Need to run these lines each time app is published so packages from
@@ -28,7 +30,7 @@ library(shinyjs)
 # 3. Define UI code -------------------------------------------------------
 
 # Workaround to ensure logo in top left corner (tab bar) is found/rendered when
-# app is published to ShinyAppsIO.
+# app is published to "shinyapps.io"
 addResourcePath(prefix = "pics", directoryPath = "./www")
 
 ui <- fluidPage(
@@ -124,7 +126,7 @@ ui <- fluidPage(
           tags$p(
             "Click the button below to Get Started! If you'd like to learn ",
             "more about how MetaBridge can be used, check the Tutorial. For ",
-            "more information, including where to report bugs & problems or ",
+            "more information, including where to report bugs or problems and ",
             "how to cite MetaBridge, please refer to the About page."
           ),
 
@@ -198,9 +200,9 @@ ui <- fluidPage(
           tags$label("Upload your Metabolites"),
 
           tags$p(HTML(
-            "Select a plain-text spreadsheet (ending in csv, txt, or tsv) ",
-            "containing your metabolites of interest in a single column. You ",
-            "can also try our example data using the button below."
+            "Select a plain-text spreadsheet (a file ending in csv, txt, or ",
+            "tsv) containing your metabolites of interest in a single column. ",
+            "You can also try our example data using the button below."
           ), style = "padding-bottom: 5px;"),
 
           # Upload handling. Note that the "Browse..." button is customized in
@@ -234,23 +236,23 @@ ui <- fluidPage(
             value   = TRUE
           ),
 
-          # TSV or CSV?
+          # Tab- or comma-separated?
           radioButtons(
             inputId = "sep",
-            label = "Choose a separator for your data",
+            label = "How is your data separated?",
             choices = c(Comma = ",", Tab = "\t", Semicolon = ";"),
             selected = ","
           ),
 
           tags$br(),
 
-          # OR, try our example!
+          # Or try our example data
           actionButton(
             inputId = "tryExamples",
-            class = "btn-secondary btn-tooltip",
+            class   = "btn-secondary btn-tooltip",
             `data-position` = "right",
-            label = tags$b("Try Example Data"),
-            title = "Try an example dataset from MetaboAnalyst"
+            label   = tags$b("Try Example Data"),
+            title   = "Try an example dataset from MetaboAnalyst"
           )
         ),
 
@@ -434,16 +436,13 @@ ui <- fluidPage(
               "MetaBridge results using",
               tags$a(
                 href = "https://networkanalyst.ca",
-                "NetworkAnalyst",
-                .noWS = "after"
+                "NetworkAnalyst."
               ),
-              ". The article is available at doi:",
+              "The article is available at doi:",
               tags$a(
                 href = "https://doi.org/10.1002/cpbi.98",
-                "10.1002/cpbi.98",
-                .noWS = "after"
-              ),
-              "."
+                "10.1002/cpbi.98."
+              )
             ),
 
             tags$p(
