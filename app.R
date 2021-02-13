@@ -651,8 +651,8 @@ server <- function(input, output, session) {
   rownames = FALSE,
   selection = list(
     mode     = "single",
-    target   = "column",
-    selected = 0
+    target   = "column"
+    # selected = 0
   ),
   style = "bootstrap",
   class = "table-bordered table-responsive"

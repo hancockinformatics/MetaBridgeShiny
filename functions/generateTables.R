@@ -31,10 +31,10 @@ generateSummaryTable <- function(mappingObject,
       # group_by(!!sym(idType), HMDB, KEGG, Compound) %>%
       group_by(HMDB, KEGG, Compound) %>%
       summarize(
-        "# Reactions" = n_distinct(`Reaction`, na.rm = TRUE),
-        "# Genes (MetaCyc)" = n_distinct(`MetaCyc Gene`, na.rm = TRUE),
-        "# Gene Names" = n_distinct(`Gene Name`, na.rm = TRUE),
-        "# Genes (Ensembl)" = n_distinct(`Ensembl`, na.rm = TRUE)
+        "Reactions" = n_distinct(`Reaction`, na.rm = TRUE),
+        "Genes (MetaCyc)" = n_distinct(`MetaCyc Gene`, na.rm = TRUE),
+        "Gene Names" = n_distinct(`Gene Name`, na.rm = TRUE),
+        "Genes (Ensembl)" = n_distinct(`Ensembl`, na.rm = TRUE)
       ) %>%
       ungroup() %>%
       arrange(Compound)
@@ -50,9 +50,9 @@ generateSummaryTable <- function(mappingObject,
       # group_by(!!sym(idType), KEGG, Compound) %>%
       group_by(KEGG, HMDB, Compound) %>% # changed here
       summarize(
-        "# Enzymes" = n_distinct(`Enzyme`, na.rm = TRUE),
-        "# Gene Names" = n_distinct(`Gene Name`, na.rm = TRUE),
-        "# Genes (Entrez)" = n_distinct(`Entrez`, na.rm = TRUE)
+        "Enzymes" = n_distinct(`Enzyme`, na.rm = TRUE),
+        "Gene Names" = n_distinct(`Gene Name`, na.rm = TRUE),
+        "Genes (Entrez)" = n_distinct(`Entrez`, na.rm = TRUE)
       ) %>%
       ungroup() %>%
       arrange(Compound)
