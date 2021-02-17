@@ -619,9 +619,10 @@ server <- function(input, output, session) {
       tags$h4(
         class = "conditional-help",
         HTML(
-          "Check below to see that your data has been uploaded properly. If ",
-          "so, click a column to <b>highlight it in blue</b>, select the matching ",
-          "ID type and continue via the <b>Proceed</b> button!"
+          "Check below to see if your data was loaded correctly. If so, click ",
+          "a column to <b><u>highlight it in blue</u></b>, select the ",
+          "matching ID type in the lower left box, then continue via the ",
+          "<b>Proceed</b> button!"
         )
       ),
       tags$br()
@@ -662,7 +663,10 @@ server <- function(input, output, session) {
     tags$div(
       class = "col-sm-9",
       uiOutput("uploadSuccess"),
-      DT::dataTableOutput("uploadedDataTable")
+      DT::dataTableOutput("uploadedDataTable"),
+
+      # tags$hr(),
+      # verbatimTextOutput("picked_column")
     )
   })
 
@@ -686,8 +690,8 @@ server <- function(input, output, session) {
 
       tags$p(HTML(
         "MetaBridge supports mapping with HMDB or KEGG metabolite IDs. Ensure ",
-        "the ID selected here matches the highlighted column before clicking ",
-        "the <b>Proceed</b> button."
+        "the ID selected here matches the chosen column (<b><u>highlighted in ",
+        "blue</u></b>) before clicking the <b>Proceed</b> button."
       ), style = "padding-bottom: 5px;"),
 
       radioButtons(
@@ -699,13 +703,15 @@ server <- function(input, output, session) {
       tags$br(),
 
       # Include button to proceed
-      actionButton(
-        inputId = "continueToMap",
-        label   = tags$b("Proceed"),
-        class   = "btn-primary btn-tooltip",
-        title   = "Proceed to mapping your metabolites",
-        icon    = icon("check")
-        # `data-position` = "right"
+      disabled(
+        actionButton(
+          inputId = "continueToMap",
+          label   = tags$b("Proceed"),
+          class   = "btn-primary btn-tooltip",
+          title   = "Proceed to mapping your metabolites",
+          icon    = icon("check")
+          # `data-position` = "right"
+        )
       )
     )
   })
@@ -746,6 +752,10 @@ server <- function(input, output, session) {
     columnPicked(columnName)
   })
 
+
+  output$picked_column <- renderPrint(columnPicked())
+
+
   # When data is populated, show column picker panel for users to select. This
   # is separate from the actual code to render so that we can only depend on
   # specific events triggering re-renders.
@@ -757,13 +767,21 @@ server <- function(input, output, session) {
   # If the selected ID type is a column name in the data frame, preselect that
   # column for use in mapping. Check that we have a column selected first,
   # otherwise the second if statement causes an error and the app crashes.
+  # observeEvent(columnPicked(), {
+  #   if (length(columnPicked()) != 0) {
+  #     if (tolower(columnPicked()) %in% c("hmdb", "kegg")) {
+  #       preSelectedIDType(columnPicked())
+  #     }
+  #   }
+  # }, ignoreInit = TRUE)
+
   observeEvent(columnPicked(), {
-    if (length(columnPicked()) != 0) {
-      if (tolower(columnPicked()) %in% c("hmdb", "kegg")) {
-        preSelectedIDType(columnPicked())
-      }
+    if ( length(columnPicked()) != 0 ) {
+      enable("continueToMap")
+    } else {
+      disable("continueToMap")
     }
-  }, ignoreInit = TRUE)
+  })
 
   # Switch to `Map` panel when "Proceed" is clicked on the `Upload` tab
   observeEvent(input$continueToMap, {
