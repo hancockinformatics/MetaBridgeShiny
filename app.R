@@ -620,8 +620,8 @@ server <- function(input, output, session) {
         class = "conditional-help",
         HTML(
           "Check below to see that your data has been uploaded properly. If ",
-          "so, click a column, select the matching ID type and continue via ",
-          "the <b>Proceed</b> button!"
+          "so, click a column to <b>highlight it in blue</b>, select the matching ",
+          "ID type and continue via the <b>Proceed</b> button!"
         )
       ),
       tags$br()
@@ -710,6 +710,7 @@ server <- function(input, output, session) {
     )
   })
 
+
   # Render the UI for the column picker panel
   columnPickerUI <- eventReactive({
     # Change on button click (uploaded file or example data)...
@@ -732,6 +733,7 @@ server <- function(input, output, session) {
     }
   })
 
+
   observeEvent({
   	input$uploadedDataTable_columns_selected
   	input$sep
@@ -750,6 +752,7 @@ server <- function(input, output, session) {
   output$columnPickerPanel <- renderUI({
     columnPickerUI()
   })
+
 
   # If the selected ID type is a column name in the data frame, preselect that
   # column for use in mapping. Check that we have a column selected first,
