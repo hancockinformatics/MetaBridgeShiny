@@ -78,6 +78,11 @@
   text-align: center;
 }*/
 
+
+.alert:hover {
+  color: #ffffff;
+}
+
 /*Make action link within alert normal color*/
 .alert a.action-button {
   color: #ffffff;
