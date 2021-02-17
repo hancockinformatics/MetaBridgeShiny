@@ -703,16 +703,16 @@ server <- function(input, output, session) {
       tags$br(),
 
       # Include button to proceed
-      disabled(
+      # disabled(
         actionButton(
           inputId = "continueToMap",
           label   = tags$b("Proceed"),
-          class   = "btn-primary btn-tooltip",
-          title   = "Proceed to mapping your metabolites",
+          class   = "btn-primary btn-tooltip disabled",
+          title   = "Select a column then click here to proceed with mapping",
           icon    = icon("check")
           # `data-position` = "right"
         )
-      )
+      #)
     )
   })
 
