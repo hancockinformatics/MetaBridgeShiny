@@ -669,7 +669,9 @@ server <- function(input, output, session) {
       DT::dataTableOutput("uploadedDataTable"),
 
       # tags$hr(),
-      # verbatimTextOutput("chosen_id")
+      # tags$p("ID"),
+      # verbatimTextOutput("chosen_id"),
+      # tags$p("Col"),
       # verbatimTextOutput("picked_column")
     )
   })
@@ -697,7 +699,7 @@ server <- function(input, output, session) {
 
       tags$p(HTML(
         "MetaBridge supports mapping with HMDB or KEGG metabolite IDs. Ensure ",
-        "the ID selected here matches the chosen column <b><u>highlighted in ",
+        "the ID selected here matches the column <b><u>highlighted in ",
         "blue</u></b> before clicking the <b>Proceed</b> button."
       ), style = "padding-bottom: 5px;"),
 
@@ -712,13 +714,14 @@ server <- function(input, output, session) {
       tags$br(),
 
       # Include button to proceed, which is disabled until a column is selected
+      # and the appropriate ID type is chosen
       disabled(
         actionButton(
           inputId = "continueToMap",
           label   = tags$b("Proceed"),
           class   = "btn-primary btn-tooltip",
           icon    = icon("check"),
-          title   = "Click here to proceed to the mapping step"
+          title   = "Continue to the mapping step"
         )
       )
     )
@@ -778,6 +781,8 @@ server <- function(input, output, session) {
   # If the selected ID type is a column name in the data frame, preselect that
   # column for use in mapping. Check that we have a column selected first,
   # otherwise the second if statement causes an error and the app crashes.
+  # Note that the current app version does not actually employ this section, a
+  # it interferes with the enabling/disabling of the Proceed button (FIX?)
   observeEvent(columnPicked(), {
     if (length(columnPicked()) != 0) {
       if (tolower(columnPicked()) %in% c("hmdb", "kegg")) {
