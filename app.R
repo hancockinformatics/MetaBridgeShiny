@@ -615,14 +615,17 @@ server <- function(input, output, session) {
       return(NULL)
     }
     tagList(
-      tags$h2("Input Data Preview", style = "margin-top: 0; margin-bottom: 0;"),
+      tags$h2(
+        "Input Data Preview & ID Selection",
+        style = "margin-top: 0; margin-bottom: 0;"
+      ),
       tags$h4(
         class = "conditional-help",
         HTML(
           "Check below to see if your data was loaded correctly. If so, click ",
           "a column to <b><u>highlight it in blue</u></b>, select the ",
           "matching ID type in the lower left box, then continue via the ",
-          "<b>Proceed</b> button!"
+          "<b>Proceed</b> button."
         )
       ),
       tags$br()
@@ -666,6 +669,7 @@ server <- function(input, output, session) {
       DT::dataTableOutput("uploadedDataTable"),
 
       # tags$hr(),
+      # verbatimTextOutput("chosen_id")
       # verbatimTextOutput("picked_column")
     )
   })
@@ -682,6 +686,9 @@ server <- function(input, output, session) {
   # the entire column picker panel has to be re-rendered when the preselected
   # ID type gets updated, which resets the entire panel, which reverts to the
   # preselected column, effectively making it impossible to switch columns!
+
+  # Note that enabling the auto selection via the "selected" argument causes an
+  # issue with the Proceed button enabling, so it's been left out for now.
   output$idSelector <- renderUI({
     tags$form(
       class = "well",
@@ -690,29 +697,30 @@ server <- function(input, output, session) {
 
       tags$p(HTML(
         "MetaBridge supports mapping with HMDB or KEGG metabolite IDs. Ensure ",
-        "the ID selected here matches the chosen column (<b><u>highlighted in ",
-        "blue</u></b>) before clicking the <b>Proceed</b> button."
+        "the ID selected here matches the chosen column <b><u>highlighted in ",
+        "blue</u></b> before clicking the <b>Proceed</b> button."
       ), style = "padding-bottom: 5px;"),
 
       radioButtons(
         inputId   = "idType",
         label     = NULL,
-        choices   = c("HMDB", "KEGG")
+        choices   = c("HMDB", "KEGG"),
+        selected  = character(0)
+        # selected  = preSelectedIDType()
       ),
 
       tags$br(),
 
-      # Include button to proceed
-      # disabled(
+      # Include button to proceed, which is disabled until a column is selected
+      disabled(
         actionButton(
           inputId = "continueToMap",
           label   = tags$b("Proceed"),
-          class   = "btn-primary btn-tooltip disabled",
-          title   = "Select a column then click here to proceed with mapping",
-          icon    = icon("check")
-          # `data-position` = "right"
+          class   = "btn-primary btn-tooltip",
+          icon    = icon("check"),
+          title   = "Click here to proceed to the mapping step"
         )
-      #)
+      )
     )
   })
 
@@ -753,7 +761,10 @@ server <- function(input, output, session) {
   })
 
 
+  # Grab some reactive variable to check their values; returned under the input
+  # data table. Just here to aid with development and testing.
   output$picked_column <- renderPrint(columnPicked())
+  output$chosen_id <- renderPrint(input$idType)
 
 
   # When data is populated, show column picker panel for users to select. This
@@ -767,16 +778,26 @@ server <- function(input, output, session) {
   # If the selected ID type is a column name in the data frame, preselect that
   # column for use in mapping. Check that we have a column selected first,
   # otherwise the second if statement causes an error and the app crashes.
-  # observeEvent(columnPicked(), {
-  #   if (length(columnPicked()) != 0) {
-  #     if (tolower(columnPicked()) %in% c("hmdb", "kegg")) {
-  #       preSelectedIDType(columnPicked())
-  #     }
-  #   }
-  # }, ignoreInit = TRUE)
-
   observeEvent(columnPicked(), {
-    if ( length(columnPicked()) != 0 ) {
+    if (length(columnPicked()) != 0) {
+      if (tolower(columnPicked()) %in% c("hmdb", "kegg")) {
+        preSelectedIDType(columnPicked())
+      }
+    }
+  }, ignoreInit = TRUE)
+
+
+
+  # Since the Proceed button starts disabled, we need to enable it under the
+  # proper circumstances. The user needs to have chosen an ID type to use in the
+  # mapping, and selected a column before the Proceed button is enabled. The
+  # closing `else()` is included so that if the conditions are met, then un-met,
+  # (i.e. click on the same column twice) the button is again disabled.
+  observeEvent({
+    columnPicked()
+    input$idType
+  }, {
+    if (all( length(columnPicked()) != 0 & !is.null(input$idType) )) {
       enable("continueToMap")
     } else {
       disable("continueToMap")
@@ -1120,7 +1141,7 @@ server <- function(input, output, session) {
     } else {
       tags$form(
         class = "well",
-        tags$label("Visualize Results"),
+        tags$label("Visualize your Results"),
 
         tags$p(HTML(
           "If you mapped against KEGG, you have the option",
