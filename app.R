@@ -1,5 +1,17 @@
 
-# 1. Load the first couple libraries --------------------------------------
+# 1. To-do ----------------------------------------------------------------
+
+# Updated the tutorial images
+
+# Need to run these lines each time app is published so packages from
+# Bioconductor can be found by Shiny.
+# library(BiocManager)
+# options(repos = BiocManager::repositories())
+
+
+
+
+# 2. Load the first couple libraries --------------------------------------
 
 # Most libraries and functions are loaded through a call to `deferred.R` at the
 # beginning of the `server()` function (approx. #488).
@@ -13,16 +25,6 @@ library(shinyjs)
 # DT blue       #0075b0
 # Grey          #ecf0f1
 # White         #fff
-
-
-
-
-# 2. To-do ----------------------------------------------------------------
-
-# Need to run these lines each time app is published so packages from
-# Bioconductor can be found by Shiny.
-# library(BiocManager)
-# options(repos = BiocManager::repositories())
 
 
 
@@ -251,7 +253,7 @@ ui <- fluidPage(
             inputId = "tryExamples",
             class   = "btn-secondary btn-tooltip",
             `data-position` = "right",
-            label   = tags$b("Try Example Data"),
+            label   = tags$b("Load Example Data"),
             title   = "Try an example dataset from MetaboAnalyst"
           )
         ),
@@ -622,10 +624,13 @@ server <- function(input, output, session) {
       tags$h4(
         class = "conditional-help",
         HTML(
-          "Check below to see if your data was loaded correctly. If so, click ",
-          "a column to <b><u>highlight it in blue</u></b>, select the ",
-          "matching ID type in the lower left box, then continue via the ",
-          "<b>Proceed</b> button."
+          # "Check below to see if your data was loaded correctly. If so, click ",
+          # "a column to <b><u>highlight it in blue</u></b>, select the ",
+          # "matching ID type in the lower left box, then continue via the ",
+          # "<b>Proceed</b> button."
+          "If your data has loaded correctly, click a column to ",
+          "<b><u>highlight it in blue</u></b>, select the matching ID type in ",
+          "the lower left box, then continue via the <b>Proceed</b> button."
         )
       ),
       tags$br()
@@ -764,8 +769,8 @@ server <- function(input, output, session) {
   })
 
 
-  # Grab some reactive variable to check their values; returned under the input
-  # data table. Just here to aid with development and testing.
+  # Grab some reactive variable to check their values, printed under the input
+  # data preview. Just here to aid with development and testing.
   output$picked_column <- renderPrint(columnPicked())
   output$chosen_id <- renderPrint(input$idType)
 
