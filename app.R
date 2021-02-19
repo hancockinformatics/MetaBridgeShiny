@@ -232,7 +232,7 @@ ui <- fluidPage(
           ),
           checkboxInput(
             inputId = "header",
-            label   = "Header",
+            label   = "My data has a header",
             value   = TRUE
           ),
 
@@ -1067,7 +1067,7 @@ server <- function(input, output, session) {
 
         downloadButton(
           "downloadMappingData",
-          tags$b("Download"),
+          tags$b("Download Results"),
           class = "btn-info btn-tooltip btn-right",
           `data-position` = "right",
           title = "Download your full mapping results",
