@@ -1154,8 +1154,8 @@ server <- function(input, output, session) {
         tags$label("Visualize your Results"),
 
         tags$p(HTML(
-          "If you mapped against KEGG, you have the option",
-          "to visualize your results with <b>Pathview</b>."
+          "If you mapped your metabolites using data from KEGG, you have the ",
+          "option to visualize your results with <b>Pathview</b>."
         )),
 
         tags$br(),
