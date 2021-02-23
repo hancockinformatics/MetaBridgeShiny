@@ -63,7 +63,9 @@ ui <- fluidPage(
     # title = htmltools::HTML(
     #   "<img src='pics/logo_white.svg' alt='' height='28'"
     # ),
-    title = div(
+    title = tags$div(
+      id = "title_tab_bar",
+
       htmltools::HTML(
           "<img src='pics/logo_white.svg' alt='' height='28'>"
         ),
@@ -1155,7 +1157,9 @@ server <- function(input, output, session) {
 
         tags$p(HTML(
           "If you mapped your metabolites using data from KEGG, you have the ",
-          "option to visualize your results with <b>Pathview</b>."
+          "option to visualize your results with <b>Pathview</b>. Select a ",
+          "metabolite from the top table, then click the button below to see ",
+          "the pathways it's involved in."
         )),
 
         tags$br(),
@@ -1270,41 +1274,51 @@ server <- function(input, output, session) {
     # Check for results before rendering!
     if (nrow(selectedRowAttrs$pathwaysOfSelectedCompound) == 0) {
       tags$div(
-        tags$h4(tags$b(
-          paste0("Pathways for ", selectedRowAttrs$selectedCompoundName)
-        )),
+        tags$label(tags$b(paste0(
+          "Pathways for ",
+          selectedRowAttrs$selectedCompoundName
+        ))),
         tags$p("No pathways found for this compound.")
       )
     } else if (databaseChosen() == "KEGG") {
       tags$div(
 
-        tags$h4(tags$b(paste0(
+        tags$label(tags$b(paste0(
           "Pathways for ",
           str_to_title(selectedRowAttrs$selectedCompoundName)
         ))),
 
-        selectInput(
-          inputId = "pathwaysPicked",
-          label = "",
-          choices = selectedRowAttrs$pathwaysOfSelectedCompound$namedPway,
-          selectize = FALSE
-        ),
+        tags$p(HTML(
+          "Note that each pathway may take some time to process. ",
+          "For each pathway, only the compound selected is shown, but <b>ALL",
+          "</b> mapped genes are shown."
+        ), style = "padding-bottom: 0; margin-bottom: 0"),
 
-        tags$p(HTML("Note that each pathway may take some time to process. ",
-        "For each pathway, only the compound selected is shown, but <b>ALL",
-        "</b> mapped genes are shown."
-        ))
+        selectInput(
+          inputId   = "pathwaysPicked",
+          label     = "",
+          choices   = selectedRowAttrs$pathwaysOfSelectedCompound$namedPway,
+          selectize = FALSE
+        )
       )
     } else if (databaseChosen() == "MetaCyc") {
       tags$div(
-        tags$h4(paste0(
+
+        tags$label(paste0(
           "Pathways for ",
           selectedRowAttrs$selectedCompoundName
         )),
+
+        tags$p(HTML(
+          "Note that each pathway may take some time to process. ",
+          "For each pathway, only the compound selected is shown, but <b>ALL",
+          "</b> mapped genes are shown."
+        ), style = "padding-bottom: 0; margin-bottom: 0"),
+
         selectInput(
-          inputId = "pathwaysPicked",
-          label = "",
-          choices = selectedRowAttrs$pathwaysOfSelectedCompound$pathwayName,
+          inputId   = "pathwaysPicked",
+          label     = "",
+          choices   = selectedRowAttrs$pathwaysOfSelectedCompound$pathwayName,
           selectize = FALSE
         )
       )
