@@ -3,8 +3,8 @@
 
 # Updated the tutorial images
 
-# Need to run these lines each time app is published so packages from
-# Bioconductor can be found by Shiny.
+# These lines need to be run each time app is published on "shinyapps.io" so
+# packages from Bioconductor can be loaded.
 # library(BiocManager)
 # options(repos = BiocManager::repositories())
 
@@ -657,7 +657,7 @@ server <- function(input, output, session) {
   # DataTable options. We only need to provide options which we want different
   # from our defaults defined in "deferred.R".
   options = list(
-    scrollY = "50vh"
+    scrollY = "70vh"
   ),
   rownames = FALSE,
   selection = list(
