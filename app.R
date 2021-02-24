@@ -179,6 +179,7 @@ ui <- fluidPage(
       # Separate div to include the lab logo which serves as a link leading to
       # the lab website
       tags$div(
+        id = "lab-logo",
         style = "position:fixed; bottom:0px; padding-bottom:10px",
         htmltools::HTML(paste0(
           "<a href='http://cmdr.ubc.ca/bobh/'> ",
@@ -240,7 +241,7 @@ ui <- fluidPage(
             value   = TRUE
           ),
 
-          # Tab- or comma-separated?
+          # Comma-, tab-, or semicolon-delimited data?
           radioButtons(
             inputId = "sep",
             label = "How is your data separated?",
@@ -287,7 +288,9 @@ ui <- fluidPage(
           tags$p(HTML(
             "Select one of the options below. MetaCyc has higher quality ",
             "annotations, but KEGG may yield more hits, and will also allow ",
-            "you to visualize your results with <b>Pathview</b>."
+            "you to visualize your results with <a href=",
+            "'https://bioconductor.org/packages/release/bioc/html/pathview.html'",
+            ">Pathview.</a>"
           ), style = "padding-bottom: 5px;"),
 
           # Choose database for mapping.
@@ -1157,9 +1160,10 @@ server <- function(input, output, session) {
 
         tags$p(HTML(
           "If you mapped your metabolites using data from KEGG, you have the ",
-          "option to visualize your results with <b>Pathview</b>. Select a ",
-          "metabolite from the top table, then click the button below to see ",
-          "the pathways it's involved in."
+          "option to visualize your results with <a href=",
+          "'https://bioconductor.org/packages/release/bioc/html/pathview.html'",
+          ">Pathview.</a> Select a metabolite from the top table, then click ",
+          "the button below to see the pathways it's involved in."
         )),
 
         tags$br(),
