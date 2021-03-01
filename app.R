@@ -37,7 +37,6 @@ addResourcePath(prefix = "pics", directoryPath = "./www")
 
 ui <- fluidPage(
 
-  # Head linking to Flatly bootstrap theme and my personal tweaks.
   tags$head(
     tags$link(rel = "stylesheet", type = "text/css", href = "css/bootstrap.min.css"),
     tags$link(rel = "stylesheet", type = "text/css", href = "css/user.css"),
@@ -369,8 +368,8 @@ ui <- fluidPage(
 
             tags$p(
               "This page covers a sample workflow for integrating your ",
-              "metabolomics data with transcriptomics or proteomics data via ",
-              "network methodologies. You can also view this tutorial on our",
+              "metabolomics data with transcriptomics or proteomics data using ",
+              "network-based approaches. You can also view this tutorial on our",
               HTML(paste0(
                 "<a href='https://github.com/travis-m-blimkie/MetaBridgeShiny/",
                 "blob/master/tutorial/tutorial.md' target='_blank'>GitHub page.</a>"
