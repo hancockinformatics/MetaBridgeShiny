@@ -216,6 +216,7 @@ ui <- fluidPage(
             inputId = "metaboliteUpload",
             label   = NULL,
             buttonLabel = list(icon("upload"), "Browse..."),
+
             accept  = c(
               "text/csv",
               "text/comma-separated-values,text/plain",
@@ -253,7 +254,7 @@ ui <- fluidPage(
           # Or try our example data
           actionButton(
             inputId = "tryExamples",
-            class   = "btn-secondary btn-tooltip",
+            class   = "btn-info btn-tooltip",
             `data-position` = "right",
             label   = tags$b("Load Example Data"),
             title   = "Try an example dataset from MetaboAnalyst"
@@ -727,10 +728,11 @@ server <- function(input, output, session) {
       disabled(
         actionButton(
           inputId = "continueToMap",
-          label   = tags$b("Proceed"),
+          label   = tags$b("Proceed to Mapping"),
           class   = "btn-primary btn-tooltip",
           icon    = icon("check"),
-          title   = "Continue to the mapping step"
+          title   = "Continue to the mapping step",
+          `data-position` = "right",
         )
       )
     )
