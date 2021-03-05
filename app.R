@@ -206,8 +206,8 @@ ui <- fluidPage(
 
           tags$p(HTML(
             "Select a plain-text spreadsheet (a file ending in csv, txt, or ",
-            "tsv) containing your metabolites of interest in a single column. ",
-            "You can also try our example data using the button below."
+            "tsv) containing your metabolites in a single column. You can ",
+            "also try our example data using the button below."
           ), style = "padding-bottom: 5px;"),
 
           # Upload handling. Note that the "Browse..." button is customized in
@@ -709,8 +709,8 @@ server <- function(input, output, session) {
       tags$label("Select an ID Type"),
 
       tags$p(HTML(
-        "MetaBridge supports mapping with HMDB or KEGG metabolite IDs. Ensure ",
-        "the ID selected here matches the column <b><u>highlighted in ",
+        "MetaBridge supports mapping with HMDB or KEGG metabolite IDs. Please ",
+        "ensure the ID selected here matches the column <b><u>highlighted in ",
         "blue</u></b> before clicking the <b>Proceed</b> button."
       ), style = "padding-bottom: 5px;"),
 
@@ -1075,7 +1075,7 @@ server <- function(input, output, session) {
         tags$label("Download your Results"),
 
         tags$p("Use the button below to download your full mapping results as ",
-        "a tab-delimited file."),
+        "a tab-delimited text file."),
 
         downloadButton(
           "downloadMappingData",
@@ -1161,8 +1161,8 @@ server <- function(input, output, session) {
         tags$label("Visualize your Results"),
 
         tags$p(HTML(
-          "If you mapped your metabolites using data from KEGG, you have the ",
-          "option to visualize your results with <a href=",
+          "If you chose <b>KEGG</b> as the database to map your metabolites, ",
+          "you can visualize your results with <a href=",
           "'https://bioconductor.org/packages/release/bioc/html/pathview.html'",
           ">Pathview.</a> Select a metabolite from the top table, then click ",
           "the button below to see the pathways it's involved in."
@@ -1297,7 +1297,7 @@ server <- function(input, output, session) {
         tags$p(HTML(
           "Note that each pathway may take some time to process. ",
           "For each pathway, only the compound selected is shown, but <b>ALL",
-          "</b> mapped genes are shown."
+          "</b> mapped genes are highlighted."
         ), style = "padding-bottom: 0; margin-bottom: 0"),
 
         selectInput(
@@ -1318,7 +1318,7 @@ server <- function(input, output, session) {
         tags$p(HTML(
           "Note that each pathway may take some time to process. ",
           "For each pathway, only the compound selected is shown, but <b>ALL",
-          "</b> mapped genes are shown."
+          "</b> mapped genes are highlighted."
         ), style = "padding-bottom: 0; margin-bottom: 0"),
 
         selectInput(
