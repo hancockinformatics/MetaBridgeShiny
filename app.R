@@ -59,15 +59,16 @@ ui <- fluidPage(
     windowTitle = "MetaBridge",
     collapsible = TRUE,
 
+    # Original title, replaced with the chunk below so we can include the github
+    # logo in the top right, which links to the github page
     # title = htmltools::HTML(
     #   "<img src='pics/logo_white.svg' alt='' height='28'"
     # ),
+
     title = tags$div(
       id = "title_tab_bar",
 
-      htmltools::HTML(
-          "<img src='pics/logo_white.svg' alt='' height='28'>"
-        ),
+      htmltools::HTML("<img src='pics/logo_white.svg' alt='' height='28'>"),
 
       tags$div(
         id = "github-img",
@@ -78,9 +79,9 @@ ui <- fluidPage(
       )
     ),
 
-    # Make sure we enable ShinyJS. We also add the `tags$style()` call to add
-    # space between the navbar and body content; otherwise the navbar would
-    # overlap the elements below it (caused by fixed navbar).
+    # Make sure we enable ShinyJS. The `tags$style()` call is to add space
+    # between the navbar and body content, otherwise the navbar would overlap
+    # the elements below it (caused by fixed navbar).
     header = tagList(
       useShinyjs(),
       tags$style(type = "text/css", "body {padding-top: 80px;}")
@@ -97,7 +98,7 @@ ui <- fluidPage(
         id    = "welcomeHero",
         class = "jumbotron",
 
-        h1("Welcome"),
+        tags$h1("Welcome"),
 
         tags$hr(),
 
@@ -107,28 +108,28 @@ ui <- fluidPage(
           tags$p(
             "Welcome to MetaBridge, a user-friendly web tool for ",
             "network-based integrative analysis of metabolomics data. Here ",
-            "you can upload a set of metabolites and identify the directly ",
-            "interacting enzymes for network integration."
+            "you can upload a list of metabolite IDs and identify the ",
+            "directly interacting enzymes for network integration."
           ),
           tags$p(
-            "To start, you'll want a set of metabolites as",
-            "HMDB or KEGG IDs. We recommend",
+            "To start, you'll want a set of metabolites as HMDB or KEGG IDs. ",
+            "We recommend",
             tags$a("MetaboAnalyst", href = "http://www.metaboanalyst.ca"),
-            "for metabolomics data processing, as well as ID conversion if ",
+            "for metabolomics data processing and ID conversion, if ",
             "you have only compound names."
           ),
           tags$p(
             "With the output of MetaBridge, you can create a ",
-            "protein-protein interaction network representative ",
-            "of your metabolomics data. We recommend",
+            "protein-protein interaction network using your metabolomics ",
+            "data. We suggest",
             tags$a("NetworkAnalyst", href = "http://www.networkanalyst.ca"),
-            "for generation of these networks and for network-based ",
+            "for generation of these networks, and for network-based ",
             "integration with data from other omics types."
           ),
 
           tags$p(
             "Click the button below to Get Started! If you'd like to learn ",
-            "more about how MetaBridge can be used, check the Tutorial. For ",
+            "more about how MetaBridge can be used, check our Tutorial. For ",
             "more information, including where to report bugs or problems and ",
             "how to cite MetaBridge, please refer to the About page."
           ),
