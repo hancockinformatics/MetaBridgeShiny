@@ -368,15 +368,14 @@ ui <- fluidPage(
 
             tags$h2("Network-Based Integrative Analysis with MetaBridge"),
 
-            tags$p(
+            tags$p(HTML(
               "This page covers a sample workflow for integrating your ",
-              "metabolomics data with transcriptomics or proteomics data using ",
-              "network-based approaches. You can also view this tutorial on our",
-              HTML(paste0(
-                "<a href='https://github.com/travis-m-blimkie/MetaBridgeShiny/",
-                "blob/master/tutorial/tutorial.md' target='_blank'>GitHub page.</a>"
-              ))
-            ),
+              "metabolomics data with transcriptomics or proteomics data ",
+              "using network-based approaches. You can also view this ",
+              "information on our <a ",
+              "href='https://github.com/travis-m-blimkie/MetaBridgeShiny/",
+              "blob/master/tutorial/tutorial.md'>GitHub page</a>."
+            )),
 
             tags$ol(
               tags$li(tags$a(
@@ -418,53 +417,37 @@ ui <- fluidPage(
           tags$div(
             class = "logoWrapper",
 
-            tags$p(
+            tags$p(HTML(
               "MetaBridge was designed by Samuel Hinshaw, and is maintained ",
-              "by Travis Blimkie at the ",
-              tags$a(
-                href = "http://cmdr.ubc.ca/bobh/",
-                "Centre for Microbial Diseases and Immunity Research"
-              ),
-              " at The University of British Columbia. It was ",
-              "originally published in ", tags$em("Bioinformatics"),
-              " (doi: ",
-              tags$a(
-                href = "https://doi.org/10.1093/bioinformatics/bty331",
-                "10.1093/bioinformatics/bty331",
-                .noWS = "after"
-              ),
-              "); please cite this paper when using MetaBridge in your analyses."
-            ),
+              "by Travis Blimkie at the <a href='http://cmdr.ubc.ca/bobh/'>",
+              "Centre for Microbial Diseases and Immunity Research</a> at The ",
+              "University of British Columbia. It was originally published in ",
+              "<i>Bioinformatics</i> (doi: <a ",
+              "href='https://doi.org/10.1093/bioinformatics/bty331'>",
+              "10.1093/bioinformatics/bty331</a>); please cite this paper ",
+              "when using MetaBridge in your analyses."
+            )),
 
-            tags$p(
+            tags$p(HTML(
               "We also have a protocol on how to use MetaBridge published in ",
-              tags$em("Current Protocols in Bioinformatics."), "It covers how ",
-              "to prepare data for input to MetaBridge, and includes an ",
-              "example of building a protein-protein interaction network from ",
-              "MetaBridge results using",
-              tags$a(
-                href = "https://networkanalyst.ca",
-                "NetworkAnalyst."
-              ),
-              "The article is available at doi:",
-              tags$a(
-                href = "https://doi.org/10.1002/cpbi.98",
-                "10.1002/cpbi.98."
-              )
-            ),
+              "<i>Current Protocols in Bioinformatics</i>. It covers how to ",
+              "prepare data for input to MetaBridge, and includes an example ",
+              "of building a protein-protein interaction network from ",
+              "MetaBridge results using <a href='https://networkanalyst.ca'>",
+              "NetworkAnalyst</a>. The article is available at doi: ",
+              "<a href='https://doi.org/10.1002/cpbi.98'>10.1002/cpbi.98</a>."
+            )),
 
-            tags$p(
+            tags$p(HTML(
               "If you encounter any bugs or run into other troubles, you can ",
-              "post an issue at the ",
-              tags$a(
-                href = "https://github.com/hancockinformatics/MetaBridgeShiny/issues",
-                "GitHub page."
-              ),
-            ),
+              "post an issue at the <a href=",
+              "'https://github.com/hancockinformatics/MetaBridgeShiny/issues'>",
+              "GitHub page</a>."
+            )),
 
-            tags$p(
+            tags$p(tags$b(
               "MetaBridge uses the following databases and R packages:"
-            ),
+            )),
 
             tags$p(
               tags$dl(
@@ -477,7 +460,10 @@ ui <- fluidPage(
 
                 # KEGG
                 tags$dt(
-                  tags$a(href = "https://www.genome.jp/kegg/", "KEGG Release 92"),
+                  tags$a(
+                    href = "https://www.genome.jp/kegg/",
+                    "KEGG Release 92"
+                  ),
                   tags$dd("Large database containing multiple data types.")
                 ),
 
@@ -489,25 +475,35 @@ ui <- fluidPage(
 
                 # ShinyCSSLoaders
                 tags$dt(
-                  tags$a(href = "https://github.com/andrewsali/shinycssloaders", "shinycssloaders"),
+                  tags$a(
+                    href = "https://github.com/andrewsali/shinycssloaders",
+                    "shinycssloaders"
+                  ),
                   tags$dd("Animated loaders for shiny outputs.")
                 ),
 
                 # ShinyJS
                 tags$dt(
                   tags$a(href = "https://deanattali.com/shinyjs/", "shinyjs"),
-                  tags$dd("Improve the user experience of your Shiny apps in seconds.")
+                  tags$dd(
+                    "Improve the user experience of your Shiny apps in seconds."
+                  )
                 ),
 
                 # Tidyverse
                 tags$dt(
                   tags$a(href = "https://www.tidyverse.org/", "tidyverse"),
-                  tags$dd("A collection of R packages designed for data science.")
+                  tags$dd(
+                    "A collection of R packages designed for data science."
+                  )
                 ),
 
                 # Pathview
                 tags$dt(
-                  tags$a(href = "https://doi.org/10.1093/bioinformatics/btt285", "Pathview"),
+                  tags$a(
+                    href = "https://doi.org/10.1093/bioinformatics/btt285",
+                    "Pathview"
+                  ),
                   tags$dd("Pathway-based data integration and visualization.")
                 )
               )
