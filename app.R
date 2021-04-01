@@ -136,11 +136,11 @@ ui <- fluidPage(
 
           tags$br(),
 
+          # Buttons linking to various tabs of the app. To see how these
+          # buttons are hidden, refer to "www/js/client.js".
+          # First the button which shows the app loading, then links to the
+          # Upload panel.
           div(
-            # Buttons linking to various tabs of the app. To see how these
-            # buttons are hidden, refer to "www/js/client.js".
-            # First the button which shows the app loading, then links to the
-            # Upload panel.
             actionButton(
               inputId = "getStarted",
               label = "Initializing App...",
@@ -176,6 +176,7 @@ ui <- fluidPage(
           )
         )
       ),
+
       # Separate div to include the lab logo which serves as a link leading to
       # the lab website
       tags$div(
@@ -211,11 +212,11 @@ ui <- fluidPage(
           ), style = "padding-bottom: 5px;"),
 
           # Upload handling. Note that the "Browse..." button is customized in
-          # "www/css/user.css". We set the the label to NULL so we can include
-          # an icon along with the text via the "buttonLabel" argument.
+          # "www/css/user.css". The label is set to NULL so we can include an
+          # icon along with the text via the "buttonLabel" argument.
           fileInput(
-            inputId = "metaboliteUpload",
-            label   = NULL,
+            inputId     = "metaboliteUpload",
+            label       = NULL,
             buttonLabel = list(icon("upload"), "Browse..."),
 
             accept  = c(
@@ -280,7 +281,7 @@ ui <- fluidPage(
       # Manual Sidebar
       tags$div(
         class = "col-sm-3 manual-sidebar",
-        id = "mapPanelSidebar",
+        id    = "mapPanelSidebar",
 
         tags$form(
           class = "well",
@@ -340,8 +341,9 @@ ui <- fluidPage(
     tabPanel(
       title = "Pathview",
       value = "vizPanel",
-      id = "visualizationPanel",
+      id    = "visualizationPanel",
       class = "viz-panel",
+
       uiOutput("vizPanelUI")
     ),
 
@@ -411,7 +413,6 @@ ui <- fluidPage(
           class = "jumbotron",
 
           tags$h1("About"),
-
           tags$hr(),
 
           tags$div(
@@ -534,7 +535,6 @@ server <- function(input, output, session) {
   }, ignoreInit = TRUE, once = TRUE)
 
 
-
   # Define reactive variables. These are isolated into individual reactive
   # values so we can depend on them for reactive changes.
   metaboliteObject <- reactiveVal()
@@ -626,13 +626,9 @@ server <- function(input, output, session) {
       tags$h4(
         class = "conditional-help",
         HTML(
-          # "Check below to see if your data was loaded correctly. If so, click ",
-          # "a column to <b><u>highlight it in blue</u></b>, select the ",
-          # "matching ID type in the lower left box, then continue via the ",
-          # "<b>Proceed</b> button."
-          "If your data has loaded correctly, click a column to ",
-          "<b><u>highlight it in blue</u></b>, select the matching ID type in ",
-          "the lower left box, then continue via the <b>Proceed</b> button."
+          "If your data has loaded correctly, click a column to <b><u>",
+          "highlight it in blue</u></b>, select the matching ID type in the ",
+          "lower left box, then continue via the <b>Proceed</b> button."
         )
       ),
       tags$br()
@@ -656,17 +652,11 @@ server <- function(input, output, session) {
   },
   # DataTable options. We only need to provide options which we want different
   # from our defaults defined in "deferred.R".
-  options = list(
-    scrollY = "70vh"
-  ),
-  rownames = FALSE,
-  selection = list(
-    mode     = "single",
-    target   = "column"
-    # selected = 0
-  ),
-  style = "bootstrap",
-  class = "table-bordered table-responsive"
+  options   = list(scrollY = "70vh"),
+  rownames  = FALSE,
+  selection = list(mode = "single", target = "column"),
+  style     = "bootstrap",
+  class     = "table-bordered table-responsive"
   )
 
   output$uploadedTablePanel <- renderUI({
@@ -688,7 +678,10 @@ server <- function(input, output, session) {
     metaboliteObject()
   }, {
     # Wait 500ms after panel render and re-activate tooltips.
-    runjs("setTimeout(() => { handlers.activateTooltips(['.panel-tooltip', '.btn-tooltip']); }, 100)")
+    runjs(paste0(
+      "setTimeout(() => { handlers.activateTooltips(['.panel-tooltip', ",
+      "'.btn-tooltip']); }, 100)"
+    ))
   })
 
   # This has to be rendered separately from the column picker panel. Otherwise,
@@ -720,8 +713,8 @@ server <- function(input, output, session) {
 
       tags$br(),
 
-      # Include button to proceed, which is disabled until a column is selected
-      # and the appropriate ID type is chosen
+      # Include button to proceed, which is disabled via shinyjs until a column
+      # is selected and the appropriate ID type is chosen
       disabled(
         actionButton(
           inputId = "continueToMap",
@@ -897,10 +890,10 @@ server <- function(input, output, session) {
   output$mappingSummaryTable <- DT::renderDataTable({
     mappingSummary$table %>% hyperlinkTable(databaseChosen())
   },
-  rownames = FALSE,
-  style = "bootstrap",
-  class = "table-bordered table-responsive compact",
-  escape = FALSE,
+  rownames  = FALSE,
+  style     = "bootstrap",
+  class     = "table-bordered table-responsive compact",
+  escape    = FALSE,
   selection = "single"
   )
 
@@ -921,7 +914,11 @@ server <- function(input, output, session) {
     } else {
       return(
         tagList(
-          tags$h3(paste0("Mapping Summary - ", databaseChosen()), class = "tab-header"),
+          tags$h3(
+            paste0("Mapping Summary: ", databaseChosen()),
+            class = "tab-header"
+          ),
+
           # Insert the datatable here that we rendered above.
           DT::dataTableOutput("mappingSummaryTable")
         )
@@ -1017,10 +1014,10 @@ server <- function(input, output, session) {
       mappedMetaboliteTable() %>% hyperlinkTable(databaseChosen())
     }
   },
-  rownames = FALSE,
-  style = "bootstrap",
-  class = "table-bordered table-responsive compact",
-  escape = FALSE,
+  rownames  = FALSE,
+  style     = "bootstrap",
+  class     = "table-bordered table-responsive compact",
+  escape    = FALSE,
   selection = "single"
   )
 
@@ -1070,15 +1067,17 @@ server <- function(input, output, session) {
         class = "well",
         tags$label("Download your Results"),
 
-        tags$p("Use the button below to download your full mapping results as ",
-        "a tab-delimited text file."),
+        tags$p(
+          "Use the button below to download your full mapping results as a ",
+          "tab-delimited text file."
+        ),
 
         downloadButton(
-          "downloadMappingData",
-          tags$b("Download Results"),
-          class = "btn-info btn-tooltip btn-right",
-          `data-position` = "right",
-          title = "Download your full mapping results",
+          outputId = "downloadMappingData",
+          label    = tags$b("Download Results"),
+          class    = "btn-info btn-tooltip btn-right",
+          title    = "Download your full mapping results",
+          `data-position` = "right"
         ),
 
         # These breaks are only needed because we right-align the download
@@ -1106,20 +1105,18 @@ server <- function(input, output, session) {
     }
   })
 
-  # Export the data.
+  # Export results to a file named: "originalfilename_mapped_dbChosen.tsv"
   output$downloadMappingData <- downloadHandler(
-    # Name file format: `originalfilename_mapped_dbChosen.savetype`.
     filename = function() {
       paste0(
         ifelse(
           test = is.null(input$metaboliteUpload),
-          yes = "example_dataset",
-          no = tools::file_path_sans_ext(input$metaboliteUpload$name)
+          yes  = "example_dataset",
+          no   = tools::file_path_sans_ext(input$metaboliteUpload$name)
         ),
         "_mapped_",
         databaseChosen(),
         ".tsv"
-        # input$saveType
       )
     },
     content = function(file) {
@@ -1127,11 +1124,6 @@ server <- function(input, output, session) {
         cleanMappedMetabolites(),
         file,
         delim = "\t"
-        # delim = switch(
-        #   input$saveType,
-        #   "csv" = ",",
-        #   "tsv" = "\t"
-        # )
       )
     }
   )
@@ -1228,10 +1220,10 @@ server <- function(input, output, session) {
   # - The pathways that compound is involved in
   # - The genes (for the enzymes) that compound interacts with
   selectedRowAttrs <- reactiveValues(
-    "selectedCompound" = NULL,
-    "selectedCompoundName" = NULL,
+    "selectedCompound"           = NULL,
+    "selectedCompoundName"       = NULL,
     "pathwaysOfSelectedCompound" = NULL,
-    "genesOfSelectedCompound" = NULL
+    "genesOfSelectedCompound"    = NULL
   )
 
   # Now, when the selected row changes...
@@ -1275,6 +1267,7 @@ server <- function(input, output, session) {
   output$pathwayPanel <- renderUI({
     # Check for results before rendering!
     if (nrow(selectedRowAttrs$pathwaysOfSelectedCompound) == 0) {
+
       tags$div(
         tags$label(tags$b(paste0(
           "Pathways for ",
@@ -1282,6 +1275,7 @@ server <- function(input, output, session) {
         ))),
         tags$p("No pathways found for this compound.")
       )
+
     } else if (databaseChosen() == "KEGG") {
       tags$div(
 
@@ -1291,9 +1285,9 @@ server <- function(input, output, session) {
         ))),
 
         tags$p(HTML(
-          "Note that each pathway may take some time to process. ",
-          "For each pathway, only the compound selected is shown, but <b>ALL",
-          "</b> mapped genes are highlighted."
+          "Note that each pathway may take some time to process. For each ",
+          "pathway, only the compound selected is shown, but <b>ALL</b> ",
+          "mapped genes are highlighted."
         ), style = "padding-bottom: 0; margin-bottom: 0"),
 
         selectInput(
@@ -1312,9 +1306,9 @@ server <- function(input, output, session) {
         )),
 
         tags$p(HTML(
-          "Note that each pathway may take some time to process. ",
-          "For each pathway, only the compound selected is shown, but <b>ALL",
-          "</b> mapped genes are highlighted."
+          "Note that each pathway may take some time to process. For each ",
+          "pathway, only the compound selected is shown, but <b>ALL</b> ",
+          "mapped genes are highlighted."
         ), style = "padding-bottom: 0; margin-bottom: 0"),
 
         selectInput(
@@ -1371,8 +1365,10 @@ server <- function(input, output, session) {
   # Render entire UI for `vizPanel`.
   output$vizPanelUI <- renderUI({
     if (is.null(databaseChosen())) {
+
       tags$div(
         tags$h2("Pathway View", class = "tab-header"),
+
         # "Nothing to map" alert
         tags$div(
           class = "alert alert-dismissible alert-danger",
@@ -1385,9 +1381,12 @@ server <- function(input, output, session) {
           "There is nothing selected to map!"
         )
       )
+
     } else if (databaseChosen() == "MetaCyc") {
+
       tags$div(
         tags$h2("Pathway View", class = "tab-header"),
+
         # "Nothing to map" alert
         tags$div(
           class = "alert alert-dismissible alert-danger",
@@ -1400,9 +1399,12 @@ server <- function(input, output, session) {
           "You must map via KEGG to visualize your results with pathview!"
         )
       )
+
     } else if (is.null(selectedMetab())) {
+
       tags$div(
         tags$h2("Pathway View", class = "tab-header"),
+
         # "Nothing to map" alert
         tags$div(
           class = "alert alert-dismissible alert-danger",
@@ -1415,9 +1417,10 @@ server <- function(input, output, session) {
           "You must select a metabolite to visualize your results with pathview!"
         )
       )
+
     } else {
       tags$div(
-        # Manual Sidebar
+
         tags$div(
           class = "col-sm-3 manual-sidebar",
           # Allow user to pick which pathway that the selected metabolite
