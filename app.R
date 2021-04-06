@@ -370,13 +370,16 @@ ui <- fluidPage(
 
             tags$h2("Network-Based Integrative Analysis with MetaBridge"),
 
-            tags$p(HTML(
+            # Note the link to the tutorial on Github needs to be one line,
+            # otherwise the `HTML()` function inserts a space which breaks the
+            # link
+            tags$p(htmltools::HTML(
               "This page covers a sample workflow for integrating your ",
               "metabolomics data with transcriptomics or proteomics data ",
               "using network-based approaches. You can also view this ",
-              "information on our <a ",
-              "href='https://github.com/travis-m-blimkie/MetaBridgeShiny/",
-              "blob/master/tutorial/tutorial.md'>GitHub page</a>."
+              "information on our <a href=",
+              "'https://github.com/hancockinformatics/MetaBridgeShiny/blob/master/tutorial/tutorial.md'",
+              ">GitHub page</a>."
             )),
 
             tags$ol(

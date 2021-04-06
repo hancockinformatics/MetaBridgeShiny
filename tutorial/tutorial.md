@@ -14,7 +14,8 @@ interest and their corresponding metabolite IDs. We recommend
 
 ### I. Upload Metabolites
 
-Upload your metabolites to [MetaBridge](https://www.metabridge.org) and select your metabolites for mapping.
+Upload your metabolites to [MetaBridge](https://www.metabridge.org) and select
+your metabolites for mapping.
 
 [![Upload Metabolites](serve/upload_metabridge.png)](https://www.metabridge.org)
 
@@ -89,16 +90,18 @@ Download your full mapping results (example table below).
 
 ### I. Upload Mapped Genes
 
-Visit [NetworkAnalyst](http://www.networkanalyst.ca) and start with [a list of genes or proteins](http://www.networkanalyst.ca/faces/Secure/network/SignatureView.xhtml) input.
+Visit [NetworkAnalyst](http://www.networkanalyst.ca) and start with a list of
+genes or proteins input.
 
 [![Select A list of genes or proteins](serve/select_list.png)](http://www.networkanalyst.ca)
 
-* Upload the genes that you mapped via MetaBridge, providing an appropriate data label.
+* Upload the genes that you mapped via MetaBridge, providing an appropriate data
+label
 * Repeat this for each gene or protein list you wish to integrate.
 * Then, paste into the box BOTH lists you wish to combine to create one COMBINED
-  list. NetworkAnalyst will filter out duplicates for you.
+list. NetworkAnalyst will filter out duplicates for you.
 
-[![Upload Genes to NetworkAnalyst](serve/copy_paste.png)](http://www.networkanalyst.ca/faces/Secure/network/SignatureView.xhtml)
+[![Upload Genes to NetworkAnalyst](serve/copy_paste.png)](http://www.networkanalyst.ca)
 
 <br>
 
@@ -113,8 +116,9 @@ with.
 
 ![Select Gene List](serve/upload_lists.png)
 
-Next, choose [Network Analysis -> Protein-protein interactions] and choose the literature-curated
-IMEX Interactome as your protein-protein interaction database.
+Next, choose [Network Analysis -> Protein-protein interactions] and choose the
+literature-curated IMEX Interactome as your protein-protein interaction
+database.
 
 ![Choose Protein-Protein Interactions and IMEX Interactome](serve/select_ppis.png)
 
@@ -129,10 +133,10 @@ interaction networks, whereas if your dataset is particularly large, you may
 wish to use a zero-order interaction network. Typically, we aim for a network
 containing a few hundred nodes.
 
-Also if importance here is the [Batch Exclusion] tool. This tool is quite
-helpful in filtering out proteins that you know to be highly connected in the
-cell, but not if interest to the condition you are studying. One of the most
-common proteins we filter out is UBC (uniprot ID P0CG48).
+Also of importance here is the [Batch Exclusion] tool. This tool is quite
+helpful in filtering out proteins that you know are highly connected in the
+cell, but not of interest to the condition you are studying. One of the most
+common proteins we filter out is UBC (UniProtID P0CG48).
 
 ![Create Minimum-Connected Network](serve/minimum_connected.png)
 
@@ -140,19 +144,19 @@ Below, you will find an example of each minimum-connected network generated
 
 ![Metabolomic Minimum-Connected Network](serve/metab_network.png)
 
-1. Minimum-connected protein-protein interaction network from MetaBridge-mapped metabolites.
+1. Minimum-connected protein-protein interaction network from MetaBridge-mapped metabolites
 
-  <hr>
+<hr>
 
-  ![Transcriptomic Minimum-Connected Network](serve/trans_network.png)
+![Transcriptomic Minimum-Connected Network](serve/trans_network.png)
 
-2. Minimum-connected protein-protein interaction network from gene expression data.
+2. Minimum-connected protein-protein interaction network from gene expression data
 
-  <hr>
+<hr>
 
-  ![Integrated Minimum-Connected Network](serve/combined_network.png)
+![Integrated Minimum-Connected Network](serve/combined_network.png)
 
-3. Minimum-connected protein-protein interaction network from combined gene list.
+3. Minimum-connected protein-protein interaction network from combined gene list
 
 <hr>
 
@@ -165,7 +169,7 @@ you can use the [Node Explorer] to view information about individual nodes of
 the network and [Save] the entire node list as a CSV file for further analysis.
 
 You can also tweak the network appearance as you would like. For example, you
-can paste in your original lists to the [Batch Selection] panel and color-code
+can paste in your original lists to the [Batch Selection] panel and colour-code
 each node of the network corresponding to its original data source. Then, you
 can download image files of the networks you have created.
 
