@@ -11,7 +11,7 @@
    inkscape:export-ydpi="400"
    inkscape:export-xdpi="400"
    inkscape:export-filename="/home/travis/Documents/Repositories/MetaBridgeShiny/figure_colour_v5.png"
-   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   inkscape:version="1.0.2 (e86c870879, 2021-01-15)"
    sodipodi:docname="figure_colour_v5.svg"
    viewBox="0 0 815.99999 1056"
    height="11in"
@@ -26,7 +26,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -261,14 +261,14 @@
        inkscape:isstock="true"
        style="overflow:visible"
        id="TriangleOutM"
-       refX="0.0"
-       refY="0.0"
+       refX="0"
+       refY="0"
        orient="auto"
        inkscape:stockid="TriangleOutM">
       <path
          transform="scale(0.4)"
-         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1;fill:#000000;fill-opacity:1"
-         d="M 5.77,0.0 L -2.88,5.0 L -2.88,-5.0 L 5.77,0.0 z "
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         d="M 5.77,0 -2.88,5 V -5 Z"
          id="path2618" />
     </marker>
     <inkscape:path-effect
@@ -730,17 +730,17 @@
      inkscape:snap-page="true"
      inkscape:bbox-nodes="false"
      inkscape:snap-bbox="true"
-     inkscape:current-layer="g1102"
+     inkscape:current-layer="g1123"
      inkscape:window-maximized="1"
-     inkscape:window-y="22"
-     inkscape:window-x="37"
-     inkscape:cy="564.86674"
-     inkscape:cx="-75.575479"
-     inkscape:zoom="0.50000001"
+     inkscape:window-y="-8"
+     inkscape:window-x="1912"
+     inkscape:cy="557.92594"
+     inkscape:cx="376.68112"
+     inkscape:zoom="1"
      showgrid="false"
      id="namedview4"
-     inkscape:window-height="710"
-     inkscape:window-width="1329"
+     inkscape:window-height="1377"
+     inkscape:window-width="2560"
      inkscape:pageshadow="2"
      inkscape:pageopacity="1"
      guidetolerance="10"
@@ -764,7 +764,7 @@
   <path
      id="path2410"
      d="M 0,185.26198 H 816"
-     style="fill:none;stroke:#2c3e50;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none" />
+     style="fill:none;stroke:#2c3e50;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
   <g
      style="stroke-width:1.00423"
      id="g1123"
@@ -786,49 +786,7 @@
        transform="translate(-682.0437,246.10402)"
        id="g1039">
       <g
-         transform="translate(16.695891,21.168888)"
-         id="g4740">
-        <text
-           id="text945"
-           y="657.85693"
-           x="678.80579"
-           style="font-style:oblique;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:16.0678px;line-height:1.25;font-family:Helvetica;-inkscape-font-specification:'Helvetica, Bold Oblique';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#2c3e50;fill-opacity:1;stroke:none;stroke-width:1.00423"
-           xml:space="preserve"><tspan
-             y="657.85693"
-             x="678.80579"
-             id="tspan943"
-             sodipodi:role="line"
-             style="font-style:oblique;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:16.0678px;font-family:Helvetica;-inkscape-font-specification:'Helvetica, Bold Oblique';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:1.00423">Novel Node</tspan></text>
-        <circle
-           r="10.264435"
-           cy="652.22382"
-           cx="782.62738"
-           id="path1024"
-           style="opacity:1;fill:#e74c3c;fill-opacity:1;stroke:#000000;stroke-width:1.00423;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none" />
-      </g>
-      <g
-         transform="translate(38.549126,21.246342)"
-         id="g4752">
-        <text
-           id="text953"
-           y="657.77948"
-           x="918.91406"
-           style="font-style:oblique;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:16.0678px;line-height:1.25;font-family:Helvetica;-inkscape-font-specification:'Helvetica, Bold Oblique';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#2c3e50;fill-opacity:1;stroke:none;stroke-width:1.00423"
-           xml:space="preserve"><tspan
-             y="657.77948"
-             x="918.91406"
-             id="tspan951"
-             sodipodi:role="line"
-             style="font-style:oblique;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:16.0678px;font-family:Helvetica;-inkscape-font-specification:'Helvetica, Bold Oblique';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:1.00423">Interactor</tspan></text>
-        <circle
-           r="10.264435"
-           cy="652.14636"
-           cx="1009.449"
-           id="circle1028"
-           style="opacity:1;fill:#ffffff;stroke:#000000;stroke-width:1.00423;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none" />
-      </g>
-      <g
-         transform="translate(33.894463,20.72965)"
+         transform="translate(27.325647,20.72965)"
          id="g4747">
         <text
            id="text949"
@@ -847,7 +805,7 @@
            style="stroke-width:0.790955">
           <path
              transform="rotate(-90)"
-             d="m -664.23566,795.18109 a 8.0764093,8.191329 0 0 1 -4.03821,7.0939 8.0764093,8.191329 0 0 1 -8.07641,0 8.0764093,8.191329 0 0 1 -4.0382,-7.0939 l 8.07641,0 z"
+             d="m -664.23566,795.18109 a 8.0764093,8.191329 0 0 1 -4.03821,7.0939 8.0764093,8.191329 0 0 1 -8.07641,0 8.0764093,8.191329 0 0 1 -4.0382,-7.0939 h 8.07641 z"
              sodipodi:arc-type="slice"
              sodipodi:end="3.1415927"
              sodipodi:start="0"
@@ -869,23 +827,65 @@
              sodipodi:start="0"
              sodipodi:end="3.1415927"
              sodipodi:arc-type="slice"
-             d="m -664.23566,-795.18109 a 8.0764093,8.191329 0 0 1 -4.03821,7.0939 8.0764093,8.191329 0 0 1 -8.07641,0 8.0764093,8.191329 0 0 1 -4.0382,-7.0939 l 8.07641,0 z"
+             d="m -664.23566,-795.18109 a 8.0764093,8.191329 0 0 1 -4.03821,7.0939 8.0764093,8.191329 0 0 1 -8.07641,0 8.0764093,8.191329 0 0 1 -4.0382,-7.0939 h 8.07641 z"
              transform="matrix(0,-1,-1,0,0,0)" />
         </g>
       </g>
+      <g
+         transform="translate(265.3707,21.168888)"
+         id="g1230">
+        <text
+           id="text1226"
+           y="657.85693"
+           x="678.80579"
+           style="font-style:oblique;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:16.0678px;line-height:1.25;font-family:Helvetica;-inkscape-font-specification:'Helvetica, Bold Oblique';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#2c3e50;fill-opacity:1;stroke:none;stroke-width:1.00423"
+           xml:space="preserve"><tspan
+             y="657.85693"
+             x="678.80579"
+             id="tspan1224"
+             sodipodi:role="line"
+             style="font-style:oblique;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:16.0678px;font-family:Helvetica;-inkscape-font-specification:'Helvetica, Bold Oblique';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:1.00423">Novel Node</tspan></text>
+        <circle
+           r="10.264435"
+           cy="652.22382"
+           cx="782.62738"
+           id="circle1228"
+           style="opacity:1;fill:#e74c3c;fill-opacity:1;stroke:#000000;stroke-width:1.00423;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none" />
+      </g>
+      <g
+         transform="translate(-210.1257,21.246342)"
+         id="g1238">
+        <text
+           id="text1234"
+           y="657.77948"
+           x="918.91406"
+           style="font-style:oblique;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:16.0678px;line-height:1.25;font-family:Helvetica;-inkscape-font-specification:'Helvetica, Bold Oblique';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#2c3e50;fill-opacity:1;stroke:none;stroke-width:1.00423"
+           xml:space="preserve"><tspan
+             y="657.77948"
+             x="918.91406"
+             id="tspan1232"
+             sodipodi:role="line"
+             style="font-style:oblique;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:16.0678px;font-family:Helvetica;-inkscape-font-specification:'Helvetica, Bold Oblique';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:1.00423">Interactor</tspan></text>
+        <circle
+           r="10.264435"
+           cy="652.14636"
+           cx="1009.449"
+           id="circle1236"
+           style="opacity:1;fill:#ffffff;stroke:#000000;stroke-width:1.00423;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none" />
+      </g>
     </g>
     <g
-       transform="matrix(0.27587368,0,0,0.27587368,592.81559,620.95444)"
+       transform="matrix(0.27587368,0,0,0.27587368,592.81559,621.72853)"
        style="overflow:hidden;stroke-width:0.926991"
        id="g2020-1-4"
        inkscape:label="network3">
       <rect
-         style="fill:#ecf0f1;fill-opacity:1;stroke:none;stroke-width:0.463496;stroke-linecap:round;stroke-linejoin:round"
+         style="fill:#ecf0f1;fill-opacity:1;stroke:none;stroke-width:0.449432;stroke-linecap:round;stroke-linejoin:round"
          id="rect2450-8"
          width="784.72223"
-         height="882.42706"
+         height="829.68622"
          x="0.25"
-         y="0.25" />
+         y="52.990837" />
       <g
          style="stroke-width:0.926991"
          id="sigma-group-edges-6-7"
@@ -8475,11 +8475,11 @@
       <rect
          ry="7.1077166"
          y="923.8584"
-         x="297.19077"
+         x="295.37341"
          height="28.104538"
-         width="204.5834"
+         width="208.13573"
          id="rect6490"
-         style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1.00424;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+         style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1.01292;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
       <text
          xml:space="preserve"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:18.7458px;line-height:1.25;font-family:Helvetica;-inkscape-font-specification:'Helvetica, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#2c3e50;fill-opacity:1;stroke:none;stroke-width:1.00423"
@@ -8897,23 +8897,23 @@
        id="g1128"
        transform="translate(169.84796,-84.481974)">
       <rect
-         style="opacity:1;fill:#ffffff;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         style="opacity:1;fill:#ffffff;stroke:none;stroke-width:1.01328;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          id="rect955"
-         width="219.67206"
+         width="225.54706"
          height="34.342857"
-         x="128.17905"
+         x="125.17775"
          y="106.84444"
          ry="6" />
       <text
          xml:space="preserve"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:18.6667px;line-height:1.25;font-family:arial;-inkscape-font-specification:'arial, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#2c3e50;fill-opacity:1;stroke:none;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none"
          x="134.55981"
-         y="128.96965"
+         y="130.69687"
          id="text849"><tspan
            sodipodi:role="line"
            id="tspan847"
            x="134.55981"
-           y="128.96965">Metabolite Compounds</tspan></text>
+           y="130.69687">Metabolite Compounds</tspan></text>
     </g>
     <text
        id="text845"
