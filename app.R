@@ -1199,21 +1199,10 @@ server <- function(input, output, session) {
     # ...map!
     pathwayMappingAttrs <- generalPathwayMapping(
       summaryTable = mappingSummary$table,
-
-      # The fullTable provided used to be the table that was rendered just for
-      # the selected metabolites. This means that the only genes were those
-      # identified for the selected metabolites. For now, I have fixed this by
-      # including all genes in the mapping. HOWEVER, in the future it could be
-      # interesting to create a toggle that would let the user specify which
-      # they would prefer. In that case, we would have to make sure that
-      # mappedMetaboliteTable() was updated before the pathway mapping function
-      # was called.
-
-      # fullTable = mappedMetaboliteTable(),
-      fullTable = mappingObject()$data,
-      idType = idTypeChosen(),
-      db = databaseChosen(),
-      selectedRow = selectedMetab()
+      fullTable    = mappingObject()$data,
+      idType       = idTypeChosen(),
+      db           = databaseChosen(),
+      selectedRow  = selectedMetab()
     )
 
     # Assign results to their reactive values
@@ -1230,9 +1219,10 @@ server <- function(input, output, session) {
       pathwayMappingAttrs$pathwaysOfSelectedCompound
   })
 
-  # Render the pathway panel once.
+  # Render the pathway panel once
   output$pathwayPanel <- renderUI({
-    # Check for results before rendering!
+
+    # Check for results before rendering
     if (nrow(selectedRowAttrs$pathwaysOfSelectedCompound) == 0) {
 
       tags$div(
@@ -1305,7 +1295,7 @@ server <- function(input, output, session) {
     pathwayNameIDcol <- as.name("namedPway")
     selectedPathway <- quo(input$pathwaysPicked)
 
-    # Pull the pathway ID from the pathway name selected by the user.
+    # Pull the pathway ID from the pathway name selected by the user
     selectedPathwayID <-
       selectedRowAttrs$pathwaysOfSelectedCompound %>%
       filter(!!(pathwayNameIDcol) == input$pathwaysPicked) %>%
@@ -1318,7 +1308,7 @@ server <- function(input, output, session) {
     )
 
     # Return a list containing the file name. Render image at 1000px and then
-    # constrain image to `div` in CSS.
+    # constrain the image to `div` with some CSS
     return(list(
       src = filename,
       contentType = "image/png",
@@ -1329,7 +1319,7 @@ server <- function(input, output, session) {
   }, deleteFile = TRUE)
 
 
-  # Render entire UI for `vizPanel`.
+  # Render entire UI for `vizPanel`
   output$vizPanelUI <- renderUI({
     if (is.null(databaseChosen())) {
 
