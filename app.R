@@ -1087,11 +1087,10 @@ server <- function(input, output, session) {
         ".tsv"
       )
     },
-    content = function(file) {
-      write_delim(
-        cleanMappedMetabolites(),
-        file,
-        delim = "\t"
+    content = function(filename) {
+      write_tsv(
+        x    = cleanMappedMetabolites(),
+        file = filename
       )
     }
   )
