@@ -1,20 +1,8 @@
 
-# 1. To-do ----------------------------------------------------------------
-
-# Updated the tutorial images
-
-# These lines need to be run each time app is published on "shinyapps.io" so
-# packages from Bioconductor can be loaded.
-# library(BiocManager)
-# options(repos = BiocManager::repositories())
-
-
-
-
-# 2. Load the first couple libraries --------------------------------------
+# 1. Load the first couple libraries --------------------------------------
 
 # Most libraries and functions are loaded through a call to `deferred.R` at the
-# beginning of the `server()` function (approx. #530).
+# beginning of the `server()` function, section #3.
 library(shiny)
 library(shinyjs)
 
@@ -29,7 +17,7 @@ library(shinyjs)
 
 
 
-# 3. Define UI code -------------------------------------------------------
+# 2. Define UI code -------------------------------------------------------
 
 # Workaround to ensure logo in top left corner (tab bar) is found/rendered when
 # app is published to "shinyapps.io"
@@ -51,7 +39,7 @@ ui <- fluidPage(
     tags$meta(name = "theme-color", content = "#303e4e")
   ),
 
-  # * 3.1 Begin the tab bar layout -------------------------------------------
+  # * 2.1 Begin the tab bar layout ----------------------------------------
 
   navbarPage(
     id          = "navbarLayout",
@@ -59,16 +47,10 @@ ui <- fluidPage(
     windowTitle = "MetaBridge",
     collapsible = TRUE,
 
-    # Original title, replaced with the chunk below so we can include the github
-    # logo in the top right, which links to the github page
-    # title = htmltools::HTML(
-    #   "<img src='pics/logo_white.svg' alt='' height='28'"
-    # ),
-
     title = tags$div(
       id = "title_tab_bar",
 
-      htmltools::HTML("<img src='pics/logo_white.svg' alt='' height='28'>"),
+      htmltools::HTML("<img src='pics/logo_white.svg' alt='' height='30'>"),
 
       tags$div(
         id = "github-img",
@@ -87,7 +69,7 @@ ui <- fluidPage(
       tags$style(type = "text/css", "body {padding-top: 80px;}")
     ),
 
-    # * 3.2 Welcome tab & landing page ------------------------------------
+    # * 2.2 Welcome tab & landing page ------------------------------------
 
     tabPanel(
       title = "MetaBridge",
@@ -190,7 +172,7 @@ ui <- fluidPage(
     ),
 
 
-    # * 3.3 Upload panel --------------------------------------------------
+    # * 2.3 Upload panel --------------------------------------------------
 
     tabPanel(
       "Upload",
@@ -200,7 +182,7 @@ ui <- fluidPage(
       tags$div(
         class = "col-sm-3 manual-sidebar",
 
-        # Separate form 'wells' within the sidebar (custom CSS class)
+        # Separate form "wells" within the sidebar (custom CSS class)
         tags$form(
           class = "well",
           tags$label("Upload your Metabolites"),
@@ -272,7 +254,7 @@ ui <- fluidPage(
     ),
 
 
-    # * 3.4 Mapping Panel -------------------------------------------------
+    # * 2.4 Mapping Panel -------------------------------------------------
 
     tabPanel(
       title = "Map",
@@ -336,7 +318,7 @@ ui <- fluidPage(
     ),
 
 
-    # * 3.5 Visualize With Pathview ---------------------------------------
+    # * 2.5 Visualize With Pathview ---------------------------------------
 
     tabPanel(
       title = "Pathview",
@@ -347,12 +329,12 @@ ui <- fluidPage(
       uiOutput("vizPanelUI")
     ),
 
-    # * 3.6 Help Panel & dropdown -----------------------------------------
+    # * 2.6 Help Panel & dropdown -----------------------------------------
 
     navbarMenu(
       title = "Help",
 
-      # * * 3.6.1 Tutorial Page -------------------------------------------
+      # * * 2.6.1 Tutorial Page -------------------------------------------
 
       tabPanel(
         title = "Tutorial",
@@ -406,7 +388,7 @@ ui <- fluidPage(
         )
       ),
 
-      # * * 3.6.2 About page ----------------------------------------------
+      # * * 2.6.2 About page ----------------------------------------------
 
       tabPanel(
         value = "aboutPanel",
@@ -523,7 +505,7 @@ ui <- fluidPage(
 
 
 
-# 4. Define the server code -----------------------------------------------
+# 3. Define the server code -----------------------------------------------
 
 server <- function(input, output, session) {
 
@@ -553,7 +535,7 @@ server <- function(input, output, session) {
 
 
 
-  # 4.1 Welcome tab handlers ----------------------------------------------
+  # 3.1 Welcome tab handlers ----------------------------------------------
 
   # When clicking "Get Started", switch to `Upload` panel
   observeEvent(input$getStarted, {
@@ -572,7 +554,7 @@ server <- function(input, output, session) {
 
 
 
-  # 4.2 Upload tab handlers -----------------------------------------------
+  # 3.2 Upload tab handlers -----------------------------------------------
 
   # Inject example data frame when "Try Examples" is clicked
   observeEvent(input$tryExamples, {
@@ -819,7 +801,7 @@ server <- function(input, output, session) {
 
 
 
-  # 4.3 Map tab handlers ----------------------------------------------------
+  # 3.3 Map tab handlers --------------------------------------------------
 
   # Store ID type chosen as a reactive variable which only changes when the
   # "Map" button is clicked
@@ -862,7 +844,7 @@ server <- function(input, output, session) {
   }, ignoreInit = TRUE)
 
 
-  # 4.4 Render summarized mapping table -----------------------------------
+  # * 3.3.1 Render summarized mapping table -------------------------------
 
   # 1. Generate table from `generateSummaryTable()`, depending only on the
   #    mapButton click.
@@ -942,7 +924,7 @@ server <- function(input, output, session) {
   })
 
 
-  # 4.5 Render metabolite-specific table ----------------------------------
+  # * 3.3.2 Render metabolite-specific table ------------------------------
 
   # THREE STEP RENDER PROCESS, PART 2 - METABOLITE SPECIFIC TABLE
   # 1. Generate table from `generateTables.R::generateSummaryTable()`, depending
@@ -1053,7 +1035,7 @@ server <- function(input, output, session) {
 
 
 
-  # 4.6 Render sidebar to save results ------------------------------------
+  # * 3.3.3 Render sidebar to download results ----------------------------
 
   # Watch for the "Try Again" button that will be rendered if an error occurs in
   # the mapping.
@@ -1092,7 +1074,7 @@ server <- function(input, output, session) {
   })
 
 
-  # 4.7 Clean and export the data -------------------------------------------
+  # * 3.3.4 Clean and export the data -------------------------------------
 
   # Cleaning the mapped MetaCyc (not KEGG) data before download, to remove HTML
   # tags from reactions. Specifically, we are removing any HTML tags, using
@@ -1132,7 +1114,7 @@ server <- function(input, output, session) {
 
 
 
-  # 4.8 Add navigation to Viz tab -----------------------------------------
+  # * 3.3.5 Add navigation to Pathview tab --------------------------------
 
   # Navigate to the "Visualize" page when KEGG was the chosen database.
   output$continueToViz <- renderUI({
@@ -1215,7 +1197,7 @@ server <- function(input, output, session) {
   }, ignoreInit = TRUE)
 
 
-  # 4.9 Viz tab handlers ----------------------------------------------------
+  # 3.4 Pathview tab handlers ---------------------------------------------
 
   # Set up reactive values for:
   # - The selected compound of the clicked row
@@ -1437,7 +1419,8 @@ server <- function(input, output, session) {
         tags$div(
           class = "col-sm-9",
           tags$h2("Pathway View", class = "tab-header"),
-          imageOutput("pathwayView") %>% withSpinner(type = 8, color = "#303E4E"),
+          imageOutput("pathwayView") %>%
+            withSpinner(type = 8, color = "#303E4E"),
           tags$br()
         )
       )
@@ -1446,6 +1429,6 @@ server <- function(input, output, session) {
 }
 
 
-# 5. Finally, run the app! ---------------------------------------------------
+# 4. Finally, run the app! ---------------------------------------------------
 
 shinyApp(ui, server)
