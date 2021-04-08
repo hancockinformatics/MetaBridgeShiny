@@ -348,37 +348,21 @@ ui <- fluidPage(
           tags$hr(),
 
           tags$div(
-            class = "logoWrapper",
+            # class = "logoWrapper",
 
             tags$h2("Network-Based Integrative Analysis with MetaBridge"),
 
             # Note the link to the tutorial on Github needs to be one line,
             # otherwise the `HTML()` function inserts a space which breaks the
             # link
-            tags$p(htmltools::HTML(
+            tags$p(HTML(paste0(
               "This page covers a sample workflow for integrating your ",
               "metabolomics data with transcriptomics or proteomics data ",
               "using network-based approaches. You can also view this ",
-              "information on our <a href=",
-              "'https://github.com/hancockinformatics/MetaBridgeShiny/blob/master/tutorial/tutorial.md'",
-              ">GitHub page</a>."
-            )),
-
-            tags$ol(
-              tags$li(tags$a(
-                "Metabolite Preprocessing",
-                href = "#metabolite-preprocessing"
-              )),
-              tags$li(tags$a(
-                "MetaBridge Mapping",
-                href = "#metabridge-mapping"
-              )),
-              tags$li(tags$a(
-                "NetworkAnalyst",
-                href = "#networkanalyst"
-              )),
-              style = "font-size: 1.34em;"
-            )
+              "information on our <a href='https://github.com/",
+              "hancockinformatics/MetaBridgeShiny/blob/master/tutorial/",
+              "tutorial.md'>GitHub page</a>."
+            )))
           )
         ),
 
