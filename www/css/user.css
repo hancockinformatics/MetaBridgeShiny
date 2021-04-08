@@ -17,7 +17,12 @@
   padding-right: 15px;
 }
 
-/*If the input panel is wide enough, put the link in the bottom right*/
+/* Increase font size for the tab names */
+.navbar-default {
+  font-size: 18.75px;
+}
+
+/* If the input panel is wide enough, put the link in the bottom right */
 .col-sm-3 form .btn-link,
 .col-sm-4 form .btn-link {
   display: inline-block;
@@ -26,7 +31,7 @@
   bottom: 0;
 }
 
-/*If the input panel is wide enough, put the button in the bottom right*/
+/* If the input panel is wide enough, put the button in the bottom right */
 .col-sm-3 form .action-button,
 .col-sm-4 form .action-button {
   display: inline-block;
@@ -53,10 +58,9 @@
 }*/
 
 
-/* Custom well class for rendering input and output options, with added border */
+/* Custom well class for rendering input and output options */
 .well {
   position: relative;
-  /*border: 1px solid #98aeb3;*/
 }
 
 /* Special class for providing help to the user */
@@ -83,7 +87,7 @@
   color: #ffffff;
 }
 
-/*Make action link within alert normal color*/
+/* Make action link within alert normal color */
 .alert a.action-button {
   color: #ffffff;
   text-decoration: underline;
@@ -124,7 +128,6 @@
 
 /* We wrap a div around the content within jumbotron to use a background image
 within the background fill of the hero element */
-
 @media only screen and (max-width: 767px) {
   .logoWrapper {
     background: url('../logo_background.svg') no-repeat center top;
@@ -188,7 +191,7 @@ within the background fill of the hero element */
   height: 100% !important;
 }
 
-/* Slight bump on font size for list items*/
+/* Slight bump on font size for list items */
 dt {
   font-size: 1.2em;
 }
@@ -207,11 +210,12 @@ dl dd {
   margin-right: 0.70em;
 }
 
-/*Reducing the top margin to give consistent spacing with other elements */
+/* Reducing the top margin to give consistent spacing with other elements */
 .checkbox {
   margin-top: 5px;
 }
 
+/* Customizing the Github image inserted into the right side of the navbar */
 #github-img{
   position: absolute;
   right: 10px;
