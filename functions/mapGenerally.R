@@ -298,8 +298,8 @@ mapMetaCyc <- function(importDF, col, idType) {
       by = c("MetaCyc Gene" = "geneID")
     ) %>%
       select(
-        all_of(idType),
         Compound,
+        all_of(idType),
         HMDB,
         KEGG,
         Reaction,
@@ -585,10 +585,10 @@ mapKEGG <- function(importDF, col, idType) {
         "Entrez"      = entrez
       ) %>%
       select(
+        Compound,
         KEGG,  # Use select to reorder
         HMDB,
         # all_of(idType),
-        Compound,
         Enzyme,
         `Enzyme Name`,
         `Gene Name`,

@@ -29,7 +29,7 @@ generateSummaryTable <- function(mappingObject,
 
     table <- mappingObject$data %>%
       # group_by(!!sym(idType), HMDB, KEGG, Compound) %>%
-      group_by(HMDB, KEGG, Compound) %>%
+      group_by(Compound, HMDB, KEGG) %>%
       summarize(
         "Reactions" = n_distinct(`Reaction`, na.rm = TRUE),
         "Genes (MetaCyc)" = n_distinct(`MetaCyc Gene`, na.rm = TRUE),
@@ -48,7 +48,7 @@ generateSummaryTable <- function(mappingObject,
 
     table <- mappingObject$data %>%
       # group_by(!!sym(idType), KEGG, Compound) %>%
-      group_by(KEGG, HMDB, Compound) %>% # changed here
+      group_by(Compound, KEGG, HMDB) %>% # changed here
       summarize(
         "Enzymes" = n_distinct(`Enzyme`, na.rm = TRUE),
         "Gene Names" = n_distinct(`Gene Name`, na.rm = TRUE),
