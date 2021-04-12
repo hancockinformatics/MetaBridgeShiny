@@ -50,7 +50,7 @@ ui <- fluidPage(
     title = tags$div(
       id = "title_tab_bar",
 
-      htmltools::HTML("<img src='pics/logo_white.svg' alt='' height='30'>"),
+      htmltools::HTML("<img src='pics/logo_white.svg' alt='' height='28'>"),
 
       tags$div(
         id = "github-img",
@@ -68,6 +68,7 @@ ui <- fluidPage(
       useShinyjs(),
       tags$style(type = "text/css", "body {padding-top: 80px;}")
     ),
+
 
     # * 2.2 Welcome tab & landing page ------------------------------------
 
@@ -149,11 +150,11 @@ ui <- fluidPage(
             # Button linking straight to the About page
             actionButton(
               inputId = "about",
-              label = "About",
-              class = "btn-info btn-lg btn-tooltip btn-hidden",
-              style = "width: 155px",
+              label   = "About",
+              class   = "btn-info btn-lg btn-tooltip btn-hidden",
+              style   = "width: 155px",
+              title   = "Learn more about MetaBridge.",
               `data-position` = "bottom",
-              title = "Learn more about MetaBridge."
             )
           )
         )
@@ -187,11 +188,14 @@ ui <- fluidPage(
           class = "well",
           tags$label("Upload your Metabolites"),
 
-          tags$p(HTML(
-            "Select a plain-text spreadsheet (a file ending in csv, txt, or ",
-            "tsv) containing your metabolites in a single column. You can ",
-            "also try our example data using the button below."
-          ), style = "padding-bottom: 5px;"),
+          tags$p(
+            HTML(
+              "Select a plain-text spreadsheet (a file ending in csv, txt, or ",
+              "tsv) containing your metabolites in a single column. You can ",
+              "also try our example data using the button below."
+            ),
+            style = "padding-bottom: 5px;"
+          ),
 
           # Upload handling. Note that the "Browse..." button is customized in
           # "www/css/user.css". The label is set to NULL so we can include an
@@ -200,8 +204,7 @@ ui <- fluidPage(
             inputId     = "metaboliteUpload",
             label       = NULL,
             buttonLabel = list(icon("upload"), "Browse..."),
-
-            accept  = c(
+            accept      = c(
               "text/csv",
               "text/comma-separated-values,text/plain",
               ".csv",
@@ -215,10 +218,7 @@ ui <- fluidPage(
           ),
 
           # Header in file?
-          tags$p(
-            HTML("<b>Does your data contain column names?</b>"),
-            style = "margin-bottom: 0;"
-          ),
+          tags$label("Does your data contain column names?"),
           checkboxInput(
             inputId = "header",
             label   = "My data has a header",
@@ -226,10 +226,11 @@ ui <- fluidPage(
           ),
 
           # Comma-, tab-, or semicolon-delimited data?
+          tags$label("How is your data separated?"),
           radioButtons(
-            inputId = "sep",
-            label = "How is your data separated?",
-            choices = c(Comma = ",", Tab = "\t", Semicolon = ";"),
+            inputId  = "sep",
+            label    = NULL,
+            choices  = c(Comma = ",", Tab = "\t", Semicolon = ";"),
             selected = ","
           ),
 
@@ -239,9 +240,9 @@ ui <- fluidPage(
           actionButton(
             inputId = "tryExamples",
             class   = "btn-info btn-tooltip",
-            `data-position` = "right",
             label   = tags$b("Load Example Data"),
-            title   = "Try an example dataset from MetaboAnalyst"
+            title   = "Try an example dataset from MetaboAnalyst",
+            `data-position` = "right"
           )
         ),
 
@@ -334,6 +335,7 @@ ui <- fluidPage(
     navbarMenu(
       title = "Help",
 
+
       # * * 2.6.1 Tutorial Page -------------------------------------------
 
       tabPanel(
@@ -371,6 +373,7 @@ ui <- fluidPage(
           includeMarkdown("tutorial/tutorial.md")
         )
       ),
+
 
       # * * 2.6.2 About page ----------------------------------------------
 
@@ -519,6 +522,7 @@ server <- function(input, output, session) {
 
 
 
+
   # 3.1 Welcome tab handlers ----------------------------------------------
 
   # When clicking "Get Started", switch to `Upload` panel
@@ -535,6 +539,7 @@ server <- function(input, output, session) {
   observeEvent(input$about, {
     updateNavbarPage(session, inputId = "navbarLayout", selected = "aboutPanel")
   }, ignoreInit = TRUE)
+
 
 
 
@@ -602,7 +607,6 @@ server <- function(input, output, session) {
       tags$br()
     )
   })
-
 
   # Once the data is populated, render a preview of the data to the user.
   output$uploadedDataTable <- DT::renderDataTable({
@@ -696,7 +700,6 @@ server <- function(input, output, session) {
     )
   })
 
-
   # Render the UI for the column picker panel
   columnPickerUI <- eventReactive({
     # Change on button click (uploaded file or example data)...
@@ -718,7 +721,6 @@ server <- function(input, output, session) {
       )
     }
   })
-
 
   observeEvent({
   	input$uploadedDataTable_columns_selected
@@ -782,7 +784,6 @@ server <- function(input, output, session) {
   observeEvent(input$continueToMap, {
     updateNavbarPage(session, inputId = "navbarLayout", selected = "mapPanel")
   }, ignoreInit = TRUE)
-
 
 
   # 3.3 Map tab handlers --------------------------------------------------
@@ -1018,7 +1019,6 @@ server <- function(input, output, session) {
   })
 
 
-
   # * 3.3.3 Render sidebar to download results ----------------------------
 
   # Watch for the "Try Again" button that will be rendered if an error occurs in
@@ -1094,7 +1094,6 @@ server <- function(input, output, session) {
       )
     }
   )
-
 
 
   # * 3.3.5 Add navigation to Pathview tab --------------------------------
@@ -1400,6 +1399,8 @@ server <- function(input, output, session) {
     }
   })
 }
+
+
 
 
 # 4. Finally, run the app! ---------------------------------------------------
