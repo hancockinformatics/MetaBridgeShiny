@@ -391,17 +391,14 @@ ui <- fluidPage(
             class = "logoWrapper",
 
             tags$p(HTML(
-              "MetaBridge was designed by Samuel Hinshaw, and is maintained ",
+              "MetaBridge was created by Samuel Hinshaw, and is maintained ",
               "by Travis Blimkie at the <a href='http://cmdr.ubc.ca/bobh/'>",
               "REW Hancock Laboratory</a> at The University of British ",
               "Columbia. It was originally published in <i>Bioinformatics</i> ",
               "(doi: <a href='https://doi.org/10.1093/bioinformatics/bty331'>",
               "10.1093/bioinformatics/bty331</a>); please cite this paper ",
-              "when using MetaBridge in your analyses."
-            )),
-
-            tags$p(HTML(
-              "We also have a protocol on how to use MetaBridge published in ",
+              "when using MetaBridge in your analyses.",
+              "We also have a protocol for MetaBridge published in ",
               "<i>Current Protocols in Bioinformatics</i>. It covers how to ",
               "prepare data for input to MetaBridge, and includes an example ",
               "of building a protein-protein interaction network from ",
@@ -410,6 +407,13 @@ ui <- fluidPage(
               "<a href='https://doi.org/10.1002/cpbi.98'>10.1002/cpbi.98</a>."
             )),
 
+            tags$p(HTML(paste0(
+              "The example data used by MetaBridge is based on results from a ",
+              "metabolomics study of pediatric sepsis published by Mickiewicz ",
+              "et al., and is available <a href=;https://www.atsjournals.org/",
+              "doi/full/10.1164/rccm.201209-1726OC'>here</a>."
+            ))),
+
             tags$p(HTML(
               "If you encounter any bugs or run into other troubles, please ",
               "post an issue at the <a href=",
@@ -417,7 +421,7 @@ ui <- fluidPage(
               "GitHub page</a>."
             )),
 
-            tags$h3(
+            tags$p(
               "MetaBridge uses the following databases and R packages:"
             ),
 
