@@ -410,16 +410,15 @@ ui <- fluidPage(
             tags$p(HTML(paste0(
               "The example data used by MetaBridge is based on results from a ",
               "metabolomics study of pediatric sepsis published by Mickiewicz ",
-              "et al., and is available <a href=;https://www.atsjournals.org/",
-              "doi/full/10.1164/rccm.201209-1726OC'>here</a>."
+              "et al., available <a href=;https://www.atsjournals.org/doi/",
+              "full/10.1164/rccm.201209-1726OC'>here</a>."
             ))),
 
-            tags$p(HTML(
+            tags$p(HTML(paste0(
               "If you encounter any bugs or run into other troubles, please ",
-              "post an issue at the <a href=",
-              "'https://github.com/hancockinformatics/MetaBridgeShiny/issues'>",
-              "GitHub page</a>."
-            )),
+              "post an issue at the <a href='https://github.com/",
+              "hancockinformatics/MetaBridgeShiny/issues'>GitHub page</a>."
+            ))),
 
             tags$p(
               "MetaBridge uses the following databases and R packages:"
@@ -571,11 +570,12 @@ server <- function(input, output, session) {
     input$header
   }, {
     if (!is.null(input$metaboliteUpload)) {
+      message("INFO: User uploading data.")
       # Save to the reactiveVal...
       read_delim(
-        file = input$metaboliteUpload$datapath,
+        file      = input$metaboliteUpload$datapath,
         col_names = input$header,
-        delim = input$sep
+        delim     = input$sep
       ) %>% metaboliteObject()
       # ...then wipe mapping objects for a fresh start.
       mappingObject(NULL)
@@ -756,7 +756,7 @@ server <- function(input, output, session) {
   # If the selected ID type is a column name in the data frame, preselect that
   # column for use in mapping. Check that we have a column selected first,
   # otherwise the second if statement causes an error and the app crashes.
-  # Note that the current app version does not actually employ this section, a
+  # Note that the current app version does not actually employ this section, as
   # it interferes with the enabling/disabling of the Proceed button (FIX?)
   observeEvent(columnPicked(), {
     if (length(columnPicked()) != 0) {
