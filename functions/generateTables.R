@@ -34,7 +34,8 @@ generateSummaryTable <- function(mappingObject,
         "Reactions" = n_distinct(`Reaction`, na.rm = TRUE),
         "Genes (MetaCyc)" = n_distinct(`MetaCyc Gene`, na.rm = TRUE),
         "Gene Names" = n_distinct(`Gene Name`, na.rm = TRUE),
-        "Genes (Ensembl)" = n_distinct(`Ensembl`, na.rm = TRUE)
+        "Genes (Ensembl)" = n_distinct(`Ensembl`, na.rm = TRUE),
+        .groups = "keep"
       ) %>%
       ungroup() %>%
       arrange(Compound)
@@ -52,7 +53,8 @@ generateSummaryTable <- function(mappingObject,
       summarize(
         "Enzymes" = n_distinct(`Enzyme`, na.rm = TRUE),
         "Gene Names" = n_distinct(`Gene Name`, na.rm = TRUE),
-        "Genes (Entrez)" = n_distinct(`Entrez`, na.rm = TRUE)
+        "Genes (Entrez)" = n_distinct(`Entrez`, na.rm = TRUE),
+        .groups = "keep"
       ) %>%
       ungroup() %>%
       arrange(Compound)
