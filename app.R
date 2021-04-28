@@ -506,6 +506,8 @@ server <- function(input, output, session) {
 
     # After packages loaded, run button transform to signal ready states.
     runjs("handlers.initGetStarted();")
+
+    message("\nINFO: Starting session.")
   }, ignoreInit = TRUE, once = TRUE)
 
 
@@ -521,6 +523,7 @@ server <- function(input, output, session) {
   selectedMetab <- reactiveVal()
   idTypeChosen <- reactiveVal()
   columnPicked <- reactiveVal()
+  firstID <- reactiveVal()
   hmdbCol <- reactiveVal()
 
 
@@ -560,6 +563,8 @@ server <- function(input, output, session) {
     mappingSummary$dbChosen <- NULL
     mappedMetaboliteTable(NULL)
     databaseChosen(NULL)
+
+    message("INFO: Loaded example data.")
   }, ignoreInit = TRUE)
 
   # Read file when any of fileInput, checkboxInput, or radioButtons states
@@ -736,6 +741,7 @@ server <- function(input, output, session) {
     # ...then pick the column name!
     columnName <- colnames(metaboliteObject())[columnIndex]
     columnPicked(columnName)
+    firstID(as.character(metaboliteObject()[1, columnIndex]))
   })
 
 
@@ -786,8 +792,13 @@ server <- function(input, output, session) {
 
   # Switch to `Map` panel when "Proceed" is clicked on the `Upload` tab
   observeEvent(input$continueToMap, {
+    # message("INFO: User's IDs look like: " input)
+    message(paste0("INFO: Chosen ID type is ", input$idType), ".")
+    message(paste0("INFO: First input ID is '", firstID(), "'."))
     updateNavbarPage(session, inputId = "navbarLayout", selected = "mapPanel")
   }, ignoreInit = TRUE)
+
+
 
 
   # 3.3 Map tab handlers --------------------------------------------------
@@ -804,6 +815,8 @@ server <- function(input, output, session) {
   # When the map button is clicked, update the `dbChosen()`.
   observeEvent(input$mapButton, {
     databaseChosen(input$dbChosen)
+
+    message("INFO: Chosen database is ", input$dbChosen, ".")
 
     # Clear any pre-existing alerts
     removeUI(selector = "#mappingAlert")
@@ -855,6 +868,7 @@ server <- function(input, output, session) {
     )
     mappingSummary$table <- results$table
     mappingSummary$dbChosen <- results$dbChosen
+    message("INFO: Summary table has ", nrow(mappingSummary$table), " entries.")
   })
 
   # 2. Render Generated Table
@@ -945,7 +959,7 @@ server <- function(input, output, session) {
 
     } else if (databaseChosen() == "KEGG") {
       if (mappingSummary$dbChosen != "KEGG") {
-        cat("DATABASE WAS NOT KEGG, NULL RETURNING...")
+        message("DATABASE WAS NOT KEGG, NULL RETURNING...")
         # If our summary table was somehow not updated yet, exit.
         return(NULL)
       } else {
@@ -961,7 +975,7 @@ server <- function(input, output, session) {
     } else if (databaseChosen() == "MetaCyc") {
       # If our summary table was somehow not updated yet, exit.
       if (mappingSummary$dbChosen != "MetaCyc") {
-        cat("DATABASE WAS NOT METACYC, NULL RETURNING...")
+        message("DATABASE WAS NOT METACYC, NULL RETURNING...")
         return(NULL)
         # Otherwise proceed with generated the metabolite table.
       } else {
@@ -983,6 +997,7 @@ server <- function(input, output, session) {
       return(data.frame())
 
     } else if (mappingObject()$status == "success") {
+      message("INFO: Specific table has ", nrow(mappedMetaboliteTable()), " entries.")
       # Only render if we had non-null, non-error, non-empty results.
       mappedMetaboliteTable() %>% hyperlinkTable(databaseChosen())
     }
