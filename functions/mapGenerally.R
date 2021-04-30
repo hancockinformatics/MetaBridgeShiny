@@ -31,9 +31,8 @@ mapMetaCyc <- function(importDF, col, idType) {
     # The return value in this chunk is the actual value that will be returned
     # in case there is no condition (e.g. warning or error). You don't need to
     # state the return value via `return()` as code in the "try" part is not
-    # wrapped insided a function (unlike that for the condition handlers for
-    # warnings and error below)
-
+    # wrapped inside a function (unlike the condition handlers for warnings and
+    # error below).
     this <- tibble(
       !!(idType) := importDF %>%
         use_series(!!(col)) %>%
@@ -100,6 +99,10 @@ mapMetaCyc <- function(importDF, col, idType) {
 
   # Return the user's input data frame if there was an error or the mapping
   # returned no results
+  message("INFO: mapMetaCyc step 1 (prep):")
+  message(
+    paste("\t", mappingDF[names(mappingDF) != "data"], collapse = "\n")
+  )
   if (mappingDF$status == "error" | mappingDF$status == "empty") {
     return(mappingDF)
   }
@@ -151,9 +154,8 @@ mapMetaCyc <- function(importDF, col, idType) {
       internalMessage = warningMessage,
       message = "There was an unspecified error in mapping your compounds.",
       suggest = paste0(
-        "<p>Please submit an issue at the",
-        "<a href='https://github.com/hancockinformatics/MetaBridgeShiny' ",
-        "style='color: white;'>Github page.</a></p>"
+        "Please check the About page for a link to our Github, where you can ",
+        "report this issue."
       )
     )
 
@@ -170,6 +172,11 @@ mapMetaCyc <- function(importDF, col, idType) {
 
 
   # If tryCatch exited with status != 0, stop here
+  message("INFO: mapMetaCyc step 2 (objects):")
+  message(
+    paste("\t", mappedToObjects[names(mappedToObjects) != "data"], collapse = "\n")
+  )
+
   if (mappedToObjects$status == "error" | mappedToObjects$status == "empty") {
     return(mappedToObjects)
   }
@@ -221,6 +228,11 @@ mapMetaCyc <- function(importDF, col, idType) {
 
 
   # Return to the user of there was an error or if the join failed silently
+  message("INFO: mapMetaCyc step 3 (reactions):")
+  message(
+    paste("\t", mappedToReactions[names(mappedToReactions) != "data"], collapse = "\n")
+  )
+
   if (mappedToReactions$status == "error" | mappedToReactions$status == "empty") {
     return(mappedToReactions)
   }
@@ -284,6 +296,11 @@ mapMetaCyc <- function(importDF, col, idType) {
 
 
   # Return and exit if there was an error, silent or otherwise
+  message("INFO: mapMetaCyc step 4 (genes):")
+  message(
+    paste("\t", mappedToGenes[names(mappedToGenes) != "data"], collapse = "\n")
+  )
+
   if (mappedToGenes$status == "error" | mappedToGenes$status == "empty") {
     return(mappedToGenes)
   }
@@ -355,6 +372,10 @@ mapMetaCyc <- function(importDF, col, idType) {
   }
 
   ) # End of tryCatch()
+  message("INFO: mapMetaCyc step 5 (Ensembl):")
+  message(
+    paste("\t", mappedToEnsembl[names(mappedToEnsembl) != "data"], collapse = "\n")
+  )
 
 
   # Returning Ensembl genes if everything worked
@@ -449,6 +470,10 @@ mapKEGG <- function(importDF, col, idType) {
     )
   }) # End of tryCatch()
 
+  message("INFO: mapKEGG step 1 (prep):")
+  message(
+    paste("\t", mappingDF[names(mappingDF) != "data"], collapse = "\n")
+  )
 
   # Mapping if NOT using KEGG IDs
   if (idType != "KEGG") {
@@ -466,7 +491,7 @@ mapKEGG <- function(importDF, col, idType) {
             "We were unable to map the ", idType, " IDs you provided to KEGG ",
             "compound IDs."
           ),
-          suggest = "Try using a different compound ID or mapping via MetaCyc"
+          suggest = "Try using a different compound ID or mapping via MetaCyc."
         )
 
       } else {
@@ -496,7 +521,7 @@ mapKEGG <- function(importDF, col, idType) {
           "We were unable to map the ", idType, " IDs you provided to KEGG ",
           "compound IDs."
         ),
-        suggest = "Try using a different compound ID or mapping via MetaCyc"
+        suggest = "Try using a different compound ID or mapping via MetaCyc."
       )
     }) # End of tryCatch()
 
@@ -519,6 +544,11 @@ mapKEGG <- function(importDF, col, idType) {
     )
   }
 
+  message("INFO: mapKEGG step 2 (IDs):")
+  message(
+    paste("\t", keggIDs[names(keggIDs) != "data"], collapse = "\n")
+  )
+
 
   # Mapping to KEGG enzymes
   keggEnzymesOfInterest <- tryCatch({
@@ -535,7 +565,7 @@ mapKEGG <- function(importDF, col, idType) {
           "We were unable to find any matches for the compounds you supplied. ",
           "Here are the KEGG compound IDs we queried."
         ),
-        suggest = "Try using a different compound ID or mapping via MetaCyc"
+        suggest = "Try using a different compound ID or mapping via MetaCyc."
       )
 
     } else {
@@ -568,6 +598,11 @@ mapKEGG <- function(importDF, col, idType) {
       suggest = "Try changing your mapping parameters."
     )
   }) # End of tryCatch()
+
+  message("INFO: mapKEGG step 3 (enzymes):")
+  message(
+    paste("\t", keggEnzymesOfInterest[names(keggEnzymesOfInterest) != "data"], collapse = "\n")
+  )
 
 
   # Mapping to genes
@@ -605,7 +640,7 @@ mapKEGG <- function(importDF, col, idType) {
           "to any human genes. Here are the enzymes and their directly ",
           "interacting enzymes. "
         ),
-        suggest = "Try using a different compound ID or mapping via MetaCyc"
+        suggest = "Try using a different compound ID or mapping via MetaCyc."
       )
 
     } else {
@@ -639,6 +674,11 @@ mapKEGG <- function(importDF, col, idType) {
     )
   }) # End of tryCatch()
 
+  message("INFO: mapKEGG step 4 (genes):")
+  message(
+    paste("\t", keggGenesOfInterest[names(keggGenesOfInterest) != "data"], collapse = "\n")
+  )
+
   return(keggGenesOfInterest)
 }
 
@@ -666,8 +706,8 @@ mapGenerally <- function(importDF, col, db, idType) {
   if (db == "KEGG") {
     mappedMetabolites <- mapKEGG(
       importDF = importDF,
-      col     = col,
-      idType  = idType
+      col      = col,
+      idType   = idType
     )
 
   # Mapping if MetaCyc is selected
@@ -687,13 +727,12 @@ mapGenerally <- function(importDF, col, db, idType) {
         "error with the database parameter."
       ),
       suggest = paste0(
-        "<p>Please submit an issue at the",
-        "<a href='https://github.com/hancockinformatics/MetaBridgeShiny' ",
-        "style='color: white;'>GitHub page.</a></p>"
+        "Please check the About page for a link to our Github, where you can ",
+        "report this issue."
       )
     )
   }
 
-  # Return the mapped data from above two functions
+  # Return the mapped data from one of the above two functions
   return(mappedMetabolites)
 }

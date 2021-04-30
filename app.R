@@ -507,7 +507,10 @@ server <- function(input, output, session) {
     # After packages loaded, run button transform to signal ready states.
     runjs("handlers.initGetStarted();")
 
-    message("\nINFO: Starting session.")
+    # message(paste0(
+    #   "\n====================================================================",
+    #     "\nINFO: Starting session."
+    # ))
   }, ignoreInit = TRUE, once = TRUE)
 
 
