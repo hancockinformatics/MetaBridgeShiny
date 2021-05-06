@@ -144,14 +144,8 @@ from the two individual gene lists, and the combined list.
 
 1. Minimum-connected PPI network from MetaBridge-mapped metabolites.
 ![](serve/s8.png)
-
-<br>
-
 2. Minimum-connected PPI network from gene expression data.
 ![](serve/s9.png)
-
-<br>
-
 3. Minimum-connected PPI network from combined gene list.
 ![](serve/s10.png)
 
