@@ -417,8 +417,12 @@ ui <- fluidPage(
             tags$p(HTML(paste0(
               "If you encounter any bugs or run into other troubles, please ",
               "post an issue at the <a href='https://github.com/",
-              "hancockinformatics/MetaBridgeShiny/issues'>GitHub page</a>."
+              "hancockinformatics/MetaBridgeShiny/issues'>GitHub page</a>. Be ",
+              "sure to include detailed information on the error you ",
+              "received, and the input you used, if possible."
             ))),
+
+            tags$br(),
 
             tags$p(
               "MetaBridge uses the following databases and R packages:"
