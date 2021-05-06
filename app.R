@@ -507,10 +507,10 @@ server <- function(input, output, session) {
     # After packages loaded, run button transform to signal ready states.
     runjs("handlers.initGetStarted();")
 
-    # message(paste0(
-    #   "\n====================================================================",
-    #     "\nINFO: Starting session."
-    # ))
+    message(paste0(
+      "\n===================================================================\n",
+        "INFO: Starting session."
+    ))
   }, ignoreInit = TRUE, once = TRUE)
 
 
@@ -567,7 +567,7 @@ server <- function(input, output, session) {
     mappedMetaboliteTable(NULL)
     databaseChosen(NULL)
 
-    message("INFO: Loaded example data.")
+    message("\nINFO: Loaded example data.")
   }, ignoreInit = TRUE)
 
   # Read file when any of fileInput, checkboxInput, or radioButtons states
