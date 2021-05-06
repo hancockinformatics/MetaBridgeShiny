@@ -193,14 +193,15 @@ within the background fill of the hero element */
 
 /* Slight bump on font size for list items */
 dt {
-  font-size: 1.1em;
+  font-size: 1.25em;
+  padding-top: 10px;
 }
 
 /* Indent defined list terms, without needing to use bullets. Also increased */
 /* font size slightly. */
 dl dd {
   margin-left: 1em;
-   font-size: 1.1em;
+  font-size: 1.1em;
 }
 
 /* Attempts at getting the download button on the right */
