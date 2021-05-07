@@ -4,7 +4,7 @@ HMDB or KEGG IDs. If you are starting with raw metabolomics data (i.e. compounds
 names, such as glucose), you will need to preprocess your metabolites with your
 method of choice to obtain their corresponding HMDB or KEGG IDs. We recommend
 [MetaboAnalyst](http://www.metaboanalyst.ca) for metabolite preprocessing and ID
-mapping.
+mapping, available by selecting "Other Utilities" then "Compound ID Conversion."
 
 ![](serve/s0.png)
 
