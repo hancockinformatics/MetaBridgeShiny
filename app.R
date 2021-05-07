@@ -410,7 +410,7 @@ ui <- fluidPage(
             tags$p(HTML(paste0(
               "The example data used by MetaBridge is based on results from a ",
               "metabolomics study of pediatric sepsis published by Mickiewicz ",
-              "et al., available <a href=;https://www.atsjournals.org/doi/",
+              "et al., available <a href='https://www.atsjournals.org/doi/",
               "full/10.1164/rccm.201209-1726OC'>here</a>."
             ))),
 
