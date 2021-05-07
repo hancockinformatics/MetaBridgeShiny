@@ -513,7 +513,7 @@ server <- function(input, output, session) {
 
     message(paste0(
       "\n===================================================================\n",
-        "INFO: Starting session."
+        "INFO: Initialized session."
     ))
   }, ignoreInit = TRUE, once = TRUE)
 
