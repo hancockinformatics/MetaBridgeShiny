@@ -47,7 +47,7 @@ notEmpty <- function(vector) {
 #'
 matchHMDB <- function(hmdbID) {
 
-  # Make sure the ID is a character amd starts with 'HMDB' or 'hmdb' Look at the
+  # Make sure the ID is a character and starts with 'HMDB' or 'hmdb' Look at the
   # syntax very carefully here, the parentheses are IMPORTANT
   if (!is.character(hmdbID) | !(str_detect(hmdbID, "^HMDB") | str_detect(hmdbID, "^hmdb"))) {
     return(NA)
@@ -74,7 +74,7 @@ matchHMDB <- function(hmdbID) {
     newID <- paste0("HMDB", str_sub(hmdbID, start = -5, end = -1))
     return(newID)
 
-  # If there is an edge case where the ID is not 9 or 11 charactesr in length(),
+  # If there is an edge case where the ID is not 9 or 11 characters in length(),
   # also return NA
   } else {
     return(NA)
@@ -82,20 +82,6 @@ matchHMDB <- function(hmdbID) {
 }
 
 
-
-
-# Pattern/replacement pairs for next function. Maybe should be moved into app.R
-# or deferred.R?
-find_replace <- c(
-  "<.*?>" = "",
-  "&harr;" = "<-->",
-  "&rarr;" = "-->",
-  "&larr;" = "<--",
-  "&alpha;" = "a",
-  "&beta;"  = "b",
-  "&omega;" = "o",
-  "&gamma;" = "g"
-)
 
 
 #' cleanReactions
@@ -107,11 +93,25 @@ find_replace <- c(
 #' @export
 #'
 #' Removes any HTML tags in reaction names. Also replaces arrow marks with plain
-#' text version, along with Greek letters. Using above-defined named vector so
-#' we can perform multiple sets of pattern-replacement in a single call to
-#' str_replace_all().
+#' text version, along with Greek letters. Using a named vector so we can
+#' perform multiple sets of pattern replacement in a single call to
+#' `str_replace_all()`.
 #'
 cleanReactions <- function(metabTable) {
+
+  # Pattern/replacement pairs for next function. Maybe should be moved into app.R
+  # or deferred.R?
+  find_replace <- c(
+    "<.*?>" = "",
+    "&harr;" = "<-->",
+    "&rarr;" = "-->",
+    "&larr;" = "<--",
+    "&alpha;" = "a",
+    "&beta;"  = "b",
+    "&omega;" = "o",
+    "&gamma;" = "g"
+  )
+
   metabTable %>% mutate(
     `Reaction Name` = stringr::str_replace_all(`Reaction Name`, find_replace)
   )

@@ -1,3 +1,21 @@
-Title: Metabridge
-Author: Sam Hinshaw, Travis Blimkie
-Type: Shiny
+Package: MetaBridgeShiny
+Title: Map Metabolites for Omics Integration
+Version: 1.4.61
+Authors@R: 
+    c(person(given = "Travis",
+           family = "Blimkie",
+           role = "ctb",
+           email = "travis@hancocklab.com"),
+    person(given = "Sam",
+           family = "Hinshaw",
+           role = c("aut", "cre")))
+Description: MetaBridge is a Shiny-based application for integration of 
+    metabolomics data with other omics data types, chiefly transcriptomics and 
+    proteomics. It leverages publicly available data from both MetaCyc and KEGG 
+    to map input metabolites to genes, through pathways and reactions in which 
+    the metabolite is involved.
+License: GPL (>= 3)
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1

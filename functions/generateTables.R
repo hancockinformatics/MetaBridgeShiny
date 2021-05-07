@@ -29,13 +29,16 @@ generateSummaryTable <- function(mappingObject,
 
     table <- mappingObject$data %>%
       # group_by(!!sym(idType), HMDB, KEGG, Compound) %>%
-      group_by(HMDB, KEGG, Compound) %>%
+      group_by(Compound, HMDB, KEGG) %>%
       summarize(
-        "# Reactions" = n_distinct(`Reaction`, na.rm = TRUE),
-        "# Genes (MetaCyc)" = n_distinct(`MetaCyc Gene`, na.rm = TRUE),
-        "# Gene Names" = n_distinct(`Gene Name`, na.rm = TRUE),
-        "# Genes (Ensembl)" = n_distinct(`Ensembl`, na.rm = TRUE)
-      ) %>% ungroup()
+        "Reactions" = n_distinct(`Reaction`, na.rm = TRUE),
+        "Genes (MetaCyc)" = n_distinct(`MetaCyc Gene`, na.rm = TRUE),
+        "Gene Names" = n_distinct(`Gene Name`, na.rm = TRUE),
+        "Genes (Ensembl)" = n_distinct(`Ensembl`, na.rm = TRUE),
+        .groups = "keep"
+      ) %>%
+      ungroup() %>%
+      arrange(Compound)
 
     # Return the results for the user, and provide database info
     return(list("table" = table, "dbChosen" = "MetaCyc"))
@@ -46,12 +49,15 @@ generateSummaryTable <- function(mappingObject,
 
     table <- mappingObject$data %>%
       # group_by(!!sym(idType), KEGG, Compound) %>%
-      group_by(KEGG, HMDB, Compound) %>% # changed here
+      group_by(Compound, KEGG, HMDB) %>% # changed here
       summarize(
-        "# Enzymes" = n_distinct(`Enzyme`, na.rm = TRUE),
-        "# Gene Names" = n_distinct(`Gene Name`, na.rm = TRUE),
-        "# Genes (Entrez)" = n_distinct(`Entrez`, na.rm = TRUE)
-      ) %>% ungroup()
+        "Enzymes" = n_distinct(`Enzyme`, na.rm = TRUE),
+        "Gene Names" = n_distinct(`Gene Name`, na.rm = TRUE),
+        "Genes (Entrez)" = n_distinct(`Entrez`, na.rm = TRUE),
+        .groups = "keep"
+      ) %>%
+      ungroup() %>%
+      arrange(Compound)
 
     # Return the results for the user, and provide database info
     return(list("table" = table, "dbChosen" = "KEGG"))
@@ -109,7 +115,8 @@ generateMetaCycMetabTable <- function(mappingObject,
 
     # Filter the mapping object for the selected metabolite
     filteredMappedMetaboliteTable <- mappingObject$data %>%
-      filter(!!(namedIDType) == !!(quotedSelectedMetab))
+      filter(!!(namedIDType) == !!(quotedSelectedMetab)) %>%
+      arrange(`Gene Name`)
 
     # Return the filtered table to the user (i.e. the details behind the summary
     # for that paritular metabolite)
@@ -171,7 +178,8 @@ generateKEGGMetabTable <- function(mappingObject,
 
     # Filter the full mapping table based on chosen compund
     filteredMappedMetaboliteTable <- mappingObject$data %>%
-      filter(!!(namedIDType) == !!(quotedSelectedMetab))
+      filter(!!(namedIDType) == !!(quotedSelectedMetab)) %>%
+      arrange(`Gene Name`)
 
     return(filteredMappedMetaboliteTable)
   }
@@ -232,7 +240,7 @@ hyperlinkTable <- function(table, dbChosen) {
       ))
   }
 
-  # Compund names and MetaCyc database
+  # Compound names and MetaCyc database
   if ("Compound" %in% colnames(table) && dbChosen == "MetaCyc") {
     table <- table %>%
       mutate(Compound = paste0(

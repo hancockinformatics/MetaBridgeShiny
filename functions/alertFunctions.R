@@ -9,14 +9,14 @@
 #' @export
 #'
 #' Function which creates pop-up bubbles containing messages, errors,
-#' suggestions and status of Metabridge app to guide the user
+#' suggestions and status of MetaBridge app to guide the user
 #'
 mappingAlert <- function(message, suggest, status) {
 
   # Generate UI elements
   insertUI(
     selector = "#mapPanelSidebar",
-    where = "beforeEnd",
+    where    = "beforeEnd",
 
     ui = tags$div(
       id = "mappingAlert",
@@ -45,7 +45,11 @@ mappingAlert <- function(message, suggest, status) {
       },
 
       if (status == "warn") {
-        "Please submit an issue on the Github page."
+        paste0(
+          "<p>Please submit an issue at the",
+          "<a href='https://github.com/hancockinformatics/MetaBridgeShiny' ",
+          "style='color: white;'>Github page.</a></p>"
+        )
       }
     )
   )
