@@ -129,7 +129,7 @@ ui <- fluidPage(
               label = "Initializing App...",
               class = "btn-primary btn-lg disabled",
               `data-position` = "bottom",
-              icon("circle-o-notch", class = "fa fa-spin", lib = "font-awesome")
+              icon("circle-notch", class = "fa fa-spin", lib = "font-awesome")
             ),
 
             # Horizontal spacer
