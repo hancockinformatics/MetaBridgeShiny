@@ -15,7 +15,7 @@ library(tidyverse)
 # Load data -------------------------------------------------------
 
 # Examples
-load("data/examples_2.RData")
+load("data/example_data.RData")
 
 # Load KEGG database files, updated on/around November 1st, 2019
 load("data/k00_keggCompounds_r92.RData")

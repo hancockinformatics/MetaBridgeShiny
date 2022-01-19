@@ -583,7 +583,7 @@ server <- function(input, output, session) {
   # Inject example data frame when "Try Examples" is clicked
   observeEvent(input$tryExamples, {
     # Input examples...
-    metaboliteObject(examples_2)
+    metaboliteObject(example_data)
     # ...and wipe mapping objects
     mappingObject(NULL)
     mappedMetabolites(NULL)
