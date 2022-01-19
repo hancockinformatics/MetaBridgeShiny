@@ -20,7 +20,7 @@ integrative analysis pipeline using
 [MetaBridge](https://metabridge.org), and 
 [NetworkAnalyst](https://www.networkanalyst.ca/) is outlined below:
 
-![](./figure_colour_v5.svg)
+![](./figure_colour_v6.svg)
 
 ## Tutorial
 To learn how to use MetaBridge as part of a network-based integrative analysis
