@@ -20,14 +20,14 @@ load("data/examples_2.RData")
 # Load KEGG database files, updated on/around November 1st, 2019
 load("data/k00_keggCompounds_r92.RData")
 load("data/k02b_keggEnzymeShortNames_r92.RData")
+load("data/k03_keggGenes_r92.RData")
+load("data/k04_keggPathways_r92.RData")
+load("data/k05_keggHumanPathways_r92.RData")
 
 # For the moment, only keep enzyme-gene relationships
-load("data/k03_keggGenes_r92.RData")
 keggGenes <- keggGenes %>%
   dplyr::select(-KEGG) %>%
   unique()
-load("data/k04_keggPathways_r92.RData")
-load("data/k05_keggHumanPathways_r92.RData")
 
 # Load MetaCyc database files, updated on/around September 19th, 2019
 load("data/m01_metaCycDBLinks_v23.RData")
@@ -35,9 +35,6 @@ load("data/m02_metaCycCompoundsReactions_v23.RData")
 load("data/m03_metaCycReactionsGenes_v23.RData")
 load("data/m04_metaCycGeneIDs_v23.RData")
 load("data/m05_metaCycPathways_v23.RData")
-
-# Load HumanCyc cross-references
-load("data/humanRefs.RData")
 
 
 # Load functions ----------------------------------------------------------
