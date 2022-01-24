@@ -529,7 +529,7 @@ mapKEGG <- function(importDF, col, idType) {
     # Mapping if using KEGG IDs
   } else if (idType == "KEGG") {
 
-    keggToHMDB <- metaCycDBLinks %>% select(KEGG, HMDB) %>% drop_na(KEGG)
+    keggToHMDB <- metaCycDBLinks %>% select(KEGG, HMDB) %>% tidyr::drop_na(KEGG)
 
     # Join compound name (to be scraped) to compound IDs here. Name the column
     # 'Compound'

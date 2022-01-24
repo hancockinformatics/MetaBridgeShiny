@@ -113,6 +113,6 @@ cleanReactions <- function(metabTable) {
   )
 
   metabTable %>% mutate(
-    `Reaction Name` = stringr::str_replace_all(`Reaction Name`, find_replace)
+    `Reaction Name` = str_replace_all(`Reaction Name`, find_replace)
   )
 }

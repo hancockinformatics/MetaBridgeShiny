@@ -1,15 +1,12 @@
 
 # Load packages -----------------------------------------------------------
 
-library(tools)
-library(magrittr)
+library(pathview)
 library(rlang)
 library(DT)
-# install.packages("BiocManager")
-# BiocManager::install("pathview")
-library(pathview)
-library(shinycssloaders)
-library(tidyverse)
+library(stringr)
+library(magrittr)
+library(dplyr)
 
 
 # Load data -------------------------------------------------------
@@ -26,7 +23,7 @@ load("data/k05_keggHumanPathways_r92.RData")
 
 # For the moment, only keep enzyme-gene relationships
 keggGenes <- keggGenes %>%
-  dplyr::select(-KEGG) %>%
+  select(-KEGG) %>%
   unique()
 
 # Load MetaCyc database files, updated on/around September 19th, 2019

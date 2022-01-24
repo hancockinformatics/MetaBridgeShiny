@@ -6,14 +6,6 @@
 library(shiny)
 library(shinyjs)
 
-# Useful colours which match the flatly theme:
-# Dark blue     #2c3e50
-# Turquoise     #18bc9c
-# Light blue    #3498db
-# DT blue       #0075b0
-# Grey          #ecf0f1
-# White         #fff
-
 
 
 
@@ -606,7 +598,7 @@ server <- function(input, output, session) {
     if (!is.null(input$metaboliteUpload)) {
       message("INFO: User uploading data.")
       # Save to the reactiveVal...
-      read_delim(
+      readr::read_delim(
         file      = input$metaboliteUpload$datapath,
         col_names = input$header,
         delim     = input$sep
@@ -1136,7 +1128,7 @@ server <- function(input, output, session) {
       )
     },
     content = function(filename) {
-      write_tsv(
+      readr::write_tsv(
         x    = cleanMappedMetabolites(),
         file = filename
       )
@@ -1360,7 +1352,6 @@ server <- function(input, output, session) {
       src = filename,
       contentType = "image/png",
       width = 1000,
-      # height = imageHeight(),
       alt = paste0("Pathway map of KEGG Pathway ", input$pathwaysPicked)
     ))
   }, deleteFile = TRUE)
@@ -1440,7 +1431,7 @@ server <- function(input, output, session) {
           class = "col-sm-9",
           tags$h2("Pathway View", class = "tab-header"),
           imageOutput("pathwayView") %>%
-            withSpinner(type = 8, color = "#303E4E"),
+            shinycssloaders::withSpinner(type = 8, color = "#303E4E"),
           tags$br()
         )
       )

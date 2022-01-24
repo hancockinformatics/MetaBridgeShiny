@@ -39,14 +39,14 @@ mapKEGGPathways <- function(idType,
   # object stored in `data/`
 
   pathwaysOfInterest <- keggPathways %>%
-    dplyr::filter(!!(namedIDType) == !!(quotedMetab)) %>%
+    filter(!!(namedIDType) == !!(quotedMetab)) %>%
     filter(id %in% keggHumanPathways)
 
   # Find all the genes that compound interacts with (from our initial mapping
   # table)
   genesOfInterest <- fullTable %>%
-    dplyr::filter(!!(KEGGname) == !!(quotedMetab)) %>%
-    magrittr::extract2("Gene Name")
+    filter(!!(KEGGname) == !!(quotedMetab)) %>%
+    extract2("Gene Name")
 
   return(list(
     "selectedCompound"           = selectedMetab,
@@ -96,17 +96,17 @@ mapMetaCycPathways <- function(idType,
 
   # Get Info from Full Mapping Table
   genesOfInterest <- fullTable %>%
-    dplyr::filter(!!(namedIDType) == !!(quotedMetab)) %>%
-    magrittr::extract2("Official Gene Symbol")
+    filter(!!(namedIDType) == !!(quotedMetab)) %>%
+    extract2("Official Gene Symbol")
 
   selectedReaction <- fullTable %>%
-    dplyr::filter(!!(namedIDType) == !!(quotedMetab)) %>%
+    filter(!!(namedIDType) == !!(quotedMetab)) %>%
     extract2("Reaction")
 
   quotedSelectedReaction <- enquo(selectedReaction)
 
   pathwaysOfInterest <- metaCycPathways %>%
-    dplyr::filter(reaction %in% !!(selectedReaction))
+    filter(reaction %in% !!(selectedReaction))
 
   return(list(
     "selectedCompound"           = selectedMetab,
