@@ -12,7 +12,7 @@ const handlers = {
     const tutorialButton = document.getElementById('tutorial');
     const aboutButton = document.getElementById('about');
     // Change innerHTML (button text)
-    getStartedButton.innerHTML = 'Get Started';
+    getStartedButton.innerHTML = 'Get started';
     // Remove disabled class
     getStartedButton.classList.remove('disabled');
     // Unhide tutorial button

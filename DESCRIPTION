@@ -1,6 +1,6 @@
 Package: MetaBridgeShiny
 Title: Map Metabolites for Omics Integration
-Version: 1.5.10
+Version: 1.5.11
 Authors@R: 
     c(person(given = "Travis",
            family = "Blimkie",

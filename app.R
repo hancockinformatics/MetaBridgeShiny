@@ -140,7 +140,7 @@ ui <- fluidPage(
           div(
             actionButton(
               inputId = "getStarted",
-              label = "Initializing App...",
+              label = "Initializing app...",
               class = "btn-primary btn-lg disabled",
               `data-position` = "bottom",
               icon("circle-notch", class = "fa fa-spin", lib = "font-awesome")
