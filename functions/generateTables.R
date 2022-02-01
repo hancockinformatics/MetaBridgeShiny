@@ -28,7 +28,6 @@ generateSummaryTable <- function(mappingObject,
   } else if (dbChosen == "MetaCyc") {
 
     table <- mappingObject$data %>%
-      # group_by(!!sym(idType), HMDB, KEGG, Compound) %>%
       group_by(Compound, HMDB, KEGG) %>%
       summarize(
         "Reactions" = n_distinct(`Reaction`, na.rm = TRUE),
@@ -48,7 +47,6 @@ generateSummaryTable <- function(mappingObject,
   } else if (dbChosen == "KEGG") {
 
     table <- mappingObject$data %>%
-      # group_by(!!sym(idType), KEGG, Compound) %>%
       group_by(Compound, KEGG, HMDB) %>% # changed here
       summarize(
         "Enzymes" = n_distinct(`Enzyme`, na.rm = TRUE),
@@ -106,7 +104,7 @@ generateMetaCycMetabTable <- function(mappingObject,
     selectedMetab <-
       summaryTable[as.numeric(rownames(summaryTable)) == selectedRows, ]
 
-    # Extract the paritcular ID from the selected row
+    # Extract the particular ID from the selected row
     selectedMetab <- selectedMetab %>%
       extract2(pastedIDType)
 
@@ -119,7 +117,7 @@ generateMetaCycMetabTable <- function(mappingObject,
       arrange(`Gene Name`)
 
     # Return the filtered table to the user (i.e. the details behind the summary
-    # for that paritular metabolite)
+    # for that particular metabolite)
     return(filteredMappedMetaboliteTable)
   }
 }
@@ -190,27 +188,17 @@ generateKEGGMetabTable <- function(mappingObject,
 
 #' hyperlinkTable
 #'
-#' @param table Table of mapped metaboltes
+#' @param table Table of mapped metabolites
 #' @param dbChosen Chosen database
 #'
-#' @return Tabel which renders the various IDs as links to their respective page.
+#' @return Table which renders the various IDs as links to their respective page
 #' @export
 #'
 #' Generates a hyperlink column based on the IDs present
 #'
 hyperlinkTable <- function(table, dbChosen) {
 
-  # keggCompoundURL <- "http://www.genome.jp/dbget-bin/www_bget?cpd:"
-  # keggEnzymeURL <- "http://www.genome.jp/dbget-bin/www_bget?ec:"
-
-  # hmdbURL <- "http://www.hmdb.ca/metabolites/"
-
-  # metaCycCompoundURL <- "https://metacyc.org/compound?orgid=META&id="
-  # metaCycReactionURL <- "https://metacyc.org/META/NEW-IMAGE?type=REACTION&object="
-  # metaCycGeneURL <- "https://metacyc.org/gene?orgid=META&id="
-
-
-  # If KEGG IDs, either database
+  # If KEGG IDs, and either database
   if ("KEGG" %in% colnames(table)) {
     table <- table %>%
       mutate(KEGG = paste0(
@@ -230,7 +218,7 @@ hyperlinkTable <- function(table, dbChosen) {
       ))
   }
 
-  # HMDB IDs, either database
+  # HMDB IDs, and either database
   if ("HMDB" %in% colnames(table)) {
     table <- table %>%
       mutate(HMDB = paste0(
@@ -270,7 +258,7 @@ hyperlinkTable <- function(table, dbChosen) {
       ))
   }
 
-  # Ensembl gene, either database
+  # Ensembl gene, and either database
   if ("Ensembl" %in% colnames(table)) {
     table <- table %>%
       rowwise() %>%
@@ -282,7 +270,7 @@ hyperlinkTable <- function(table, dbChosen) {
       ungroup()
   }
 
-  # Entrez gene and eiter database
+  # Entrez gene and either database
   if ("Entrez" %in% colnames(table)) {
     table <- table %>%
       rowwise() %>%
@@ -293,7 +281,6 @@ hyperlinkTable <- function(table, dbChosen) {
       ))) %>%
       ungroup()
   }
-
 
   return(table)
 }
