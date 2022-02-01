@@ -3,8 +3,10 @@
 
 # Most libraries and functions are loaded through a call to `deferred.R` at the
 # beginning of the `server()` function, section #3.
-library(shiny)
-library(shinyjs)
+suppressPackageStartupMessages({
+  library(shiny)
+  library(shinyjs)
+})
 
 
 
@@ -447,7 +449,7 @@ ui <- fluidPage(
 
                 # MetaCyc
                 tags$dt(
-                  tags$a(href = "https://metacyc.org/", "MetaCyc v23"),
+                  tags$a(href = "https://metacyc.org/", "MetaCyc v25"),
                   tags$dd("Curated database for human metabolomic data.")
                 ),
 
@@ -455,7 +457,7 @@ ui <- fluidPage(
                 tags$dt(
                   tags$a(
                     href = "https://www.genome.jp/kegg/",
-                    "KEGG Release 92"
+                    "KEGG Release 101"
                   ),
                   tags$dd("Large database containing multiple data types.")
                 ),
