@@ -1,12 +1,14 @@
 
-# MetaCyc data was last updated on 2022-01-18, using MetaCyc v25.5
+# MetaCyc data was last updated on January 18th, 2022, using MetaCyc v25.5
 
 
 # Load packages -----------------------------------------------------------
 
-library(splitstackshape)
-library(glue)
-library(tidyverse)
+library(stringr)
+library(readr)
+library(dplyr)
+import::from(glue, glue)
+import::from(splitstackshape, cSplit)
 
 
 # Set paths ---------------------------------------------------------------
@@ -23,17 +25,17 @@ metacycVersion <- "v25"
 
 metaCycDBLinks_0 <- read_tsv(file.path(updateDir, "1-compounds-ids.txt"))
 
-metaCycDBLinks_1 <- metaCycDBLinks_0 %>%
+m01_metaCycDBLinks <- metaCycDBLinks_0 %>%
   rename("KEGG" = Kegg) %>%
   mutate(
     across(HMDB:KEGG, ~str_remove_all(.x, "^<a href='.*'>|<\\/a>$")),
     across(Compound:KEGG, str_trim)
   )
 
-# save(
-#   metaCycDBLinks_1,
-#   file = file.path(dataDir, glue("m01_metaCycDBLinks_{metacycVersion}.RData"))
-# )
+save(
+  m01_metaCycDBLinks,
+  file = file.path(dataDir, glue("m01_metaCycDBLinks_{metacycVersion}.RData"))
+)
 
 
 # 2. MetaCyc Reactions ----------------------------------------------------
@@ -41,7 +43,7 @@ metaCycDBLinks_1 <- metaCycDBLinks_0 %>%
 metaCycCompoundsReactions_0 <-
   read_tsv(file.path(updateDir, "2-compounds-reactions.tsv"))
 
-metaCycCompoundsReactions_1 <- metaCycCompoundsReactions_0 %>%
+m02_metaCycCompoundsReactions <- metaCycCompoundsReactions_0 %>%
   select("reaction" = ID, "reactionName" = Name, "compound" = Matches) %>%
   cSplit(
     splitCols    = c("compound"),
@@ -51,13 +53,13 @@ metaCycCompoundsReactions_1 <- metaCycCompoundsReactions_0 %>%
     stripWhite   = FALSE
   )
 
-# save(
-#   metaCycCompoundsReactions_1,
-#   file = file.path(
-#     dataDir,
-#     glue("m02_metaCycCompoundsReactions_{metacycVersion}.RData")
-#   )
-# )
+save(
+  m02_metaCycCompoundsReactions,
+  file = file.path(
+    dataDir,
+    glue("m02_metaCycCompoundsReactions_{metacycVersion}.RData")
+  )
+)
 
 
 # 3. MetaCyc Genes --------------------------------------------------------
@@ -65,7 +67,7 @@ metaCycCompoundsReactions_1 <- metaCycCompoundsReactions_0 %>%
 metaCycReactionsGenes_0 <-
   read_tsv(file.path(updateDir, '3-reactions-genes.tsv'))
 
-metaCycReactionsGenes_1 <- metaCycReactionsGenes_0 %>%
+m03_metaCycReactionsGenes <- metaCycReactionsGenes_0 %>%
   select("geneID" = ID, "geneName" = Name, "reaction" = Matches) %>%
   cSplit(
     splitCols    = c("reaction"),
@@ -75,37 +77,37 @@ metaCycReactionsGenes_1 <- metaCycReactionsGenes_0 %>%
     stripWhite   = FALSE
   )
 
-# save(
-#   metaCycReactionsGenes_1,
-#   file = file.path(
-#     dataDir,
-#     glue("m03_metaCycReactionsGenes_{metacycVersion}.RData")
-#   )
-# )
+save(
+  m03_metaCycReactionsGenes,
+  file = file.path(
+    dataDir,
+    glue("m03_metaCycReactionsGenes_{metacycVersion}.RData")
+  )
+)
 
 
 # 4. Map to Gene IDs ------------------------------------------------------
 
 metaCycGeneIDs_0 <- read_tsv(file.path(updateDir, "4-genes-ids.txt"))
 
-metaCycGeneIDs_1 <- metaCycGeneIDs_0 %>%
+m04_metaCycGeneIDs <- metaCycGeneIDs_0 %>%
   mutate(
     across(Ensembl:GeneCards, ~str_remove_all(.x, "^<a href='.*'>|<\\/a>$")),
     across(everything(), str_trim)
   ) %>%
   rename("geneID" = `Gene Name`, "Symbol" = GeneCards)
 
-# save(
-#   metaCycGeneIDs_1,
-#   file = file.path(dataDir, glue("m04_metaCycGeneIDs_{metacycVersion}.RData"))
-# )
+save(
+  m04_metaCycGeneIDs,
+  file = file.path(dataDir, glue("m04_metaCycGeneIDs_{metacycVersion}.RData"))
+)
 
 
 # 5. Map to Pathways ------------------------------------------------------
 
 metaCycPathways_0 <- read_tsv(file.path(updateDir, "5-pathways-reactions.tsv"))
 
-metaCycPathways_1 <- metaCycPathways_0 %>%
+m05_metaCycPathways <- metaCycPathways_0 %>%
   select("pathwayID" = ID, "pathwayName" = Name, "reaction" = Matches) %>%
   cSplit(
     splitCols    = c("reaction"),
@@ -115,7 +117,7 @@ metaCycPathways_1 <- metaCycPathways_0 %>%
     stripWhite   = FALSE
   )
 
-# save(
-#   metaCycPathways_1,
-#   file = file.path(dataDir, glue("m05_metaCycPathways_{metacycVersion}.RData"))
-# )
+save(
+  m05_metaCycPathways,
+  file = file.path(dataDir, glue("m05_metaCycPathways_{metacycVersion}.RData"))
+)
