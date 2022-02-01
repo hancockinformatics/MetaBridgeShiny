@@ -38,9 +38,12 @@ mapKEGGPathways <- function(idType,
   # Pull out the pathways that our compound is present in from the metabPathways
   # object stored in `data/`
 
-  pathwaysOfInterest <- keggPathways %>%
-    filter(!!(namedIDType) == !!(quotedMetab)) %>%
-    filter(id %in% keggHumanPathways)
+  pathwaysOfInterest <- k04_keggPathwayNames %>%
+    filter(
+      !!(namedIDType) == !!(quotedMetab),
+      id %in% k05_keggPathwayIDs,
+      id != "01100"
+    )
 
   # Find all the genes that compound interacts with (from our initial mapping
   # table)
@@ -105,7 +108,7 @@ mapMetaCycPathways <- function(idType,
 
   quotedSelectedReaction <- enquo(selectedReaction)
 
-  pathwaysOfInterest <- metaCycPathways %>%
+  pathwaysOfInterest <- m05_metaCycPathways %>%
     filter(reaction %in% !!(selectedReaction))
 
   return(list(

@@ -1,37 +1,45 @@
 
 # Load packages -----------------------------------------------------------
 
-library(pathview)
-library(rlang)
-library(DT)
-library(stringr)
-library(magrittr)
-library(dplyr)
+suppressPackageStartupMessages({
+  library(pathview)
+  library(rlang)
+  library(DT)
+  library(stringr)
+  library(magrittr)
+  library(dplyr)
+})
 
 
-# Load data -------------------------------------------------------
+# Load example data -------------------------------------------------------
 
-# Examples
 load("data/example_data.RData")
 
-# Load KEGG database files, updated on/around November 1st, 2019
-load("data/k00_keggCompounds_r92.RData")
-load("data/k02b_keggEnzymeShortNames_r92.RData")
-load("data/k03_keggGenes_r92.RData")
-load("data/k04_keggPathways_r92.RData")
-load("data/k05_keggHumanPathways_r92.RData")
+
+# Load KEGG data ----------------------------------------------------------
+
+# Updated data as of January 31st, 2022
+load("data/k01_keggCompounds_r101.RData")
+load("data/k02_keggEnzymeNames_r101.RData")
+load("data/k03_keggGenes_r101.RData")
+load("data/k04_keggPathwayNames_r101.RData")
+load("data/k05_keggPathwayIDs_r101.RData")
+
 
 # For the moment, only keep enzyme-gene relationships
-keggGenes <- keggGenes %>%
+k03_keggGenes <- k03_keggGenes %>%
   select(-KEGG) %>%
   unique()
 
-# Load MetaCyc database files, updated on/around September 19th, 2019
-load("data/m01_metaCycDBLinks_v23.RData")
-load("data/m02_metaCycCompoundsReactions_v23.RData")
-load("data/m03_metaCycReactionsGenes_v23.RData")
-load("data/m04_metaCycGeneIDs_v23.RData")
-load("data/m05_metaCycPathways_v23.RData")
+
+# Load MetaCyc data -------------------------------------------------------
+
+# Updated as of January 31st, 2022
+load("data/m01_metaCycDBLinks_v25.RData")
+load("data/m02_metaCycCompoundsReactions_v25.RData")
+load("data/m03_metaCycReactionsGenes_v25.RData")
+load("data/m04_metaCycGeneIDs_v25.RData")
+load("data/m05_metaCycPathways_v25.RData")
 
 
 # Load functions ----------------------------------------------------------
