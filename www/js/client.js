@@ -1,12 +1,13 @@
 
 const handlers = {
-  // We're passing a static object, so this will only run ONCE. However, we
-  // could link this to button presses to make the loading even more dynamic.
+
   lazyLoadPackages: num => {
     // First argument is input name
     // Second argument is value to send
     Shiny.onInputChange('sessionInitialized', num);
   },
+
+
   initGetStarted: () => {
     const getStartedButton = document.getElementById('getStarted');
     const tutorialButton = document.getElementById('tutorial');
@@ -27,6 +28,7 @@ const handlers = {
     handlers.activateTooltips(['#getStarted']);
   },
 
+
   addToolTips: () => {
     // Disable viz panel on page load
     $("a[data-value='vizPanel']")
@@ -40,6 +42,8 @@ const handlers = {
       'Please select a metabolite that has been mapped via KEGG'
     );
   },
+
+
   activateTooltips: selectors => {
     const tippyOptions = {
       size: 'big',
@@ -51,12 +55,14 @@ const handlers = {
   }
 };
 
+
 // We must use shiny:sessioninitialized, not DOM Content Loaded
 $(document).on('shiny:sessioninitialized', () => {
   handlers.lazyLoadPackages(1);
   handlers.addToolTips();
   handlers.activateTooltips(['.panel-tooltip', '.btn-tooltip']);
 });
+
 
 window.onbeforeunload = () => {
   // First check to see whether Shiny has disconnected
