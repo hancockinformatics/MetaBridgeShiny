@@ -16,45 +16,26 @@ suppressPackageStartupMessages({
 load("data/example_data.RData")
 
 
-# Load KEGG data ----------------------------------------------------------
+# Load data ----------------------------------------------------------
 
-# Updated data as of January 31st, 2022
-load("data/k01_keggCompounds_r101.RData")
-load("data/k02_keggEnzymeNames_r101.RData")
-load("data/k03_keggGenes_r101.RData")
-load("data/k04_keggPathwayNames_r101.RData")
-load("data/k05_keggPathwayIDs_r101.RData")
+# KEGG data, updated data as of January 31st, 2022
+load("data/kegg_data_r101.RData", verbose = TRUE)
 
-
-# For the moment, only keep enzyme-gene relationships
+# Keep only enzyme-gene relationships
 k03_keggGenes <- k03_keggGenes %>%
   select(-KEGG) %>%
   unique()
 
-
-# Load MetaCyc data -------------------------------------------------------
-
-# Updated as of January 31st, 2022
-load("data/m01_metaCycDBLinks_v25.RData")
-load("data/m02_metaCycCompoundsReactions_v25.RData")
-load("data/m03_metaCycReactionsGenes_v25.RData")
-load("data/m04_metaCycGeneIDs_v25.RData")
-load("data/m05_metaCycPathways_v25.RData")
+# MetaCyc data, updated data as of January 31st, 2022
+load("data/metaCyc_data_v25.RData", verbose = TRUE)
 
 
 # Load functions ----------------------------------------------------------
 
-# Utility functions
-source(file.path("functions", "utilityFunctions.R"), local = TRUE)$value
-
-# Primary mapping functions
-source(file.path("functions", "mapGenerally.R"), local = TRUE)$value
-source(file.path("functions", "mapPathways.R"), local = TRUE)$value
-source(file.path("functions", "visualizePathways.R"), local = TRUE)$value
-
-# App and UI functions
-source(file.path("functions", "alertFunctions.R"), local = TRUE)$value
-source(file.path("functions", "generateTables.R"), local = TRUE)$value
+purrr::walk(
+  .x = list.files("functions/", full.names = TRUE),
+  .f = ~import::from(.x, .all = TRUE, .character_only = TRUE)
+)
 
 
 # Set global DT options ---------------------------------------------------

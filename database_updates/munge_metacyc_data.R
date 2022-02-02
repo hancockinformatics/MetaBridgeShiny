@@ -7,7 +7,6 @@
 library(stringr)
 library(readr)
 library(dplyr)
-import::from(glue, glue)
 import::from(splitstackshape, cSplit)
 
 
@@ -32,11 +31,6 @@ m01_metaCycDBLinks <- metaCycDBLinks_0 %>%
     across(Compound:KEGG, str_trim)
   )
 
-save(
-  m01_metaCycDBLinks,
-  file = file.path(dataDir, glue("m01_metaCycDBLinks_{metacycVersion}.RData"))
-)
-
 
 # 2. MetaCyc Reactions ----------------------------------------------------
 
@@ -52,14 +46,6 @@ m02_metaCycCompoundsReactions <- metaCycCompoundsReactions_0 %>%
     type.convert = FALSE,
     stripWhite   = FALSE
   )
-
-save(
-  m02_metaCycCompoundsReactions,
-  file = file.path(
-    dataDir,
-    glue("m02_metaCycCompoundsReactions_{metacycVersion}.RData")
-  )
-)
 
 
 # 3. MetaCyc Genes --------------------------------------------------------
@@ -77,14 +63,6 @@ m03_metaCycReactionsGenes <- metaCycReactionsGenes_0 %>%
     stripWhite   = FALSE
   )
 
-save(
-  m03_metaCycReactionsGenes,
-  file = file.path(
-    dataDir,
-    glue("m03_metaCycReactionsGenes_{metacycVersion}.RData")
-  )
-)
-
 
 # 4. Map to Gene IDs ------------------------------------------------------
 
@@ -96,11 +74,6 @@ m04_metaCycGeneIDs <- metaCycGeneIDs_0 %>%
     across(everything(), str_trim)
   ) %>%
   rename("geneID" = `Gene Name`, "Symbol" = GeneCards)
-
-save(
-  m04_metaCycGeneIDs,
-  file = file.path(dataDir, glue("m04_metaCycGeneIDs_{metacycVersion}.RData"))
-)
 
 
 # 5. Map to Pathways ------------------------------------------------------
@@ -117,7 +90,15 @@ m05_metaCycPathways <- metaCycPathways_0 %>%
     stripWhite   = FALSE
   )
 
+
+# Save it all as one object -----------------------------------------------
+
 save(
+  m01_metaCycDBLinks,
+  m02_metaCycCompoundsReactions,
+  m03_metaCycReactionsGenes,
+  m04_metaCycGeneIDs,
   m05_metaCycPathways,
-  file = file.path(dataDir, glue("m05_metaCycPathways_{metacycVersion}.RData"))
+  file = glue::glue("data/metaCyc_data_{metacycVersion}.RData")
 )
+
