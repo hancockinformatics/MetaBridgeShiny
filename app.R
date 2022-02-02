@@ -13,10 +13,6 @@ suppressPackageStartupMessages({
 
 # 2. Define UI code -------------------------------------------------------
 
-# Workaround to ensure logo in top left corner (tab bar) is found/rendered when
-# app is published to "shinyapps.io"
-addResourcePath(prefix = "pics", directoryPath = "./www")
-
 ui <- fluidPage(
 
   tags$head(
@@ -66,7 +62,7 @@ ui <- fluidPage(
     title = tags$div(
       id = "title_tab_bar",
 
-      htmltools::HTML("<img src='pics/logo_white.svg' alt='' height='28'>"),
+      htmltools::HTML("<img src='logo_white.svg' alt='' height='28'>"),
 
       tags$div(
         id = "github-img",
@@ -183,7 +179,7 @@ ui <- fluidPage(
         style = "position:fixed; bottom:0px; padding-bottom:10px",
         htmltools::HTML(paste0(
           "<a href='http://cmdr.ubc.ca/bobh/'> ",
-          "<img src='pics/hancock-lab-logo.svg'> </a>"
+          "<img src='hancock-lab-logo.svg'> </a>"
         ))
       )
     ),
@@ -366,8 +362,6 @@ ui <- fluidPage(
           tags$hr(),
 
           tags$div(
-            # class = "logoWrapper",
-
             tags$h2("Network-Based Integrative Analysis with MetaBridge"),
 
             # Note the link to the tutorial on Github needs to be one line,
@@ -590,8 +584,7 @@ server <- function(input, output, session) {
     message("\nINFO: Loaded example data.")
   }, ignoreInit = TRUE)
 
-  # Read file when any of fileInput, checkboxInput, or radioButtons states
-  # change
+  # Read file when any of fileInput, checkboxInput, or radioButtons changes
   observeEvent({
     input$metaboliteUpload
     input$sep
@@ -689,9 +682,9 @@ server <- function(input, output, session) {
   })
 
   # This has to be rendered separately from the column picker panel. Otherwise,
-  # the entire column picker panel has to be re-rendered when the preselected
+  # the entire column picker panel has to be re-rendered when the pre-selected
   # ID type gets updated, which resets the entire panel, which reverts to the
-  # preselected column, effectively making it impossible to switch columns!
+  # pre-selected column, effectively making it impossible to switch columns!
 
   # Note that enabling the auto selection via the "selected" argument causes an
   # issue with the Proceed button enabling, so it's been left out for now.
@@ -782,7 +775,7 @@ server <- function(input, output, session) {
   })
 
 
-  # If the selected ID type is a column name in the data frame, preselect that
+  # If the selected ID type is a column name in the data frame, pre-select that
   # column for use in mapping. Check that we have a column selected first,
   # otherwise the second if statement causes an error and the app crashes.
   # Note that the current app version does not actually employ this section, as
@@ -929,7 +922,7 @@ server <- function(input, output, session) {
             class = "tab-header"
           ),
 
-          # Insert the datatable here that we rendered above.
+          # Insert the DT table here that we rendered above.
           DT::dataTableOutput("mappingSummaryTable")
         )
       )
@@ -1020,7 +1013,11 @@ server <- function(input, output, session) {
       return(data.frame())
 
     } else if (mappingObject()$status == "success") {
-      message("INFO: Specific table has ", nrow(mappedMetaboliteTable()), " entries.")
+      message(
+        "INFO: Specific table has ",
+        nrow(mappedMetaboliteTable()),
+        " entries."
+      )
       # Only render if we had non-null, non-error, non-empty results.
       mappedMetaboliteTable() %>% hyperlinkTable(databaseChosen())
     }
@@ -1066,7 +1063,11 @@ server <- function(input, output, session) {
   # Watch for the "Try Again" button that will be rendered if an error occurs in
   # the mapping.
   observeEvent(input$remap, {
-    updateNavbarPage(session, inputId = "navbarLayout", selected = "uploadPanel")
+    updateNavbarPage(
+      session,
+      inputId = "navbarLayout",
+      selected = "uploadPanel"
+    )
   }, ignoreInit = TRUE)
 
   # Once table exists, render the panel with the Download button.
@@ -1432,8 +1433,11 @@ server <- function(input, output, session) {
         tags$div(
           class = "col-sm-9",
           tags$h2("Pathway View", class = "tab-header"),
-          imageOutput("pathwayView") %>%
-            shinycssloaders::withSpinner(type = 8, color = "#303E4E"),
+          shinycssloaders::withSpinner(
+            ui_element = imageOutput("pathwayView"),
+            type       = 8,
+            color      = "#303E4E"
+          ),
           tags$br()
         )
       )
