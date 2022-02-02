@@ -29,7 +29,7 @@ visualizePathview <- function(pathway, genes, cpd) {
   filename_new <- paste0("pathways_results/", filename_original)
 
   file.rename(from = filename_original, to = filename_new)
-  message("INFO: Pathway file was renamed/moved.")
+  message("INFO: Pathway file was renamed/moved.\n")
 
   return(filename_new)
 }
