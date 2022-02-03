@@ -202,7 +202,7 @@ hyperlinkTable <- function(table, dbChosen) {
   if ("KEGG" %in% colnames(table)) {
     table <- table %>%
       mutate(KEGG = paste0(
-        '<a target="_blank" href="',
+        '<a target="_blank" rel="noopener noreferrer" href="',
         "http://www.genome.jp/dbget-bin/www_bget?cpd:",
         KEGG, '">', KEGG, "</a>"
       ))
@@ -212,7 +212,7 @@ hyperlinkTable <- function(table, dbChosen) {
   if ("Enzyme" %in% colnames(table) && dbChosen == "KEGG") {
     table <- table %>%
       mutate(Enzyme = paste0(
-        '<a target="_blank" href="',
+        '<a target="_blank" rel="noopener noreferrer" href="',
         "http://www.genome.jp/dbget-bin/www_bget?ec:",
         Enzyme, '">', Enzyme, "</a>"
       ))
@@ -222,7 +222,7 @@ hyperlinkTable <- function(table, dbChosen) {
   if ("HMDB" %in% colnames(table)) {
     table <- table %>%
       mutate(HMDB = paste0(
-        '<a target="_blank" href="',
+        '<a target="_blank" rel="noopener noreferrer" href="',
         "http://www.hmdb.ca/metabolites/",
         HMDB, '">', HMDB, "</a>"
       ))
@@ -232,7 +232,7 @@ hyperlinkTable <- function(table, dbChosen) {
   if ("Compound" %in% colnames(table) && dbChosen == "MetaCyc") {
     table <- table %>%
       mutate(Compound = paste0(
-        '<a target="_blank" href="',
+        '<a target="_blank" rel="noopener noreferrer" href="',
         "https://metacyc.org/compound?orgid=META&id=",
         Compound, '">', Compound, "</a>"
       ))
@@ -242,7 +242,7 @@ hyperlinkTable <- function(table, dbChosen) {
   if ("Reaction" %in% colnames(table) && dbChosen == "MetaCyc") {
     table <- table %>%
       mutate(Reaction = paste0(
-        '<a target="_blank" href="',
+        '<a target="_blank" rel="noopener noreferrer" href="',
         "https://metacyc.org/META/NEW-IMAGE?type=REACTION&object=",
         Reaction, '">', Reaction, "</a>"
       ))
@@ -252,7 +252,7 @@ hyperlinkTable <- function(table, dbChosen) {
   if ("MetaCyc Gene" %in% colnames(table) && dbChosen == "MetaCyc") {
     table <- table %>%
       mutate(`MetaCyc Gene` = paste0(
-        '<a target="_blank" href="',
+        '<a target="_blank" rel="noopener noreferrer" href="',
         "https://metacyc.org/gene?orgid=META&id=",
         `MetaCyc Gene`, '">', `MetaCyc Gene`, "</a>"
       ))
@@ -263,7 +263,7 @@ hyperlinkTable <- function(table, dbChosen) {
     table <- table %>%
       rowwise() %>%
       mutate(Ensembl = ifelse(is.na(Ensembl), NA, paste0(
-        '<a target="_blank" href="',
+        '<a target="_blank" rel="noopener noreferrer" href="',
         "http://www.ensembl.org/id/",
         Ensembl, '">', Ensembl, "</a>"
       ))) %>%
@@ -275,7 +275,7 @@ hyperlinkTable <- function(table, dbChosen) {
     table <- table %>%
       rowwise() %>%
       mutate(Entrez = ifelse(is.na(Entrez), NA, paste0(
-        '<a target="_blank" href="',
+        '<a target="_blank" rel="noopener noreferrer" href="',
         "https://www.ncbi.nlm.nih.gov/gene/",
         Entrez, '">', Entrez, "</a>"
       ))) %>%

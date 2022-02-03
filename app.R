@@ -15,6 +15,11 @@ suppressPackageStartupMessages({
 
 ui <- fluidPage(
 
+  # Specify that all links should open in a new tab. The "rel" specification
+  # security-related, to prevent the new tab from being able to access/influence
+  # the original tab.
+  HTML("<base target='_blank' rel='noopener noreferrer'>"),
+
   tags$head(
     tags$link(
       rel  = "stylesheet",
@@ -481,7 +486,7 @@ ui <- fluidPage(
 
                 # Tidyverse
                 tags$dt(
-                  tags$a(href = "https://www.tidyverse.org/", "tidyverse"),
+                  tags$a(href = "https://www.tidyverse.org/", "Tidyverse"),
                   tags$dd(
                     "A collection of R packages designed for data science."
                   )
