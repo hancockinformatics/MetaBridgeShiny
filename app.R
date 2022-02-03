@@ -498,6 +498,21 @@ ui <- fluidPage(
               )
             )
           )
+        ),
+
+        # Display the current app version in bottom-right page corner
+        div(
+          br(),
+          br(),
+          div(
+            class = "p-ver",
+            gsub(
+              x = readLines("DESCRIPTION")[3],
+              pattern = "^Version\\: ",
+              replacement = "v"
+            )
+          ),
+          br()
         )
       )
     )

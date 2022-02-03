@@ -192,3 +192,9 @@ dl dd {
   bottom: 0;
   height: 25px;
 }
+
+/* Special class based on 'p' for including app version in About page */
+.p-ver {
+  font-size: 16px;
+  text-align: right;
+}
