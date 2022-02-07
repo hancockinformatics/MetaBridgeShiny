@@ -15,9 +15,9 @@ suppressPackageStartupMessages({
 
 ui <- fluidPage(
 
-  # Specify that all links should open in a new tab. The "rel" specification
-  # security-related, to prevent the new tab from being able to access/influence
-  # the original tab.
+  # Specify that all links should open in a new tab. The "rel" specifications
+  # are security-related, to prevent the new tab from being able to access
+  # information from the original tab.
   HTML("<base target='_blank' rel='noopener noreferrer'>"),
 
   tags$head(
@@ -505,7 +505,8 @@ ui <- fluidPage(
           )
         ),
 
-        # Display the current app version in bottom-right page corner
+        # Display the current app version in bottom-right page corner, with a
+        # custom CSS class (check "www/css/user.css" for details)
         div(
           br(),
           br(),
@@ -516,8 +517,7 @@ ui <- fluidPage(
               pattern = "^Version\\: ",
               replacement = "v"
             )
-          ),
-          br()
+          )
         )
       )
     )
@@ -917,7 +917,10 @@ server <- function(input, output, session) {
   style     = "bootstrap",
   class     = "table-bordered table-responsive compact",
   escape    = FALSE,
-  selection = "single"
+  selection = "single",
+  options   = list(columnDefs = list(list(
+    className = 'dt-head-center', targets = "_all"
+  )))
   )
 
   # 3. Render UI
@@ -1046,7 +1049,10 @@ server <- function(input, output, session) {
   style     = "bootstrap",
   class     = "table-bordered table-responsive compact",
   escape    = FALSE,
-  selection = "single"
+  selection = "single",
+  options   = list(columnDefs = list(list(
+    className = 'dt-head-center', targets = "_all"
+  )))
   )
 
   # 3. Render UI
