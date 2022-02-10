@@ -103,7 +103,7 @@ ui <- fluidPage(
         tags$hr(),
 
         tags$div(
-          class = "logoWrapper",
+          class = "logoWrapper-home",
 
           tags$p(
             "Welcome to MetaBridge, a user-friendly web tool for ",
@@ -403,7 +403,7 @@ ui <- fluidPage(
           tags$hr(),
 
           tags$div(
-            class = "logoWrapper",
+            class = "logoWrapper-about",
 
             tags$p(HTML(
               "MetaBridge was created by Samuel Hinshaw, and is maintained ",

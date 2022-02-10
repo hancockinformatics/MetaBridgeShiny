@@ -97,16 +97,30 @@
 /* We wrap a div around the content within jumbotron to use a background image
 within the background fill of the hero element */
 @media only screen and (max-width: 767px) {
-  .logoWrapper {
+  .logoWrapper-home {
     background: url('../logo_background.svg') no-repeat center top;
     background-size: contain;
+  }
+
+  .logoWrapper-about {
+    background-image: url('../logo_background.svg');
+    background-repeat: no-repeat;
+    background-position: right top;
+    background-size: 800px;
   }
 }
 
 @media only screen and (min-width: 768px) {
-  .logoWrapper {
+  .logoWrapper-home {
     background: url('../logo_background.svg') no-repeat right;
     background-size: contain;
+  }
+
+  .logoWrapper-about {
+    background-image: url('../logo_background.svg');
+    background-repeat: no-repeat;
+    background-position: right top;
+    background-size: 800px;
   }
 }
 
