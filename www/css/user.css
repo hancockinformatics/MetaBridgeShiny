@@ -1,3 +1,4 @@
+
 .irs-bar-edge,
 .irs-line-right,
 .irs-line {
@@ -40,24 +41,6 @@
   bottom: 10px;
 }
 
-/*#mapButton,*/
-/*#downloadMappingData,*/
-/*#continueToMap {
-  display: inline-block;
-  position: absolute;
-  right: 10px;
-  bottom: 10px;
-}*/
-
-/*
-#continueToMap {
-  display: block;
-  position: absolute;
-  right: 10px;
-  bottom: 10px;
-}*/
-
-
 /* Custom well class for rendering input and output options */
 .well {
   position: relative;
@@ -67,21 +50,6 @@
 .conditional-help {
   margin-bottom: 10px;
 }
-
-/*.manual-sidebar {
-  display: inline-block;
-}*/
-
-/*#uploadedDataTable table td:nth-child(1),
-#uploadedDataTable table th:nth-child(1) {
-  background-color: rgb(23, 202, 233);
-}*/
-
-/*.aboutWrapper {
-  margin: 0 auto;
-  text-align: center;
-}*/
-
 
 .alert:hover {
   color: #ffffff;
@@ -129,16 +97,30 @@
 /* We wrap a div around the content within jumbotron to use a background image
 within the background fill of the hero element */
 @media only screen and (max-width: 767px) {
-  .logoWrapper {
+  .logoWrapper-home {
     background: url('../logo_background.svg') no-repeat center top;
     background-size: contain;
+  }
+
+  .logoWrapper-about {
+    background-image: url('../logo_background.svg');
+    background-repeat: no-repeat;
+    background-position: right top;
+    background-size: 800px;
   }
 }
 
 @media only screen and (min-width: 768px) {
-  .logoWrapper {
+  .logoWrapper-home {
     background: url('../logo_background.svg') no-repeat right;
     background-size: contain;
+  }
+
+  .logoWrapper-about {
+    background-image: url('../logo_background.svg');
+    background-repeat: no-repeat;
+    background-position: right top;
+    background-size: 800px;
   }
 }
 
@@ -223,4 +205,10 @@ dl dd {
   top: 10px;
   bottom: 0;
   height: 25px;
+}
+
+/* Special class based on 'p' for including app version in About page */
+.p-ver {
+  font-size: 16px;
+  text-align: right;
 }

@@ -19,8 +19,6 @@ mapMetaCyc <- function(importDF, col, idType) {
   quotedCol <- quo(col)
   quotedID <- quo(idType)
 
-  # Let's attempt using tryCatch to handle errors for each joining step.
-
   # Extract the column of interest (col) and construct a new tibble with which
   # we will map our metabolites to enzymes and then genes. as_character() just
   # in case IDs such as PubChem IDs are interpreted as integers
@@ -118,7 +116,7 @@ mapMetaCyc <- function(importDF, col, idType) {
 
     } else {
       # Otherwise proceed as normal
-      this <- inner_join(mappingDF$data, metaCycDBLinks, by = idType) %>%
+      this <- inner_join(mappingDF$data, m01_metaCycDBLinks, by = idType) %>%
         select(all_of(idType), Compound, HMDB, KEGG) %>% # here
         rename("compound" = Compound)
     }
@@ -174,7 +172,8 @@ mapMetaCyc <- function(importDF, col, idType) {
   # If tryCatch exited with status != 0, stop here
   message("INFO: mapMetaCyc step 2 (objects):")
   message(
-    paste("\t", mappedToObjects[names(mappedToObjects) != "data"], collapse = "\n")
+    paste("\t", mappedToObjects[names(mappedToObjects) != "data"],
+          collapse = "\n")
   )
 
   if (mappedToObjects$status == "error" | mappedToObjects$status == "empty") {
@@ -186,7 +185,7 @@ mapMetaCyc <- function(importDF, col, idType) {
   mappedToReactions <- tryCatch({
 
     this <- inner_join(mappedToObjects$data,
-                       metaCycCompoundsReactions,
+                       m02_metaCycCompoundsReactions,
                        by = "compound")
 
     # Check to see if join failed silently
@@ -212,7 +211,7 @@ mapMetaCyc <- function(importDF, col, idType) {
       status = "warn",
       data   = this,
       internalMessage = warningMessage,
-      message = "Your compounds were mapped, but there may have been a problem.",
+      message = "Your compounds were mapped, but there was a problem.",
       suggest = NULL
     )
 
@@ -230,10 +229,12 @@ mapMetaCyc <- function(importDF, col, idType) {
   # Return to the user of there was an error or if the join failed silently
   message("INFO: mapMetaCyc step 3 (reactions):")
   message(
-    paste("\t", mappedToReactions[names(mappedToReactions) != "data"], collapse = "\n")
+    paste("\t", mappedToReactions[names(mappedToReactions) != "data"],
+          collapse = "\n")
   )
 
-  if (mappedToReactions$status == "error" | mappedToReactions$status == "empty") {
+  if (mappedToReactions$status == "error" |
+      mappedToReactions$status == "empty") {
     return(mappedToReactions)
   }
 
@@ -244,7 +245,7 @@ mapMetaCyc <- function(importDF, col, idType) {
     # Join and filter the data
     this <- inner_join(
       mappedToReactions$data,
-      metaCycReactionsGenes,
+      m03_metaCycReactionsGenes,
       by = "reaction"
     ) %>%
       # Make sure we only return human genes
@@ -311,7 +312,7 @@ mapMetaCyc <- function(importDF, col, idType) {
 
     this <- left_join(
       mappedToGenes$data,
-      metaCycGeneIDs,
+      m04_metaCycGeneIDs,
       by = c("MetaCyc Gene" = "geneID")
     ) %>%
       select(
@@ -479,7 +480,7 @@ mapKEGG <- function(importDF, col, idType) {
   if (idType != "KEGG") {
 
     keggIDs <- tryCatch({
-      this <- metaCycDBLinks %>%
+      this <- m01_metaCycDBLinks %>%
         filter(!!(namedIDtype) %in% extract2(mappingDF$data, !!(quotedIDtype)))
 
       # Check to see if filter failed silently
@@ -508,7 +509,7 @@ mapKEGG <- function(importDF, col, idType) {
         status  = "warn",
         data    = this,
         internalMessage = warningMessage,
-        message = "Your compounds were mapped, but there may have been a problem.",
+        message = "Your compounds were mapped, but there was a problem.",
         suggest = NULL
       )
 
@@ -529,11 +530,13 @@ mapKEGG <- function(importDF, col, idType) {
     # Mapping if using KEGG IDs
   } else if (idType == "KEGG") {
 
-    keggToHMDB <- metaCycDBLinks %>% select(KEGG, HMDB) %>% drop_na(KEGG)
+    keggToHMDB <- m01_metaCycDBLinks %>%
+      select(KEGG, HMDB) %>%
+      tidyr::drop_na(KEGG)
 
     # Join compound name (to be scraped) to compound IDs here. Name the column
     # 'Compound'
-    this <- left_join(mappingDF$data, keggCompounds, by = "KEGG") %>%
+    this <- left_join(mappingDF$data, k01_keggCompounds, by = "KEGG") %>%
       left_join(., keggToHMDB, by = "KEGG")
 
     keggIDs <- list(
@@ -553,7 +556,7 @@ mapKEGG <- function(importDF, col, idType) {
   # Mapping to KEGG enzymes
   keggEnzymesOfInterest <- tryCatch({
 
-    this <- left_join(keggIDs$data, keggEnzymeNames, by = "KEGG")
+    this <- left_join(keggIDs$data, k02_keggEnzymeNames, by = "KEGG")
 
     # Check to see if this join failed silently
     if (nrow(this) == 0) {
@@ -608,7 +611,7 @@ mapKEGG <- function(importDF, col, idType) {
   # Mapping to genes
   keggGenesOfInterest <- tryCatch({
 
-    keggGeneDB <- keggGenes %>% select(enzymes, entrez, symbol)
+    keggGeneDB <- k03_keggGenes %>% select(enzymes, entrez, symbol)
 
     this <-
       inner_join(keggEnzymesOfInterest$data, keggGeneDB, by = "enzymes") %>%
@@ -621,9 +624,8 @@ mapKEGG <- function(importDF, col, idType) {
       ) %>%
       select(
         Compound,
-        KEGG,  # Use select to reorder
+        KEGG,
         HMDB,
-        # all_of(idType),
         Enzyme,
         `Enzyme Name`,
         `Gene Name`,
@@ -676,7 +678,8 @@ mapKEGG <- function(importDF, col, idType) {
 
   message("INFO: mapKEGG step 4 (genes):")
   message(
-    paste("\t", keggGenesOfInterest[names(keggGenesOfInterest) != "data"], collapse = "\n")
+    paste("\t", keggGenesOfInterest[names(keggGenesOfInterest) != "data"],
+          collapse = "\n")
   )
 
   return(keggGenesOfInterest)

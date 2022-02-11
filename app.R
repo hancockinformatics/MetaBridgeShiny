@@ -3,39 +3,56 @@
 
 # Most libraries and functions are loaded through a call to `deferred.R` at the
 # beginning of the `server()` function, section #3.
-library(shiny)
-library(shinyjs)
-
-# Useful colours which match the flatly theme:
-# Dark blue     #2c3e50
-# Turquoise     #18bc9c
-# Light blue    #3498db
-# DT blue       #0075b0
-# Grey          #ecf0f1
-# White         #fff
+suppressPackageStartupMessages({
+  library(shiny)
+  library(shinyjs)
+})
 
 
 
 
 # 2. Define UI code -------------------------------------------------------
 
-# Workaround to ensure logo in top left corner (tab bar) is found/rendered when
-# app is published to "shinyapps.io"
-addResourcePath(prefix = "pics", directoryPath = "./www")
-
 ui <- fluidPage(
 
+  # Specify that all links should open in a new tab. The "rel" specifications
+  # are security-related, to prevent the new tab from being able to access
+  # information from the original tab.
+  HTML("<base target='_blank' rel='noopener noreferrer'>"),
+
   tags$head(
-    tags$link(rel = "stylesheet", type = "text/css", href = "css/bootstrap.min.css"),
+    tags$link(
+      rel  = "stylesheet",
+      type = "text/css",
+      href = "css/bootstrap.min.css"
+    ),
     tags$link(rel = "stylesheet", type = "text/css", href = "css/user.css"),
     tags$link(rel = "stylesheet", type = "text/css", href = "css/tippy.css"),
 
     # Favicon options
-    tags$link(rel = "apple-touch-icon", sizes = "180x180", href = "/apple-touch-icon.png"),
-    tags$link(rel = "icon", type = "image/png", sizes = "32x32", href = "/favicon-32x32.png"),
-    tags$link(rel = "icon", type = "image/png", sizes = "16x16", href = "/favicon-16x16.png"),
+    tags$link(
+      rel   = "apple-touch-icon",
+      sizes = "180x180",
+      href  = "/apple-touch-icon.png"
+    ),
+    tags$link(
+      rel   = "icon",
+      type  = "image/png",
+      sizes = "32x32",
+      href  = "/favicon-32x32.png"
+    ),
+    tags$link(
+      rel   = "icon",
+      type  = "image/png",
+      sizes = "16x16",
+      href  = "/favicon-16x16.png"
+    ),
+    tags$link(
+      rel   = "mask-icon",
+      href  = "/safari-pinned-tab.svg",
+      color = "#303e4e"
+    ),
     tags$link(rel = "manifest", href = "/manifest.json"),
-    tags$link(rel = "mask-icon", href = "/safari-pinned-tab.svg", color = "#303e4e"),
     tags$meta(name = "theme-color", content = "#303e4e")
   ),
 
@@ -50,7 +67,7 @@ ui <- fluidPage(
     title = tags$div(
       id = "title_tab_bar",
 
-      htmltools::HTML("<img src='pics/logo_white.svg' alt='' height='28'>"),
+      htmltools::HTML("<img src='logo_white.svg' alt='' height='28'>"),
 
       tags$div(
         id = "github-img",
@@ -86,7 +103,7 @@ ui <- fluidPage(
         tags$hr(),
 
         tags$div(
-          class = "logoWrapper",
+          class = "logoWrapper-home",
 
           tags$p(
             "Welcome to MetaBridge, a user-friendly web tool for ",
@@ -126,10 +143,10 @@ ui <- fluidPage(
           div(
             actionButton(
               inputId = "getStarted",
-              label = "Initializing App...",
+              label = "Initializing app...",
               class = "btn-primary btn-lg disabled",
               `data-position` = "bottom",
-              icon("circle-o-notch", class = "fa fa-spin", lib = "font-awesome")
+              icon("circle-notch", class = "fa fa-spin", lib = "font-awesome")
             ),
 
             # Horizontal spacer
@@ -167,7 +184,7 @@ ui <- fluidPage(
         style = "position:fixed; bottom:0px; padding-bottom:10px",
         htmltools::HTML(paste0(
           "<a href='http://cmdr.ubc.ca/bobh/'> ",
-          "<img src='pics/hancock-lab-logo.svg'> </a>"
+          "<img src='hancock-lab-logo.svg'> </a>"
         ))
       )
     ),
@@ -350,8 +367,6 @@ ui <- fluidPage(
           tags$hr(),
 
           tags$div(
-            # class = "logoWrapper",
-
             tags$h2("Network-Based Integrative Analysis with MetaBridge"),
 
             # Note the link to the tutorial on Github needs to be one line,
@@ -388,7 +403,7 @@ ui <- fluidPage(
           tags$hr(),
 
           tags$div(
-            class = "logoWrapper",
+            class = "logoWrapper-about",
 
             tags$p(HTML(
               "MetaBridge was created by Samuel Hinshaw, and is maintained ",
@@ -433,7 +448,7 @@ ui <- fluidPage(
 
                 # MetaCyc
                 tags$dt(
-                  tags$a(href = "https://metacyc.org/", "MetaCyc v23"),
+                  tags$a(href = "https://metacyc.org/", "MetaCyc v25"),
                   tags$dd("Curated database for human metabolomic data.")
                 ),
 
@@ -441,7 +456,7 @@ ui <- fluidPage(
                 tags$dt(
                   tags$a(
                     href = "https://www.genome.jp/kegg/",
-                    "KEGG Release 92"
+                    "KEGG Release 101"
                   ),
                   tags$dd("Large database containing multiple data types.")
                 ),
@@ -471,7 +486,7 @@ ui <- fluidPage(
 
                 # Tidyverse
                 tags$dt(
-                  tags$a(href = "https://www.tidyverse.org/", "tidyverse"),
+                  tags$a(href = "https://www.tidyverse.org/", "Tidyverse"),
                   tags$dd(
                     "A collection of R packages designed for data science."
                   )
@@ -486,6 +501,21 @@ ui <- fluidPage(
                   tags$dd("Pathway-based data integration and visualization.")
                 )
               )
+            )
+          )
+        ),
+
+        # Display the current app version in bottom-right page corner, with a
+        # custom CSS class (check "www/css/user.css" for details)
+        div(
+          br(),
+          br(),
+          div(
+            class = "p-ver",
+            gsub(
+              x = readLines("DESCRIPTION")[3],
+              pattern = "^Version\\: ",
+              replacement = "v"
             )
           )
         )
@@ -561,7 +591,7 @@ server <- function(input, output, session) {
   # Inject example data frame when "Try Examples" is clicked
   observeEvent(input$tryExamples, {
     # Input examples...
-    metaboliteObject(examples_2)
+    metaboliteObject(example_data)
     # ...and wipe mapping objects
     mappingObject(NULL)
     mappedMetabolites(NULL)
@@ -574,8 +604,7 @@ server <- function(input, output, session) {
     message("\nINFO: Loaded example data.")
   }, ignoreInit = TRUE)
 
-  # Read file when any of fileInput, checkboxInput, or radioButtons states
-  # change
+  # Read file when any of fileInput, checkboxInput, or radioButtons changes
   observeEvent({
     input$metaboliteUpload
     input$sep
@@ -584,7 +613,7 @@ server <- function(input, output, session) {
     if (!is.null(input$metaboliteUpload)) {
       message("INFO: User uploading data.")
       # Save to the reactiveVal...
-      read_delim(
+      readr::read_delim(
         file      = input$metaboliteUpload$datapath,
         col_names = input$header,
         delim     = input$sep
@@ -673,9 +702,9 @@ server <- function(input, output, session) {
   })
 
   # This has to be rendered separately from the column picker panel. Otherwise,
-  # the entire column picker panel has to be re-rendered when the preselected
+  # the entire column picker panel has to be re-rendered when the pre-selected
   # ID type gets updated, which resets the entire panel, which reverts to the
-  # preselected column, effectively making it impossible to switch columns!
+  # pre-selected column, effectively making it impossible to switch columns!
 
   # Note that enabling the auto selection via the "selected" argument causes an
   # issue with the Proceed button enabling, so it's been left out for now.
@@ -766,7 +795,7 @@ server <- function(input, output, session) {
   })
 
 
-  # If the selected ID type is a column name in the data frame, preselect that
+  # If the selected ID type is a column name in the data frame, pre-select that
   # column for use in mapping. Check that we have a column selected first,
   # otherwise the second if statement causes an error and the app crashes.
   # Note that the current app version does not actually employ this section, as
@@ -888,7 +917,10 @@ server <- function(input, output, session) {
   style     = "bootstrap",
   class     = "table-bordered table-responsive compact",
   escape    = FALSE,
-  selection = "single"
+  selection = "single",
+  options   = list(columnDefs = list(list(
+    className = 'dt-head-center', targets = "_all"
+  )))
   )
 
   # 3. Render UI
@@ -913,7 +945,7 @@ server <- function(input, output, session) {
             class = "tab-header"
           ),
 
-          # Insert the datatable here that we rendered above.
+          # Insert the DT table here that we rendered above.
           DT::dataTableOutput("mappingSummaryTable")
         )
       )
@@ -1004,7 +1036,11 @@ server <- function(input, output, session) {
       return(data.frame())
 
     } else if (mappingObject()$status == "success") {
-      message("INFO: Specific table has ", nrow(mappedMetaboliteTable()), " entries.")
+      message(
+        "INFO: Specific table has ",
+        nrow(mappedMetaboliteTable()),
+        " entries."
+      )
       # Only render if we had non-null, non-error, non-empty results.
       mappedMetaboliteTable() %>% hyperlinkTable(databaseChosen())
     }
@@ -1013,7 +1049,10 @@ server <- function(input, output, session) {
   style     = "bootstrap",
   class     = "table-bordered table-responsive compact",
   escape    = FALSE,
-  selection = "single"
+  selection = "single",
+  options   = list(columnDefs = list(list(
+    className = 'dt-head-center', targets = "_all"
+  )))
   )
 
   # 3. Render UI
@@ -1050,7 +1089,11 @@ server <- function(input, output, session) {
   # Watch for the "Try Again" button that will be rendered if an error occurs in
   # the mapping.
   observeEvent(input$remap, {
-    updateNavbarPage(session, inputId = "navbarLayout", selected = "uploadPanel")
+    updateNavbarPage(
+      session,
+      inputId = "navbarLayout",
+      selected = "uploadPanel"
+    )
   }, ignoreInit = TRUE)
 
   # Once table exists, render the panel with the Download button.
@@ -1114,7 +1157,7 @@ server <- function(input, output, session) {
       )
     },
     content = function(filename) {
-      write_tsv(
+      readr::write_tsv(
         x    = cleanMappedMetabolites(),
         file = filename
       )
@@ -1338,7 +1381,6 @@ server <- function(input, output, session) {
       src = filename,
       contentType = "image/png",
       width = 1000,
-      # height = imageHeight(),
       alt = paste0("Pathway map of KEGG Pathway ", input$pathwaysPicked)
     ))
   }, deleteFile = TRUE)
@@ -1417,8 +1459,11 @@ server <- function(input, output, session) {
         tags$div(
           class = "col-sm-9",
           tags$h2("Pathway View", class = "tab-header"),
-          imageOutput("pathwayView") %>%
-            withSpinner(type = 8, color = "#303E4E"),
+          shinycssloaders::withSpinner(
+            ui_element = imageOutput("pathwayView"),
+            type       = 8,
+            color      = "#303E4E"
+          ),
           tags$br()
         )
       )
