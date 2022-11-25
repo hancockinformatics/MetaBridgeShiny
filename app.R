@@ -56,7 +56,7 @@ ui <- fluidPage(
     tags$meta(name = "theme-color", content = "#303e4e")
   ),
 
-  # * 2.1 Begin the tab bar layout ----------------------------------------
+  # |- 2.1 Begin the tab bar layout ---------------------------------------
 
   navbarPage(
     id          = "navbarLayout",
@@ -87,7 +87,7 @@ ui <- fluidPage(
     ),
 
 
-    # * 2.2 Welcome tab & landing page ------------------------------------
+    # |- 2.2 Welcome tab & landing page -----------------------------------
 
     tabPanel(
       title = "MetaBridge",
@@ -190,7 +190,7 @@ ui <- fluidPage(
     ),
 
 
-    # * 2.3 Upload panel --------------------------------------------------
+    # |- 2.3 Upload panel -------------------------------------------------
 
     tabPanel(
       "Upload",
@@ -272,7 +272,7 @@ ui <- fluidPage(
     ),
 
 
-    # * 2.4 Mapping Panel -------------------------------------------------
+    # |- 2.4 Mapping Panel ------------------------------------------------
 
     tabPanel(
       title = "Map",
@@ -336,7 +336,7 @@ ui <- fluidPage(
     ),
 
 
-    # * 2.5 Visualize With Pathview ---------------------------------------
+    # |- 2.5 Visualize With Pathview --------------------------------------
 
     tabPanel(
       title = "Pathview",
@@ -347,13 +347,13 @@ ui <- fluidPage(
       uiOutput("vizPanelUI")
     ),
 
-    # * 2.6 Help Panel & dropdown -----------------------------------------
+    # |- 2.6 Help Panel & dropdown ----------------------------------------
 
     navbarMenu(
       title = "Help",
 
 
-      # * * 2.6.1 Tutorial Page -------------------------------------------
+      # |-- 2.6.1 Tutorial Page -------------------------------------------
 
       tabPanel(
         title = "Tutorial",
@@ -390,7 +390,7 @@ ui <- fluidPage(
       ),
 
 
-      # * * 2.6.2 About page ----------------------------------------------
+      # |-- 2.6.2 About page ----------------------------------------------
 
       tabPanel(
         value = "aboutPanel",
@@ -882,7 +882,7 @@ server <- function(input, output, session) {
   }, ignoreInit = TRUE)
 
 
-  # * 3.3.1 Render summarized mapping table -------------------------------
+  # |- 3.3.1 Render summarized mapping table ------------------------------
 
   # 1. Generate table from `generateSummaryTable()`, depending only on the
   #    mapButton click.
@@ -966,7 +966,7 @@ server <- function(input, output, session) {
   })
 
 
-  # * 3.3.2 Render metabolite-specific table ------------------------------
+  # |- 3.3.2 Render metabolite-specific table -----------------------------
 
   # THREE STEP RENDER PROCESS, PART 2 - METABOLITE SPECIFIC TABLE
   # 1. Generate table from `generateTables.R::generateSummaryTable()`, depending
@@ -1084,7 +1084,7 @@ server <- function(input, output, session) {
   })
 
 
-  # * 3.3.3 Render sidebar to download results ----------------------------
+  # |- 3.3.3 Render sidebar to download results ---------------------------
 
   # Watch for the "Try Again" button that will be rendered if an error occurs in
   # the mapping.
@@ -1127,7 +1127,7 @@ server <- function(input, output, session) {
   })
 
 
-  # * 3.3.4 Clean and export the data -------------------------------------
+  # |- 3.3.4 Clean and export the data ------------------------------------
 
   # Cleaning the mapped MetaCyc (not KEGG) data before download, to remove HTML
   # tags from reactions. Specifically, we are removing any HTML tags, using
@@ -1165,7 +1165,7 @@ server <- function(input, output, session) {
   )
 
 
-  # * 3.3.5 Add navigation to Pathview tab --------------------------------
+  # |- 3.3.5 Add navigation to Pathview tab -------------------------------
 
   # Navigate to the "Visualize" page when KEGG was the chosen database.
   output$continueToViz <- renderUI({
