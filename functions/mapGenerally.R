@@ -48,7 +48,8 @@ mapMetaCyc <- function(importDF, col, idType) {
       this <- this %>%
         rowwise() %>%
         mutate(!!(idType) := matchHMDB(!!(as.name(idType)))) %>%
-        ungroup()
+        ungroup() %>%
+        tidyr::drop_na(!!(idType))
     }
 
 
@@ -117,7 +118,7 @@ mapMetaCyc <- function(importDF, col, idType) {
     } else {
       # Otherwise proceed as normal
       this <- inner_join(mappingDF$data, m01_metaCycDBLinks, by = idType) %>%
-        select(all_of(idType), Compound, HMDB, KEGG) %>% # here
+        select(all_of(idType), Compound, HMDB, KEGG) %>%
         rename("compound" = Compound)
     }
 
@@ -431,7 +432,8 @@ mapKEGG <- function(importDF, col, idType) {
       this <- this %>%
         rowwise() %>%
         mutate(!!(idType) := matchHMDB(!!(as.name(idType)))) %>%
-        ungroup()
+        ungroup() %>%
+        tidyr::drop_na(!!(idType))
     }
 
     # Check to see if data frame construction failed silently
