@@ -56,6 +56,7 @@ ui <- fluidPage(
     tags$meta(name = "theme-color", content = "#303e4e")
   ),
 
+
   # |- 2.1 Begin the tab bar layout ---------------------------------------
 
   navbarPage(
@@ -346,6 +347,7 @@ ui <- fluidPage(
 
       uiOutput("vizPanelUI")
     ),
+
 
     # |- 2.6 Help Panel & dropdown ----------------------------------------
 
