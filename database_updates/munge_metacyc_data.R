@@ -4,25 +4,23 @@
 
 # Load packages -----------------------------------------------------------
 
-library(stringr)
-library(readr)
-library(dplyr)
-import::from(splitstackshape, cSplit)
+library(tidyverse)
+import::from(splitstackshape, cSplit, .into = "")
 
 
 # Set paths ---------------------------------------------------------------
 
 rootDir    <- rprojroot::find_rstudio_root_file()
-updateDir  <- file.path(rootDir, 'database_updates')
-exampleDir <- file.path(rootDir, 'example_data')
-dataDir    <- file.path(rootDir, 'data')
+updateDir  <- file.path(rootDir, "database_updates")
+exampleDir <- file.path(rootDir, "example_data")
+dataDir    <- file.path(rootDir, "data")
 
-metacycVersion <- "v25"
+metacycVersion <- "v26"
 
 
 # 1. MetaCyc Compounds ----------------------------------------------------
 
-metaCycDBLinks_0 <- read_tsv(file.path(updateDir, "1-compounds-ids.txt"))
+metaCycDBLinks_0 <- read_tsv(file.path(updateDir, "1-compounds-ids.tsv"))
 
 m01_metaCycDBLinks <- metaCycDBLinks_0 %>%
   rename("KEGG" = Kegg) %>%
@@ -45,7 +43,8 @@ m02_metaCycCompoundsReactions <- metaCycCompoundsReactions_0 %>%
     direction    = "long",
     type.convert = FALSE,
     stripWhite   = FALSE
-  )
+  ) %>%
+  as_tibble()
 
 
 # 3. MetaCyc Genes --------------------------------------------------------
@@ -61,12 +60,13 @@ m03_metaCycReactionsGenes <- metaCycReactionsGenes_0 %>%
     direction    = "long",
     type.convert = FALSE,
     stripWhite   = FALSE
-  )
+  ) %>%
+  as_tibble()
 
 
 # 4. Map to Gene IDs ------------------------------------------------------
 
-metaCycGeneIDs_0 <- read_tsv(file.path(updateDir, "4-genes-ids.txt"))
+metaCycGeneIDs_0 <- read_tsv(file.path(updateDir, "4-genes-ids.tsv"))
 
 m04_metaCycGeneIDs <- metaCycGeneIDs_0 %>%
   mutate(
@@ -88,7 +88,8 @@ m05_metaCycPathways <- metaCycPathways_0 %>%
     direction    = "long",
     type.convert = FALSE,
     stripWhite   = FALSE
-  )
+  ) %>%
+  as_tibble()
 
 
 # Save it all as one object -----------------------------------------------
