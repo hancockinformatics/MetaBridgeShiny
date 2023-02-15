@@ -457,7 +457,7 @@ ui <- fluidPage(
                 tags$dt(
                   tags$a(
                     href = "https://www.genome.jp/kegg/",
-                    "KEGG Release 101"
+                    "KEGG Release 105"
                   ),
                   tags$dd("Large database containing multiple data types.")
                 ),

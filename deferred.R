@@ -17,16 +17,14 @@ load("data/example_data.RData")
 
 # Load data ----------------------------------------------------------
 
-# KEGG data, updated data as of January 31st, 2022
-load("data/kegg_data_r101.RData", verbose = TRUE)
+# Last update was in January/February 2023
+load("data/metaCyc_data_v26.RData", verbose = TRUE)
+load("data/kegg_data_r105.RData", verbose = TRUE)
 
 # Keep only enzyme-gene relationships
 k03_keggGenes <- k03_keggGenes %>%
   select(-KEGG) %>%
   unique()
-
-# MetaCyc data, updated data in February 2023
-load("data/metaCyc_data_v26.RData", verbose = TRUE)
 
 
 # Load functions ----------------------------------------------------------
