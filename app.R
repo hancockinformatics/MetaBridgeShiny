@@ -1,4 +1,3 @@
-
 # 1. Load the first couple libraries --------------------------------------
 
 # Most libraries and functions are loaded through a call to `deferred.R` at the
@@ -450,7 +449,7 @@ ui <- fluidPage(
 
                 # MetaCyc
                 tags$dt(
-                  tags$a(href = "https://metacyc.org/", "MetaCyc v25"),
+                  tags$a(href = "https://metacyc.org/", "MetaCyc v26"),
                   tags$dd("Curated database for human metabolomic data.")
                 ),
 

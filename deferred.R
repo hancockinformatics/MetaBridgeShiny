@@ -1,4 +1,3 @@
-
 # Load packages -----------------------------------------------------------
 
 suppressPackageStartupMessages({
@@ -26,7 +25,7 @@ k03_keggGenes <- k03_keggGenes %>%
   select(-KEGG) %>%
   unique()
 
-# MetaCyc data, updated data as of January 31st, 2022
+# MetaCyc data, updated data in February 2023
 load("data/metaCyc_data_v26.RData", verbose = TRUE)
 
 

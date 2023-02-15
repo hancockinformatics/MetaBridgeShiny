@@ -382,7 +382,6 @@ mapMetaCyc <- function(importDF, col, idType) {
 
   # Returning Ensembl genes if everything worked
   return(mappedToEnsembl)
-
 }
 
 
