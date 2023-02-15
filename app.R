@@ -1,4 +1,3 @@
-
 # 1. Load the first couple libraries --------------------------------------
 
 # Most libraries and functions are loaded through a call to `deferred.R` at the
@@ -55,6 +54,7 @@ ui <- fluidPage(
     tags$link(rel = "manifest", href = "/manifest.json"),
     tags$meta(name = "theme-color", content = "#303e4e")
   ),
+
 
   # |- 2.1 Begin the tab bar layout ---------------------------------------
 
@@ -347,6 +347,7 @@ ui <- fluidPage(
       uiOutput("vizPanelUI")
     ),
 
+
     # |- 2.6 Help Panel & dropdown ----------------------------------------
 
     navbarMenu(
@@ -448,7 +449,7 @@ ui <- fluidPage(
 
                 # MetaCyc
                 tags$dt(
-                  tags$a(href = "https://metacyc.org/", "MetaCyc v25"),
+                  tags$a(href = "https://metacyc.org/", "MetaCyc v26"),
                   tags$dd("Curated database for human metabolomic data.")
                 ),
 
@@ -456,7 +457,7 @@ ui <- fluidPage(
                 tags$dt(
                   tags$a(
                     href = "https://www.genome.jp/kegg/",
-                    "KEGG Release 101"
+                    "KEGG Release 105"
                   ),
                   tags$dd("Large database containing multiple data types.")
                 ),
