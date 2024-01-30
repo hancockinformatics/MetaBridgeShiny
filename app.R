@@ -21,7 +21,7 @@ ui <- fluidPage(
 
   tags$head(
     tags$link(
-      rel  = "stylesheet",
+      rel = "stylesheet",
       type = "text/css",
       href = "css/bootstrap.min.css"
     ),
@@ -30,25 +30,25 @@ ui <- fluidPage(
 
     # Favicon options
     tags$link(
-      rel   = "apple-touch-icon",
+      rel = "apple-touch-icon",
       sizes = "180x180",
-      href  = "/apple-touch-icon.png"
+      href = "/apple-touch-icon.png"
     ),
     tags$link(
-      rel   = "icon",
-      type  = "image/png",
+      rel = "icon",
+      type = "image/png",
       sizes = "32x32",
-      href  = "/favicon-32x32.png"
+      href = "/favicon-32x32.png"
     ),
     tags$link(
-      rel   = "icon",
-      type  = "image/png",
+      rel = "icon",
+      type = "image/png",
       sizes = "16x16",
-      href  = "/favicon-16x16.png"
+      href = "/favicon-16x16.png"
     ),
     tags$link(
-      rel   = "mask-icon",
-      href  = "/safari-pinned-tab.svg",
+      rel = "mask-icon",
+      href = "/safari-pinned-tab.svg",
       color = "#303e4e"
     ),
     tags$link(rel = "manifest", href = "/manifest.json"),
@@ -59,19 +59,19 @@ ui <- fluidPage(
   # |- 2.1 Begin the tab bar layout ---------------------------------------
 
   navbarPage(
-    id          = "navbarLayout",
-    position    = "fixed-top",
+    id = "navbarLayout",
+    position = "fixed-top",
     windowTitle = "MetaBridge",
     collapsible = TRUE,
 
-    title = tags$div(
+    title = div(
       id = "title_tab_bar",
 
-      htmltools::HTML("<img src='logo_white.svg' alt='' height='28'>"),
+      HTML("<img src='logo_white.svg' alt='' height='28'>"),
 
-      tags$div(
+      div(
         id = "github-img",
-        htmltools::HTML(paste0(
+        HTML(paste0(
           "<a href='https://github.com/hancockinformatics/MetaBridgeShiny'> ",
           "<img src = 'github.svg'> </a>"
         ))
@@ -94,47 +94,45 @@ ui <- fluidPage(
       value = "welcomePanel",
 
       # Main panel that will contain text and links
-      tags$div(
-        id    = "welcomeHero",
+      div(
+        id = "welcomeHero",
         class = "jumbotron",
 
-        tags$h1("Welcome"),
+        h1("Welcome"),
+        hr(),
 
-        tags$hr(),
-
-        tags$div(
+        div(
           class = "logoWrapper-home",
-
-          tags$p(
+          p(
             "Welcome to MetaBridge, a user-friendly web tool for ",
             "network-based integrative analysis of metabolomics data. Here ",
             "you can upload a list of metabolite IDs and identify the ",
             "directly interacting enzymes for network integration."
           ),
-          tags$p(
+          p(
             "To start, you'll want a set of metabolites as HMDB or KEGG IDs. ",
             "We recommend",
-            tags$a("MetaboAnalyst", href = "http://www.metaboanalyst.ca"),
+            a("MetaboAnalyst", href = "http://www.metaboanalyst.ca"),
             "for metabolomics data processing and ID conversion, if ",
             "you have only compound names."
           ),
-          tags$p(
+          p(
             "With the output of MetaBridge, you can create a ",
             "protein-protein interaction network using your metabolomics ",
             "data. We suggest",
-            tags$a("NetworkAnalyst", href = "http://www.networkanalyst.ca"),
+            a("NetworkAnalyst", href = "http://www.networkanalyst.ca"),
             "for generation of these networks, and for network-based ",
             "integration with data from other omics types."
           ),
 
-          tags$p(
+          p(
             "Click the button below to Get Started! If you'd like to learn ",
             "more about how MetaBridge can be used, check our Tutorial. For ",
             "more information, including where to report bugs or problems and ",
             "how to cite MetaBridge, please refer to the About page."
           ),
 
-          tags$br(),
+          br(),
 
           # Buttons linking to various tabs of the app. To see how these
           # buttons are hidden, refer to "www/js/client.js".
@@ -155,10 +153,10 @@ ui <- fluidPage(
             # Linking to the Tutorials page
             actionButton(
               inputId = "tutorial",
-              label   = "Tutorial",
-              class   = "btn-success btn-lg btn-tooltip btn-hidden",
-              style   = "width: 155px",
-              title   = "Learn how to use MetaBridge for integrative analysis.",
+              label = "Tutorial",
+              class = "btn-success btn-lg btn-tooltip btn-hidden",
+              style = "width: 155px",
+              title = "Learn how to use MetaBridge for integrative analysis.",
               `data-position` = "bottom"
             ),
 
@@ -167,10 +165,10 @@ ui <- fluidPage(
             # Button linking straight to the About page
             actionButton(
               inputId = "about",
-              label   = "About",
-              class   = "btn-info btn-lg btn-tooltip btn-hidden",
-              style   = "width: 155px",
-              title   = "Learn more about MetaBridge.",
+              label = "About",
+              class = "btn-info btn-lg btn-tooltip btn-hidden",
+              style = "width: 155px",
+              title = "Learn more about MetaBridge.",
               `data-position` = "bottom",
             )
           )
@@ -179,10 +177,10 @@ ui <- fluidPage(
 
       # Separate div to include the lab logo which serves as a link leading to
       # the lab website
-      tags$div(
+      div(
         id = "lab-logo",
         style = "position:fixed; bottom:0px; padding-bottom:10px",
-        htmltools::HTML(paste0(
+        HTML(paste0(
           "<a href='http://cmdr.ubc.ca/bobh/'> ",
           "<img src='hancock-lab-logo.svg'> </a>"
         ))
@@ -197,7 +195,7 @@ ui <- fluidPage(
       value = "uploadPanel",
 
       # Sidebar
-      tags$div(
+      div(
         class = "col-sm-3 manual-sidebar",
 
         # Separate form "wells" within the sidebar (custom CSS class)
@@ -205,23 +203,21 @@ ui <- fluidPage(
           class = "well",
           tags$label("Upload your Metabolites"),
 
-          tags$p(
-            HTML(
-              "Select a plain-text spreadsheet (a file ending in csv, txt, or ",
-              "tsv) containing your metabolites in a single column. You can ",
-              "also try our example data using the button below."
-            ),
-            style = "padding-bottom: 5px;"
+          p(
+            style = "padding-bottom: 5px;",
+            "Select a plain-text spreadsheet (a file ending in csv, txt, or ",
+            "tsv) containing your metabolites in a single column. You can ",
+            "also try our example data using the button below."
           ),
 
           # Upload handling. Note that the "Browse..." button is customized in
           # "www/css/user.css". The label is set to NULL so we can include an
           # icon along with the text via the "buttonLabel" argument.
           fileInput(
-            inputId     = "metaboliteUpload",
-            label       = NULL,
+            inputId = "metaboliteUpload",
+            label = NULL,
             buttonLabel = list(icon("upload"), "Browse..."),
-            accept      = c(
+            accept = c(
               "text/csv",
               "text/comma-separated-values,text/plain",
               ".csv",
@@ -238,16 +234,16 @@ ui <- fluidPage(
           tags$label("Does your data contain column names?"),
           checkboxInput(
             inputId = "header",
-            label   = "My data has a header",
-            value   = TRUE
+            label = "My data has a header",
+            value = TRUE
           ),
 
           # Comma-, tab-, or semicolon-delimited data?
           tags$label("How is your data separated?"),
           radioButtons(
             inputId  = "sep",
-            label    = NULL,
-            choices  = c(Comma = ",", Tab = "\t", Semicolon = ";"),
+            label = NULL,
+            choices = c(Comma = ",", Tab = "\t", Semicolon = ";"),
             selected = ","
           ),
 
@@ -256,9 +252,9 @@ ui <- fluidPage(
           # Or try our example data
           actionButton(
             inputId = "tryExamples",
-            class   = "btn-info btn-tooltip",
-            label   = tags$b("Load Example Data"),
-            title   = "Try an example dataset from MetaboAnalyst",
+            class = "btn-info btn-tooltip",
+            label = tags$b("Load Example Data"),
+            title = "Try an example dataset from MetaboAnalyst",
             `data-position` = "right"
           )
         ),
@@ -279,36 +275,36 @@ ui <- fluidPage(
       value = "mapPanel",
 
       # Manual Sidebar
-      tags$div(
+      div(
         class = "col-sm-3 manual-sidebar",
-        id    = "mapPanelSidebar",
+        id = "mapPanelSidebar",
 
         tags$form(
           class = "well",
           tags$label("Choose a Database"),
 
-          tags$p(HTML(
-            "Select one of the options below. MetaCyc has higher quality ",
-            "annotations, but KEGG may yield more hits, and will also allow ",
-            "you to visualize your results with <a href=",
-            "'https://bioconductor.org/packages/release/bioc/html/pathview.html'",
-            ">Pathview.</a>"
-          ), style = "padding-bottom: 5px;"),
+          HTML(paste0(
+            "<p style='padding-bottom: 5px'>Select one of the options below. ",
+            "MetaCyc has higher quality annotations, but KEGG may yield more ",
+            "hits, and will also allow you to visualize your results with ",
+            "<a href='https://bioconductor.org/packages/release/bioc/html/",
+            "pathview.html'>Pathview.</a></p>"
+          )),
 
           # Choose database for mapping.
           radioButtons(
-            "dbChosen",
-            label    = NULL,
-            choices  = c("MetaCyc", "KEGG"),
+            inputId = "dbChosen",
+            label = NULL,
+            choices = c("MetaCyc", "KEGG"),
             selected = "MetaCyc"
           ),
 
-          tags$br(),
+          br(),
 
           # Map!
           actionButton(
-            "mapButton",
-            tags$b("Map Metabolites"),
+            inputId = "mapButton",
+            label = strong("Map Metabolites"),
             class = "btn-primary btn-tooltip",
             `data-position` = "right",
             title = "Map your metabolites to the selected database",
@@ -324,12 +320,10 @@ ui <- fluidPage(
       ),
 
       # Display mapping results
-      tags$div(
+      div(
         class = "col-sm-9",
-
         # Show summary table.
         uiOutput("mappingSummaryPanel"),
-
         # Show FULL results for a selected metabolite.
         uiOutput("fullMappingResultsPanel")
       )
@@ -341,9 +335,8 @@ ui <- fluidPage(
     tabPanel(
       title = "Pathview",
       value = "vizPanel",
-      id    = "visualizationPanel",
+      id = "visualizationPanel",
       class = "viz-panel",
-
       uiOutput("vizPanelUI")
     ),
 
@@ -360,27 +353,27 @@ ui <- fluidPage(
         title = "Tutorial",
         value = "tutorialPanel",
 
-        tags$div(
+        div(
           class = "jumbotron",
 
-          tags$h1("Tutorial"),
+          h1("Tutorial"),
 
-          tags$hr(),
+          hr(),
 
-          tags$div(
-            tags$h2("Network-Based Integrative Analysis with MetaBridge"),
+          div(
+            h2("Network-Based Integrative Analysis with MetaBridge"),
 
             # Note the link to the tutorial on Github needs to be one line,
             # otherwise the `HTML()` function inserts a space which breaks the
             # link
-            tags$p(HTML(paste0(
-              "This page covers a sample workflow for integrating your ",
+            HTML(paste0(
+              "<p>This page covers a sample workflow for integrating your ",
               "metabolomics data with transcriptomics or proteomics data ",
               "using network-based approaches. You can also view this ",
               "information on our <a href='https://github.com/",
               "hancockinformatics/MetaBridgeShiny/blob/master/tutorial/",
-              "tutorial.md'>GitHub page</a>."
-            )))
+              "tutorial.md'>GitHub page</a>.</p>"
+            ))
           )
         ),
 
@@ -397,17 +390,17 @@ ui <- fluidPage(
         value = "aboutPanel",
         title = "About",
 
-        tags$div(
+        div(
           class = "jumbotron",
 
-          tags$h1("About"),
-          tags$hr(),
+          h1("About"),
+          hr(),
 
-          tags$div(
+          div(
             class = "logoWrapper-about",
 
-            tags$p(HTML(
-              "MetaBridge was created by Samuel Hinshaw, and is maintained ",
+            HTML(paste0(
+              "<p>MetaBridge was created by Samuel Hinshaw, and is maintained ",
               "by Travis Blimkie at the <a href='http://cmdr.ubc.ca/bobh/'>",
               "REW Hancock Laboratory</a> at The University of British ",
               "Columbia. It was originally published in <i>Bioinformatics</i> ",
@@ -420,42 +413,40 @@ ui <- fluidPage(
               "of building a protein-protein interaction network from ",
               "MetaBridge results using <a href='https://networkanalyst.ca'>",
               "NetworkAnalyst</a>. The article is available at doi: ",
-              "<a href='https://doi.org/10.1002/cpbi.98'>10.1002/cpbi.98</a>."
+              "<a href='https://doi.org/10.1002/cpbi.98'>10.1002/cpbi.98</a>.</p>"
             )),
 
-            tags$p(HTML(paste0(
-              "The example data used by MetaBridge is based on results from a ",
-              "metabolomics study of pediatric sepsis published by Mickiewicz ",
-              "et al., available <a href='https://www.atsjournals.org/doi/",
-              "full/10.1164/rccm.201209-1726OC'>here</a>."
-            ))),
+            HTML(paste0(
+              "<p>The example data used by MetaBridge is based on results ",
+              "from a metabolomics study of pediatric sepsis published by ",
+              "Mickiewicz et al., available ",
+              "<a href='https://www.atsjournals.org/doi/",
+              "full/10.1164/rccm.201209-1726OC'>here</a>.</p>"
+            )),
 
-            tags$p(HTML(paste0(
-              "If you encounter any bugs or run into other troubles, please ",
-              "post an issue at the <a href='https://github.com/",
+            HTML(paste0(
+              "<p>If you encounter any bugs or run into other troubles, ",
+              "please post an issue at the <a href='https://github.com/",
               "hancockinformatics/MetaBridgeShiny/issues'>GitHub page</a>. Be ",
               "sure to include detailed information on the error you ",
-              "received, and the input you used, if possible."
-            ))),
+              "received, and the input you used, if possible.</p>"
+            )),
 
-            tags$br(),
+            br(),
 
-            tags$p(
-              "MetaBridge uses the following databases and R packages:"
-            ),
+            p("MetaBridge uses the following databases and R packages:"),
 
-            tags$p(
+            p(
               tags$dl(
-
                 # MetaCyc
                 tags$dt(
-                  tags$a(href = "https://metacyc.org/", "MetaCyc v26"),
+                  a(href = "https://metacyc.org/", "MetaCyc v26"),
                   tags$dd("Curated database for human metabolomic data.")
                 ),
 
                 # KEGG
                 tags$dt(
-                  tags$a(
+                  a(
                     href = "https://www.genome.jp/kegg/",
                     "KEGG Release 105"
                   ),
@@ -464,13 +455,13 @@ ui <- fluidPage(
 
                 # Shiny
                 tags$dt(
-                  tags$a(href = "https://shiny.rstudio.com/", "Shiny"),
+                  a(href = "https://shiny.rstudio.com/", "Shiny"),
                   tags$dd("Web application framework for R.")
                 ),
 
                 # ShinyCSSLoaders
                 tags$dt(
-                  tags$a(
+                  a(
                     href = "https://github.com/andrewsali/shinycssloaders",
                     "shinycssloaders"
                   ),
@@ -479,7 +470,7 @@ ui <- fluidPage(
 
                 # ShinyJS
                 tags$dt(
-                  tags$a(href = "https://deanattali.com/shinyjs/", "shinyjs"),
+                  a(href = "https://deanattali.com/shinyjs/", "shinyjs"),
                   tags$dd(
                     "Improve the user experience of your Shiny apps in seconds."
                   )
@@ -487,7 +478,7 @@ ui <- fluidPage(
 
                 # Tidyverse
                 tags$dt(
-                  tags$a(href = "https://www.tidyverse.org/", "Tidyverse"),
+                  a(href = "https://www.tidyverse.org/", "Tidyverse"),
                   tags$dd(
                     "A collection of R packages designed for data science."
                   )
@@ -495,7 +486,7 @@ ui <- fluidPage(
 
                 # Pathview
                 tags$dt(
-                  tags$a(
+                  a(
                     href = "https://doi.org/10.1093/bioinformatics/btt285",
                     "Pathview"
                   ),
