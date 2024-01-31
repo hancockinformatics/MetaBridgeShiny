@@ -84,8 +84,7 @@ mapMetaCyc <- function(importDF, col, idType) {
           rename("compound" = Compound)
       } else {
         this <- inner_join(mappingDF$data, m01_metaCycDBLinks, by = idType) %>%
-          select(all_of(idType), Compound, HMDB, KEGG) %>%
-          rename("compound" = Compound)
+          select(all_of(idType), "compound" = Compound, HMDB, KEGG)
       }
 
       if (nrow(this) == 0) {
@@ -206,7 +205,7 @@ mapMetaCyc <- function(importDF, col, idType) {
     ) %>%
       # Make sure we only return human genes
       filter(str_detect(tolower(geneID), "^hs")) %>%
-      dplyr::rename(
+      rename(
         "Reaction" = reaction,
         "Reaction Name" = reactionName,
         "Compound" = compound,
@@ -332,8 +331,6 @@ mapMetaCyc <- function(importDF, col, idType) {
 }
 
 
-
-
 #' mapKEGG
 #'
 #' @param importDF Input data frame from the user
@@ -417,48 +414,49 @@ mapKEGG <- function(importDF, col, idType) {
   # Mapping if NOT using KEGG IDs
   if (idType != "KEGG") {
 
-    keggIDs <- tryCatch({
-      this <- m01_metaCycDBLinks %>%
-        filter(!!(namedIDtype) %in% extract2(mappingDF$data, !!(quotedIDtype)))
+    keggIDs <- tryCatch(
+      {
+        this <- m01_metaCycDBLinks %>%
+          filter(!!(namedIDtype) %in% extract2(mappingDF$data, !!(quotedIDtype)))
 
-      if (nrow(this) == 0) {
+        if (nrow(this) == 0) {
+          list(
+            status = "empty",
+            data = importDF,
+            message = paste0(
+              "We were unable to map the ", idType, " IDs you provided to KEGG ",
+              "compound IDs."
+            ),
+            suggest = "Try using a different compound ID or mapping via MetaCyc."
+          )
+        } else {
+          list(
+            status = "success",
+            data = this,
+            message = "Your metabolites have been successfully mapped!",
+            suggest = NULL
+          )
+        }
+      }, warning = function(warningMessage) {
         list(
-          status = "empty",
+          status = "warn",
+          data = this,
+          internalMessage = warningMessage,
+          message = "Your compounds were mapped, but there was a problem.",
+          suggest = NULL
+        )
+      }, error = function(errorMessage) {
+        list(
+          status = "error",
           data = importDF,
+          internalMessage = errorMessage,
           message = paste0(
             "We were unable to map the ", idType, " IDs you provided to KEGG ",
             "compound IDs."
           ),
           suggest = "Try using a different compound ID or mapping via MetaCyc."
         )
-      } else {
-        list(
-          status = "success",
-          data = this,
-          message = "Your metabolites have been successfully mapped!",
-          suggest = NULL
-        )
-      }
-    }, warning = function(warningMessage) {
-      list(
-        status = "warn",
-        data = this,
-        internalMessage = warningMessage,
-        message = "Your compounds were mapped, but there was a problem.",
-        suggest = NULL
-      )
-    }, error = function(errorMessage) {
-      list(
-        status = "error",
-        data = importDF,
-        internalMessage = errorMessage,
-        message = paste0(
-          "We were unable to map the ", idType, " IDs you provided to KEGG ",
-          "compound IDs."
-        ),
-        suggest = "Try using a different compound ID or mapping via MetaCyc."
-      )
-    })
+      })
 
     # Mapping if using KEGG IDs
   } else if (idType == "KEGG") {
@@ -487,7 +485,6 @@ mapKEGG <- function(importDF, col, idType) {
   keggEnzymesOfInterest <- tryCatch(
     {
       this <- left_join(keggIDs$data, k02_keggEnzymeNames, by = "KEGG")
-
       if (nrow(this) == 0) {
         list(
           status = "empty",
@@ -543,21 +540,14 @@ mapKEGG <- function(importDF, col, idType) {
         by = "enzymes",
         relationship = "many-to-many"
       ) %>%
-        rename(
-          "KEGG" = KEGG,
-          "Enzyme" = enzymes,
-          "Enzyme Name" = enzymeName,
-          "Gene Name" = symbol,
-          "Entrez" = entrez
-        ) %>%
         select(
           Compound,
           KEGG,
           HMDB,
-          Enzyme,
-          `Enzyme Name`,
-          `Gene Name`,
-          `Entrez`
+          "Enzyme" = enzymes,
+          "Enzyme Name" = enzymeName,
+          "Gene Name" = symbol,
+          "Entrez" = entrez
         )
 
       if (nrow(this) == 0) {
@@ -626,16 +616,16 @@ mapGenerally <- function(importDF, col, db, idType) {
   if (db == "KEGG") {
     mappedMetabolites <- mapKEGG(
       importDF = importDF,
-      col      = col,
-      idType   = idType
+      col = col,
+      idType = idType
     )
 
     # Mapping if MetaCyc is selected
   } else if (db == "MetaCyc") {
     mappedMetabolites <- mapMetaCyc(
       importDF = importDF,
-      col      = col,
-      idType   = idType
+      col = col,
+      idType = idType
     )
 
     # Return a basic error when something goes wrong
