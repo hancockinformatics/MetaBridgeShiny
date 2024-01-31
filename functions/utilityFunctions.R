@@ -3,9 +3,6 @@
 #' @param vector Input vector to be cleaned
 #'
 #' @return Vector stripped of any NA values.
-#' @export
-#'
-#' Simple function to remove NA values from input vector
 #'
 notNAs <- function(vector) {
   vector <- vector[!is.na(vector)]
@@ -13,18 +10,11 @@ notNAs <- function(vector) {
 }
 
 
-
-
 #' notEmpty
 #'
 #' @param vector Input vector to be cleaned
 #'
 #' @return Vector stripped of any empty values.
-#' @export
-#'
-#' @examples
-#'
-#' Simple function to remove empty elements from a vector
 #'
 notEmpty <- function(vector) {
   vector <- vector[!grepl(x = vector, pattern = "^$")]
@@ -32,18 +22,11 @@ notEmpty <- function(vector) {
 }
 
 
-
-
 #' matchHMDB
 #'
 #' @param hmdbID HMDB ID to be cleaned and returned
 #'
 #' @return Sanitized HMDB IDs which can be used in mapping.
-#' @export
-#'
-#' MetaCyc only supports the older format, five digit HMDB IDs. If we detect
-#' your HMDB IDs are in the newer seven digit format, we will trim the leading
-#' characters if they are zeros. If they are not zeros, we will return an error
 #'
 matchHMDB <- function(hmdbID) {
 
@@ -59,48 +42,25 @@ matchHMDB <- function(hmdbID) {
     if (str_sub(hmdbID, start = 5, end = 6) == "00") {
       newID <- paste0("HMDB", str_sub(hmdbID, start = -5, end = -1))
       return(newID)
-
-    # Otherwise, return an error
     } else {
       return(NA)
     }
-
-  # Otherwise, if the ID is in the older, 5-digit format, simply return the ID
-  # as-is.
   } else if (nchar(hmdbID) == 9) {
-
-    # Do this **anyways** because it'll ensure we have capital letters at the
-    # start of the ID
     newID <- paste0("HMDB", str_sub(hmdbID, start = -5, end = -1))
     return(newID)
-
-  # If there is an edge case where the ID is not 9 or 11 characters in length(),
-  # also return NA
   } else {
     return(NA)
   }
 }
 
 
-
-
 #' cleanReactions
 #'
-#' @param metabTable
+#' @param metabTable Data frame containing reactions
 #'
 #' @return Clean version of output table for download purposes
 #'
-#' @export
-#'
-#' Removes any HTML tags in reaction names. Also replaces arrow marks with plain
-#' text version, along with Greek letters. Using a named vector so we can
-#' perform multiple sets of pattern replacement in a single call to
-#' `str_replace_all()`.
-#'
 cleanReactions <- function(metabTable) {
-
-  # Pattern/replacement pairs for next function. Maybe should be moved into app.R
-  # or deferred.R?
   find_replace <- c(
     "<.*?>" = "",
     "&harr;" = "<-->",

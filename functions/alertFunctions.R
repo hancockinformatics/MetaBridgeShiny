@@ -6,18 +6,11 @@
 #'   (e.g. mapGenerally())
 #'
 #' @return UI elements to be rendered as needed.
-#' @export
-#'
-#' Function which creates pop-up bubbles containing messages, errors,
-#' suggestions and status of MetaBridge app to guide the user
 #'
 mappingAlert <- function(message, suggest, status) {
-
-  # Generate UI elements
   insertUI(
     selector = "#mapPanelSidebar",
-    where    = "beforeEnd",
-
+    where = "beforeEnd",
     ui = tags$div(
       id = "mappingAlert",
       class = if (status == "error" | status == "empty") {

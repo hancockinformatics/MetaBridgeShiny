@@ -5,21 +5,11 @@
 #' @param dbChosen Database chosen for the mapping
 #'
 #' @return Table to be rendered by `DT::renderDataTable()`
-#' @export
 #'
-#' Generates a nice DT table summarizing the mapping results
-#'
-generateSummaryTable <- function(mappingObject,
-                                 idType,
-                                 dbChosen) {
+generateSummaryTable <- function(mappingObject, idType, dbChosen) {
 
-  # Should never be null since we're not responding until map button is clicked,
-  # but good to have just in case
   if (is.null(mappingObject$data)) {
     return(NULL)
-
-
-  # Statement of there was an error or silent failure
   } else if (mappingObject$status == "error" | mappingObject$status == "empty") {
     return(mappingObject$data)
 
@@ -39,15 +29,13 @@ generateSummaryTable <- function(mappingObject,
       ungroup() %>%
       arrange(Compound)
 
-    # Return the results for the user, and provide database info
     return(list("table" = table, "dbChosen" = "MetaCyc"))
-
 
   # Summary table if KEGG was the chosen database
   } else if (dbChosen == "KEGG") {
 
     table <- mappingObject$data %>%
-      group_by(Compound, KEGG, HMDB) %>% # changed here
+      group_by(Compound, KEGG, HMDB) %>%
       summarize(
         "Enzymes" = n_distinct(`Enzyme`, na.rm = TRUE),
         "Gene Names" = n_distinct(`Gene Name`, na.rm = TRUE),
@@ -57,13 +45,9 @@ generateSummaryTable <- function(mappingObject,
       ungroup() %>%
       arrange(Compound)
 
-    # Return the results for the user, and provide database info
     return(list("table" = table, "dbChosen" = "KEGG"))
   }
-
 }
-
-
 
 
 #' generateMetaCycMetabTable
@@ -76,23 +60,16 @@ generateSummaryTable <- function(mappingObject,
 #' @param idType ID type of selected row (done by the user)
 #'
 #' @return Table to be rendered by `DT::renderDataTable()`
-#' @export
 #'
-#' Generate MetaCyc table for the user-selected row
-#'
-generateMetaCycMetabTable <- function(mappingObject,
-                                      summaryTable,
-                                      selectedRows,
-                                      idType) {
+generateMetaCycMetabTable <- function(
+    mappingObject,
+    summaryTable,
+    selectedRows,
+    idType
+) {
 
-  # Should never be null since we're not responding until map button is
-  # clicked, but good to have just in case
   if (is.null(mappingObject$data) | is.null(selectedRows) | is.null(summaryTable)) {
-
-    # Returns an empty data frame
     return(data.frame())
-
-  # If the mapping object is not NULL, continue as planned
   } else {
 
     # Quote necessary variables for dplyr
@@ -100,24 +77,18 @@ generateMetaCycMetabTable <- function(mappingObject,
     quotedIDType <- quo(idType)
     pastedIDType <- paste0(idType)
 
-    # Pull the selected row and extract its compound ID
     selectedMetab <-
       summaryTable[as.numeric(rownames(summaryTable)) == selectedRows, ]
 
-    # Extract the particular ID from the selected row
     selectedMetab <- selectedMetab %>%
       extract2(pastedIDType)
 
-    # Quote for NSE
     quotedSelectedMetab <- enquo(selectedMetab)
 
-    # Filter the mapping object for the selected metabolite
     filteredMappedMetaboliteTable <- mappingObject$data %>%
       filter(!!(namedIDType) == !!(quotedSelectedMetab)) %>%
       arrange(`Gene Name`)
 
-    # Return the filtered table to the user (i.e. the details behind the summary
-    # for that particular metabolite)
     return(filteredMappedMetaboliteTable)
   }
 }
@@ -133,22 +104,16 @@ generateMetaCycMetabTable <- function(mappingObject,
 #' @param idType ID type for the selected metabolite
 #'
 #' @return Table to be rendered by `DT::renderDataTable()`
-#' @export
 #'
-#' Generate the more detailed table for a particular metabolite if the chosen
-#' database was KEGG
-#'
-generateKEGGMetabTable <- function(mappingObject,
-                                   summaryTable,
-                                   selectedRows,
-                                   idType) {
+generateKEGGMetabTable <- function(
+    mappingObject,
+    summaryTable,
+    selectedRows,
+    idType
+) {
 
-  # Should never be null since we're not responding until map button is
-  # clicked, but good to have just in case
   if (is.null(mappingObject$data) | is.null(selectedRows) | is.null(summaryTable)) {
     return(data.frame())
-
-  # Continue if there was no failure
   } else {
 
     # Quote necessary variables for dplyr
@@ -156,25 +121,18 @@ generateKEGGMetabTable <- function(mappingObject,
     quotedIDType <- quo(idType)
     pastedIDType <- paste0(idType)
 
-    # Pull the selected row and extract its compound ID
     selectedMetab <-
       summaryTable[as.numeric(rownames(summaryTable)) == selectedRows, ]
 
-    # If mapping against the KEGG database, pull out the KEGG CPD ID (even if
-    # not what was supplied), and extract the ID from the HTML contents of the
-    # cell
     selectedMetab <- selectedMetab %>%
       extract2("KEGG") %>%
-      # Make sure we've just got the kegg compound ID
       str_extract("C[0-9]{5}")
 
     # Quote for NSE
     quotedSelectedMetab <- enquo(selectedMetab)
 
-    # Establish column name for filtering step
     namedIDType <- as.name("KEGG")
 
-    # Filter the full mapping table based on chosen compund
     filteredMappedMetaboliteTable <- mappingObject$data %>%
       filter(!!(namedIDType) == !!(quotedSelectedMetab)) %>%
       arrange(`Gene Name`)
@@ -192,9 +150,6 @@ generateKEGGMetabTable <- function(mappingObject,
 #' @param dbChosen Chosen database
 #'
 #' @return Table which renders the various IDs as links to their respective page
-#' @export
-#'
-#' Generates a hyperlink column based on the IDs present
 #'
 hyperlinkTable <- function(table, dbChosen) {
 
@@ -281,6 +236,5 @@ hyperlinkTable <- function(table, dbChosen) {
       ))) %>%
       ungroup()
   }
-
   return(table)
 }
