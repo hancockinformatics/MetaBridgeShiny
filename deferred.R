@@ -6,7 +6,6 @@ suppressPackageStartupMessages({
   library(DT)
   library(stringr)
   library(magrittr)
-  library(dplyr)
 })
 
 
