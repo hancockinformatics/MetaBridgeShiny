@@ -36,6 +36,8 @@ metabridge_ui <- page_fluid(
   page_navbar(
     id = "navbarLayout",
 
+    nav_item(HTML("<img src='img/logo_white.svg' alt='' height='28'>")),
+
 
     # |- Welcome ----------------------------------------------------------
 
@@ -98,20 +100,27 @@ metabridge_ui <- page_fluid(
                 class = "btn-primary btn-lg px-4 me-md-2",
                 label = "Get started",
                 width = "155px"
-              ),
+              ) %>% tooltip("Let's go!"),
               actionButton(
                 inputId = "tutorial",
                 class = "btn-success btn-lg px-4 me-md-2",
                 label = "Tutorial",
                 width = "155px"
-              ),
+              ) %>% tooltip("Learn how to use MetaBridge for integrative analysis"),
               actionButton(
                 inputId = "about",
                 class = "btn-info btn-lg px-4 me-md-2",
                 label = "About",
                 width = "155px"
-              )
+              ) %>% tooltip("Learn more about MetaBridge")
             )
+          )
+        ),
+        div(
+          style = "position:fixed; bottom:0px; padding-bottom:10px",
+          HTML(
+            "<a href='http://cmdr.ubc.ca/bobh/'>",
+            "<img src='img/hancock-lab-logo.svg'></a>"
           )
         )
       )
@@ -135,8 +144,10 @@ metabridge_ui <- page_fluid(
               "Select a plain-text spreadsheet (a file ending in csv, txt, or ",
               "tsv) containing your metabolites in a single column. You can ",
               "also try our example data using",
-              actionLink(inputId = "tryExamples", "this link", .noWS = "after"),
-              "."
+              tooltip(
+                actionLink(inputId = "tryExamples", "this link."),
+                "Try an example dataset from MetaboAnalyst"
+              )
             ),
 
             fileInput(
@@ -344,47 +355,29 @@ metabridge_ui <- page_fluid(
           div(
             class = "mx-auto fs-5 text-muted",
 
-            p(
-              "MetaBridge was created by Samuel Hinshaw, and is maintained by ",
-              "Travis Blimkie at the ",
-              a(
-                "REW Hancock Laboratory",
-                href = "http://cmdr.ubc.ca/bobh",
-                target = "_blank",
-                rel = "noopener noreferrer"
-              ),
-              "at The University of British Columbia. It was originally ",
+            HTML(paste0(
+              "<p>MetaBridge was created by Samuel Hinshaw, and is maintained ",
+              "by Travis Blimkie at the ",
+              "<a href='http://cmdr.ubc.ca/bobh' target='blank' rel='noopener ",
+              "noreferrer'>REW Hancock Laboratory</a>",
+              " at The University of British Columbia. It was originally ",
               "published in <i>Bioinformatics</i> (doi: ",
-              a(
-                "10.1093/bioinformatics/bty331",
-                href = "https://doi.org/10.1093/bioinformatics/bty331",
-                target = "_blank",
-                rel = "noopener noreferrer",
-                .noWS = "after"
-              ),
-              "; please cite this paper when using MetaBridge in your ",
+              "<a href='https://doi.org/10.1093/bioinformatics/bty331' ",
+              "target='blank' rel='noopener noreferrer'>",
+              "10.1093/bioinformatics/bty331</a>",
+              "); please cite this paper when using MetaBridge in your ",
               "analyses. We also have a protocol for MetaBridge published in ",
               "<i>Current Protocols in Bioinformatics</i>. It covers how to ",
               "prepare data for input to MetaBridge, and includes an example ",
               "of building a protein-protein interaction network from ",
               "MetaBridge results using ",
-              a(
-                "NetworkAnalyst",
-                href = "https://networkanalyst.ca",
-                target = "_blank",
-                rel = "noopener noreferrer",
-                .noWS = "after"
-              ),
+              "<a href='https://networkanalyst.ca' target='blank' ",
+              "rel='noopener noreferrer'>NetworkAnalyst</a>",
               ". The article is available at doi: ",
-              a(
-                "10.1002/cpbi.98",
-                href = "https://doi.org/10.1002/cpbi.98",
-                target = "_blank",
-                rel = "noopener noreferrer",
-                .noWS = "after"
-              ),
-              "."
-            ),
+              "<a href='https://doi.org/10.1002/cpbi.98' target='blank' ",
+              "rel='noopener noreferrer'>10.1002/cpbi.98</a>",
+              ".</p>"
+            )),
 
             p(
               "The example data used by MetaBridge is based on results from a ",
@@ -893,11 +886,10 @@ metabridge_server <- function(input, output, session) {
           hr(),
           strong("Visualize your results"),
           HTML(
-            "<p>If you chose <b>KEGG</b> as the database to map your metabolites, ",
-            "you can visualize your results with ",
-            "<a href='https://bioconductor.org/packages/pathview/'>Pathview.</a>",
+            "<p>If you chose <b>KEGG</b> as the database to map your ",
+            "metabolites, you can visualize your results with Pathview. ",
             "Select a metabolite from the top table, then click the button ",
-            "below to see the pathways it's involved in.</p>"
+            "below to see the pathways it's involved in."
           ),
           if (databaseChosen() == "KEGG" & !is.null(selectedMetab())) {
             actionButton(
@@ -914,7 +906,7 @@ metabridge_server <- function(input, output, session) {
               icon = icon("eye"),
               label = "Visualize",
               width = "100%"
-            ) %>% tooltip("Select a metabolite from the summary table"))
+            ) %>% tooltip("Select a metabolite from the summary table to visualize"))
           }
         )
       }
