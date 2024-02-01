@@ -21,7 +21,7 @@ mapKEGGPathways <- function(
   selectedMetab <-
     summaryTable[as.numeric(rownames(summaryTable)) == selectedRow, ] %>%
     extract2(idType) %>%
-    str_extract("C[0-9]{5}")
+    stringr::str_extract("C[0-9]{5}")
 
   quotedMetab <- enquo(selectedMetab)
 

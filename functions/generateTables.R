@@ -126,7 +126,7 @@ generateKEGGMetabTable <- function(
 
     selectedMetab <- selectedMetab %>%
       extract2("KEGG") %>%
-      str_extract("C[0-9]{5}")
+      stringr::str_extract("C[0-9]{5}")
 
     # Quote for NSE
     quotedSelectedMetab <- enquo(selectedMetab)

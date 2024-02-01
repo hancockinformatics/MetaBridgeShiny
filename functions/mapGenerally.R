@@ -21,7 +21,7 @@ mapMetaCyc <- function(importDF, col, idType) {
           as.character() %>%
           notNAs() %>%
           notEmpty() %>%
-          str_trim()
+          stringr::str_trim()
       )
 
       # Sanitize our HMDB IDs if we are using HMDB IDs
@@ -204,7 +204,7 @@ mapMetaCyc <- function(importDF, col, idType) {
       relationship = "many-to-many"
     ) %>%
       # Make sure we only return human genes
-      filter(str_detect(tolower(geneID), "^hs")) %>%
+      filter(stringr::str_detect(tolower(geneID), "^hs")) %>%
       rename(
         "Reaction" = reaction,
         "Reaction Name" = reactionName,
@@ -359,7 +359,7 @@ mapKEGG <- function(importDF, col, idType) {
         !!(namedIDtype) := extract2(importDF, col) %>%
           notNAs() %>%
           notEmpty() %>%
-          str_trim()
+          stringr::str_trim()
       )
 
       # Use our `matchHMDB()` function to sanitize HMDB IDs

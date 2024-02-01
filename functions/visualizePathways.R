@@ -8,7 +8,7 @@
 #'
 visualizePathview <- function(pathway, genes, cpd) {
   suppressWarnings({
-    pathview(
+    pathview::pathview(
       gene.data = genes,
       cpd.data = cpd,
       pathway.id = pathway,

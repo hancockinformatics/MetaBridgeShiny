@@ -32,21 +32,23 @@ matchHMDB <- function(hmdbID) {
 
   # Make sure the ID is a character and starts with 'HMDB' or 'hmdb' Look at the
   # syntax very carefully here, the parentheses are IMPORTANT
-  if (!is.character(hmdbID) | !(str_detect(hmdbID, "^HMDB") | str_detect(hmdbID, "^hmdb"))) {
+  if (!is.character(hmdbID) |
+      !(stringr::str_detect(hmdbID, "^HMDB") |
+        stringr::str_detect(hmdbID, "^hmdb"))) {
     return(NA)
 
-  # If the ID is in the new, 7 digit format, check the leading digits
+    # If the ID is in the new, 7 digit format, check the leading digits
   } else if (nchar(hmdbID) == 11) {
 
     # If the leading characters are 00, simply trim the string
-    if (str_sub(hmdbID, start = 5, end = 6) == "00") {
-      newID <- paste0("HMDB", str_sub(hmdbID, start = -5, end = -1))
+    if (stringr::str_sub(hmdbID, start = 5, end = 6) == "00") {
+      newID <- paste0("HMDB", stringr::str_sub(hmdbID, start = -5, end = -1))
       return(newID)
     } else {
       return(NA)
     }
   } else if (nchar(hmdbID) == 9) {
-    newID <- paste0("HMDB", str_sub(hmdbID, start = -5, end = -1))
+    newID <- paste0("HMDB", stringr::str_sub(hmdbID, start = -5, end = -1))
     return(newID)
   } else {
     return(NA)
@@ -73,6 +75,6 @@ cleanReactions <- function(metabTable) {
   )
 
   metabTable %>% mutate(
-    `Reaction Name` = str_replace_all(`Reaction Name`, find_replace)
+    `Reaction Name` = stringr::str_replace_all(`Reaction Name`, find_replace)
   )
 }
