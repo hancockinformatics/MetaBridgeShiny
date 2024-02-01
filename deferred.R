@@ -1,7 +1,7 @@
 # Load packages -----------------------------------------------------------
 
 suppressPackageStartupMessages({
-  # library(pathview)
+  library(pathview)
   library(rlang)
   library(magrittr)
 })

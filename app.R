@@ -263,9 +263,23 @@ metabridge_ui <- page_fluid(
     nav_panel(
       title = "Pathview",
       value = "vizPanel",
-      id = "visualizationPanel",
-      class = "viz-panel",
-      uiOutput("vizPanelUI")
+      card(
+        min_height = "88vh",
+        layout_sidebar(
+          sidebar = sidebar(
+            title = "Visualize with Pathview",
+            class = "sidebar d-flex",
+            width = "500px",
+            open = NA,
+            p(
+              "To visualize pathways, upload data, and map the metabolites ",
+              "with KEGG. Then you can return here to see the pathway images."
+            ),
+            uiOutput("pathwayPanel")
+          ),
+          uiOutput("vizPanelUI")
+        )
+      )
     ),
 
 
@@ -828,7 +842,8 @@ metabridge_server <- function(input, output, session) {
         downloadButton(
           outputId = "downloadMappingData",
           label = "Download results",
-          class = "btn-success"
+          class = "btn-success",
+          style = "width: 200px"
         )
       )
     }
@@ -867,7 +882,7 @@ metabridge_server <- function(input, output, session) {
   )
 
 
-  # Continue to Viz -------------------------------------------------------
+  # Continue to Pathview --------------------------------------------------
 
   output$continueToViz <- renderUI({
     if (!is.null(mappedMetabolites())) {
@@ -889,14 +904,16 @@ metabridge_server <- function(input, output, session) {
               inputId = "visualizeButton",
               class = "btn-primary",
               icon = icon("eye"),
-              label = "Visualize"
+              label = "Visualize",
+              width = "100%"
             )
           } else {
             disabled(actionButton(
               inputId = "visualizeButton",
               class = "btn-primary",
               icon = icon("eye"),
-              label = "Visualize"
+              label = "Visualize",
+              width = "100%"
             ) %>% tooltip("Select a metabolite from the summary table"))
           }
         )
@@ -908,6 +925,153 @@ metabridge_server <- function(input, output, session) {
     input$visualizeButton,
     nav_select(id = "navbarLayout", selected = "vizPanel")
   )
+
+
+  # Pathview  -------------------------------------------------------------
+
+  selectedRowAttrs <- reactiveValues(
+    "selectedCompound" = NULL,
+    "selectedCompoundName" = NULL,
+    "pathwaysOfSelectedCompound" = NULL,
+    "genesOfSelectedCompound" = NULL
+  )
+
+  observeEvent(input$mappingSummaryTable_rows_selected, {
+    pathwayMappingAttrs <- generalPathwayMapping(
+      summaryTable = mappingSummary$table,
+      fullTable = mappingObject()$data,
+      idType = idTypeChosen(),
+      db = databaseChosen(),
+      selectedRow = selectedMetab()
+    )
+
+    selectedRowAttrs$selectedCompound <-
+      pathwayMappingAttrs$selectedCompound
+
+    selectedRowAttrs$selectedCompoundName <-
+      pathwayMappingAttrs$selectedCompoundName
+
+    selectedRowAttrs$genesOfSelectedCompound <-
+      pathwayMappingAttrs$genesOfSelectedCompound
+
+    selectedRowAttrs$pathwaysOfSelectedCompound <-
+      pathwayMappingAttrs$pathwaysOfSelectedCompound
+  })
+
+  output$pathwayPanel <- renderUI({
+    if (!is.null(mappingObject())) {
+      if (nrow(selectedRowAttrs$pathwaysOfSelectedCompound) == 0) {
+        div(
+          strong(paste0(
+            "Pathways for ",
+            selectedRowAttrs$selectedCompoundName
+          )),
+          p("No pathways found for this compound.")
+        )
+      } else if (databaseChosen() == "KEGG") {
+        div(
+          strong(paste0(
+            "Pathways for ",
+            stringr::str_to_title(selectedRowAttrs$selectedCompoundName)
+          )),
+          HTML(
+            "<p>Note that each pathway may take some time to process. For each ",
+            "pathway, only the compound selected is shown, but <b>ALL</b> ",
+            "mapped genes are highlighted.</p>"
+          ),
+          selectInput(
+            inputId = "pathwaysPicked",
+            label = NULL,
+            choices = selectedRowAttrs$pathwaysOfSelectedCompound$namedPway
+          )
+        )
+      } else if (databaseChosen() == "MetaCyc") {
+        div(
+          strong(paste0(
+            "Pathways for ",
+            selectedRowAttrs$selectedCompoundName
+          )),
+          HTML(
+            "<p>Note that each pathway may take some time to process. For each ",
+            "pathway, only the compound selected is shown, but <b>ALL</b> ",
+            "mapped genes are highlighted.</p>"
+          ),
+          selectInput(
+            inputId = "pathwaysPicked",
+            label = NULL,
+            choices = selectedRowAttrs$pathwaysOfSelectedCompound$pathwayName
+          )
+        )
+      }
+    }
+  })
+
+  output$pathwayView <- renderImage({
+    if (is.null(input$pathwaysPicked)) {
+      return({
+        list(
+          src = "./logo_background.svg",
+          contentType = "image/svg",
+          width = 512,
+          height = 512,
+          alt = "pathway placeholder"
+        )
+      })
+    }
+
+    pathwayNameIDcol <- as.name("namedPway")
+    selectedPathway <- quo(input$pathwaysPicked)
+
+    selectedPathwayID <-
+      selectedRowAttrs$pathwaysOfSelectedCompound %>%
+      filter(!!(pathwayNameIDcol) == input$pathwaysPicked) %>%
+      extract2("id")
+
+    filename <- visualizePathview(
+      pathway = selectedPathwayID,
+      genes = selectedRowAttrs$genesOfSelectedCompound,
+      cpd = selectedRowAttrs$selectedCompound
+    )
+
+    return(list(
+      src = filename,
+      contentType = "image/png",
+      width = 1000,
+      alt = paste0("Pathway map of KEGG pathway ", input$pathwaysPicked)
+    ))
+  }, deleteFile = TRUE)
+
+  output$vizPanelUI <- renderUI({
+    tagList(
+      h3(class = "mb-4", "Pathway view"),
+
+      if (is.null(databaseChosen())) {
+        div(
+          class = "alert alert-dismissible alert-danger",
+          "There is nothing selected to map!"
+        )
+
+      } else if (databaseChosen() == "MetaCyc") {
+        div(
+          class = "alert alert-dismissible alert-danger",
+          "You must map via KEGG to visualize your results with pathview!"
+        )
+
+      } else if (is.null(selectedMetab())) {
+        div(
+          class = "alert alert-dismissible alert-danger",
+          "You must select a metabolite to visualize your results with pathview!"
+        )
+
+      } else {
+        shinycssloaders::withSpinner(
+          ui_element = imageOutput("pathwayView"),
+          type = 8,
+          color = "#303E4E"
+        )
+      }
+    )
+  })
 }
 
 shinyApp(metabridge_ui, metabridge_server)
