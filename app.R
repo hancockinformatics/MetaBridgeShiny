@@ -9,12 +9,14 @@ suppressPackageStartupMessages({
 
 source("deferred.R")
 
+metabridgeTheme <- bs_theme(version = 5, preset = "flatly")
+
 
 # UI ----------------------------------------------------------------------
 
 metabridge_ui <- page_fluid(
   title = "MetaBridge",
-  theme = bs_theme(version = 5, preset = "flatly"),
+  theme = metabridgeTheme,
   useShinyjs(),
 
   tags$head(
@@ -35,7 +37,6 @@ metabridge_ui <- page_fluid(
 
   page_navbar(
     id = "navbarLayout",
-
     nav_item(HTML("<img src='img/logo_white.svg' alt='' height='28'>")),
 
 
@@ -46,7 +47,7 @@ metabridge_ui <- page_fluid(
       title = "MetaBridge",
 
       div(
-        class = "container my-2",
+        class = "mx-2 my-2",
         div(
           class = "p-5 bg-body-tertiary rounded-3",
           h1(
@@ -55,7 +56,7 @@ metabridge_ui <- page_fluid(
           ),
 
           div(
-            class = "mx-auto fs-5 text-muted",
+            class = "mx-auto fs-4 text-muted",
             p(
               "Welcome to MetaBridge, a user-friendly web tool for ",
               "network-based integrative analysis of metabolomics data. Here ",
@@ -100,19 +101,25 @@ metabridge_ui <- page_fluid(
                 class = "btn-primary btn-lg px-4 me-md-2",
                 label = "Get started",
                 width = "155px"
-              ) %>% tooltip("Let's go!"),
+              ) %>% tooltip("Let's go!", placement = "bottom"),
               actionButton(
                 inputId = "tutorial",
                 class = "btn-success btn-lg px-4 me-md-2",
                 label = "Tutorial",
                 width = "155px"
-              ) %>% tooltip("Learn how to use MetaBridge for integrative analysis"),
+              ) %>% tooltip(
+                "Learn how to use MetaBridge for integrative analysis",
+                placement = "bottom"
+              ),
               actionButton(
                 inputId = "about",
                 class = "btn-info btn-lg px-4 me-md-2",
                 label = "About",
                 width = "155px"
-              ) %>% tooltip("Learn more about MetaBridge")
+              ) %>% tooltip(
+                "Learn more about MetaBridge",
+                placement = "bottom"
+              )
             )
           )
         ),
@@ -133,6 +140,7 @@ metabridge_ui <- page_fluid(
       title = "Upload",
       value = "uploadPanel",
       card(
+        height = "88vh",
         layout_sidebar(
           sidebar = sidebar(
             title = "Upload your metabolites",
@@ -214,20 +222,19 @@ metabridge_ui <- page_fluid(
       title = "Map",
       value = "mapPanel",
       card(
-        min_height = "90vh",
-
+        min_height = "88vh",
         layout_sidebar(
           sidebar = sidebar(
-            title = "Choose a database",
+            title = "Map your metabolites",
             id = "mapPanelSidebar",
             class = "d-flex",
             width = "500px",
             open = NA,
 
             p(
-              "Select one of the options below. ",
-              "MetaCyc has higher quality annotations, but KEGG may yield more ",
-              "hits, and will also allow you to visualize your results with ",
+              "Select one of the database options below. MetaCyc has higher ",
+              "quality annotations, but KEGG may yield more hits, and will ",
+              "also allow you to visualize your results with ",
               a(
                 "Pathview",
                 href = "https://bioconductor.org/packages/release/bioc/html/pathview.html",
@@ -248,9 +255,10 @@ metabridge_ui <- page_fluid(
             disabled(
               actionButton(
                 inputId = "mapButton",
-                class = "btn-primary",
+                class = "btn-info",
                 icon = icon("arrows-alt"),
-                label = "Map Metabolites"
+                label = "Map Metabolites",
+                width = 200
               ) %>%
                 tooltip(
                   id = "mapButtonTT",
@@ -301,7 +309,7 @@ metabridge_ui <- page_fluid(
       value = "tutorialPanel",
 
       div(
-        class = "container my-2",
+        class = "mx-2 my-2",
         div(
           class = "bg-body-tertiary rounded-3 p-5 mb-4",
           h1(
@@ -310,7 +318,7 @@ metabridge_ui <- page_fluid(
           ),
           h3("Network-based integrative analysis with MetaBridge"),
           div(
-            class = "mx-auto fs-5 text-muted",
+            class = "mx-auto fs-4 text-muted",
             p(
               "This page covers a sample workflow for integrating your ",
               "metabolomics data with transcriptomics or proteomics data ",
@@ -331,7 +339,7 @@ metabridge_ui <- page_fluid(
           )
         ),
         div(
-          class = "tutorial",
+          class = "container tutorial",
           includeMarkdown("tutorial/tutorial.md")
         )
       )
@@ -345,7 +353,7 @@ metabridge_ui <- page_fluid(
       value = "aboutPanel",
 
       div(
-        class = "container my-2",
+        class = "mx-2 my-2",
         div(
           class = "bg-body-tertiary rounded-3 p-5 mb-4",
           h1(
@@ -353,7 +361,7 @@ metabridge_ui <- page_fluid(
             "About"
           ),
           div(
-            class = "mx-auto fs-5 text-muted",
+            class = "mx-auto fs-4 text-muted",
 
             HTML(paste0(
               "<p>MetaBridge was created by Samuel Hinshaw, and is maintained ",
@@ -405,84 +413,83 @@ metabridge_ui <- page_fluid(
               ),
               ". Be sure to include detailed information on the error you ",
               "received, and the input you used, if possible."
+            )
+          ),
+
+          h3(
+            class = "pt-4",
+            strong("MetaBridge uses the following databases and packages:")
+          ),
+
+          tags$dl(
+            class = "fs-6",
+            tags$dt(
+              a(href = "https://metacyc.org/", "MetaCyc v26"),
+              tags$dd("Curated database for human metabolomic data.")
             ),
 
-            h4(
-              class = "pt-4",
-              strong("MetaBridge uses the following databases and packages:")
+            tags$dt(
+              a(
+                href = "https://www.genome.jp/kegg/",
+                "KEGG Release 105",
+                target = "_blank",
+                rel = "noopener noreferrer"
+              ),
+              tags$dd("Large database containing multiple data types.")
             ),
 
-            p(
-              tags$dl(
-                tags$dt(
-                  a(href = "https://metacyc.org/", "MetaCyc v26"),
-                  tags$dd("Curated database for human metabolomic data.")
-                ),
+            tags$dt(
+              a(
+                href = "https://shiny.rstudio.com/",
+                "Shiny",
+                target = "_blank",
+                rel = "noopener noreferrer",
+              ),
+              tags$dd("Web application framework for R.")
+            ),
 
-                tags$dt(
-                  a(
-                    href = "https://www.genome.jp/kegg/",
-                    "KEGG Release 105",
-                    target = "_blank",
-                    rel = "noopener noreferrer"
-                  ),
-                  tags$dd("Large database containing multiple data types.")
-                ),
+            tags$dt(
+              a(
+                href = "https://github.com/andrewsali/shinycssloaders",
+                "shinycssloaders",
+                target = "_blank",
+                rel = "noopener noreferrer"
+              ),
+              tags$dd("Animated loaders for shiny outputs.")
+            ),
 
-                tags$dt(
-                  a(
-                    href = "https://shiny.rstudio.com/",
-                    "Shiny",
-                    target = "_blank",
-                    rel = "noopener noreferrer",
-                  ),
-                  tags$dd("Web application framework for R.")
-                ),
-
-                tags$dt(
-                  a(
-                    href = "https://github.com/andrewsali/shinycssloaders",
-                    "shinycssloaders",
-                    target = "_blank",
-                    rel = "noopener noreferrer"
-                  ),
-                  tags$dd("Animated loaders for shiny outputs.")
-                ),
-
-                tags$dt(
-                  a(
-                    href = "https://deanattali.com/shinyjs/",
-                    "shinyjs",
-                    target = "_blank",
-                    rel = "noopener noreferrer"
-                  ),
-                  tags$dd(
-                    "Improve the user experience of your Shiny apps in seconds."
-                  )
-                ),
-
-                tags$dt(
-                  a(
-                    href = "https://www.tidyverse.org/",
-                    "Tidyverse",
-                    target = "_blank",
-                    rel = "noopener noreferrer"
-                  ),
-                  tags$dd(
-                    "A collection of R packages designed for data science."
-                  )
-                ),
-
-                tags$dt(
-                  a(
-                    href = "https://doi.org/10.1093/bioinformatics/btt285",
-                    "Pathview",
-                    target = "_blank",
-                    rel = "noopener noreferrer"
-                  ),
-                  tags$dd("Pathway-based data integration and visualization.")
-                )
+            tags$dt(
+              a(
+                href = "https://deanattali.com/shinyjs/",
+                "shinyjs",
+                target = "_blank",
+                rel = "noopener noreferrer"
+              ),
+              tags$dd(
+                "Improve the user experience of your Shiny apps in seconds."
               )
+            ),
+
+            tags$dt(
+              a(
+                href = "https://www.tidyverse.org/",
+                "Tidyverse",
+                target = "_blank",
+                rel = "noopener noreferrer"
+              ),
+              tags$dd(
+                "A collection of R packages designed for data science."
+              )
+            ),
+
+            tags$dt(
+              a(
+                href = "https://doi.org/10.1093/bioinformatics/btt285",
+                "Pathview",
+                target = "_blank",
+                rel = "noopener noreferrer"
+              ),
+              tags$dd("Pathway-based data integration and visualization.")
             )
           )
         )
@@ -578,7 +585,7 @@ metabridge_server <- function(input, output, session) {
   })
 
 
-  # Success panel ---------------------------------------------------------
+  # Render input table view -----------------------------------------------
 
   output$uploadSuccess <- renderUI({
     input$tryExamples
@@ -594,9 +601,6 @@ metabridge_server <- function(input, output, session) {
       )
     )
   })
-
-
-  # Input table -----------------------------------------------------------
 
   output$uploadedDataTable <- DT::renderDataTable(
     {
@@ -623,7 +627,7 @@ metabridge_server <- function(input, output, session) {
   )
 
 
-  # Render success panel and input table ----------------------------------
+  # Output input table view -----------------------------------------------
 
   output$uploadedTablePanel <- renderUI(div(
     uiOutput("uploadSuccess"),
@@ -691,7 +695,7 @@ metabridge_server <- function(input, output, session) {
   )
 
 
-  # Grouped table ---------------------------------------------------------
+  # Summary/grouped table -------------------------------------------------
 
   observeEvent(input$mapButton, {
     results <- generateSummaryTable(
@@ -745,7 +749,7 @@ metabridge_server <- function(input, output, session) {
   observeEvent(input$mapButton, selectedMetab(NULL))
 
 
-  # Single table ----------------------------------------------------------
+  # Single-metabolite table -----------------------------------------------
 
   observeEvent({
     selectedMetab()
@@ -842,9 +846,9 @@ metabridge_server <- function(input, output, session) {
     }
   })
 
+  # Clean up MetaCyc reactions if they're being downloaded
   cleanMappedMetabolites <- reactive({
     req(mappedMetabolites())
-
     if (databaseChosen() == "MetaCyc") {
       mappedMetabolites() %>% cleanReactions(.)
     } else {
@@ -852,7 +856,6 @@ metabridge_server <- function(input, output, session) {
     }
   })
 
-  # Export results to a file named: "originalfilename_mapped_dbChosen.tsv"
   output$downloadMappingData <- downloadHandler(
     filename = function() {
       paste0(
@@ -875,7 +878,7 @@ metabridge_server <- function(input, output, session) {
   )
 
 
-  # Continue to Pathview --------------------------------------------------
+  # Switch to Pathview --------------------------------------------------
 
   output$continueToViz <- renderUI({
     if (!is.null(mappedMetabolites())) {
@@ -889,7 +892,7 @@ metabridge_server <- function(input, output, session) {
             "<p>If you chose <b>KEGG</b> as the database to map your ",
             "metabolites, you can visualize your results with Pathview. ",
             "Select a metabolite from the top table, then click the button ",
-            "below to see the pathways it's involved in."
+            "below to see the pathways it's involved in.</p>"
           ),
           if (databaseChosen() == "KEGG" & !is.null(selectedMetab())) {
             actionButton(
@@ -919,7 +922,7 @@ metabridge_server <- function(input, output, session) {
   )
 
 
-  # Pathview  -------------------------------------------------------------
+  # Pathview tab ----------------------------------------------------------
 
   selectedRowAttrs <- reactiveValues(
     "selectedCompound" = NULL,
@@ -930,11 +933,11 @@ metabridge_server <- function(input, output, session) {
 
   observeEvent(input$mappingSummaryTable_rows_selected, {
     pathwayMappingAttrs <- generalPathwayMapping(
-      summaryTable = mappingSummary$table,
-      fullTable = mappingObject()$data,
-      idType = idTypeChosen(),
       db = databaseChosen(),
-      selectedRow = selectedMetab()
+      idType = idTypeChosen(),
+      selectedRow = selectedMetab(),
+      summaryTable = mappingSummary$table,
+      fullTable = mappingObject()$data
     )
 
     selectedRowAttrs$selectedCompound <-
@@ -950,7 +953,11 @@ metabridge_server <- function(input, output, session) {
       pathwayMappingAttrs$pathwaysOfSelectedCompound
   })
 
+
+  # Pathway selection UI --------------------------------------------------
+
   output$pathwayPanel <- renderUI({
+
     if (!is.null(mappingObject())) {
       if (nrow(selectedRowAttrs$pathwaysOfSelectedCompound) == 0) {
         div(
@@ -998,17 +1005,21 @@ metabridge_server <- function(input, output, session) {
     }
   })
 
+
+  # Render Pathview image -------------------------------------------------
+
   output$pathwayView <- renderImage({
     if (is.null(input$pathwaysPicked)) {
-      return({
+      return(
         list(
           src = "./logo_background.svg",
+          class = "card-img-top",
           contentType = "image/svg",
           width = 512,
           height = 512,
           alt = "pathway placeholder"
         )
-      })
+      )
     }
 
     pathwayNameIDcol <- as.name("namedPway")
@@ -1033,36 +1044,40 @@ metabridge_server <- function(input, output, session) {
     ))
   }, deleteFile = TRUE)
 
-  output$vizPanelUI <- renderUI({
-    tagList(
-      h3(class = "mb-4", "Pathway view"),
-
+  observeEvent(input$pathwaysPicked, {
+    output$vizPanelUI <- renderUI({
       if (is.null(databaseChosen())) {
-        div(
-          class = "alert alert-dismissible alert-danger",
-          "There is nothing selected to map!"
+        tagList(
+          h3(class = "mb-4", "Pathway view"),
+          div(
+            class = "alert alert-dismissible alert-danger",
+            "There is nothing selected to map!"
+          )
         )
-
       } else if (databaseChosen() == "MetaCyc") {
-        div(
-          class = "alert alert-dismissible alert-danger",
-          "You must map via KEGG to visualize your results with pathview!"
+        tagList(
+          h3(class = "mb-4", "Pathway view"),
+          div(
+            class = "alert alert-dismissible alert-danger",
+            "You must map via KEGG to visualize your results with pathview!"
+          )
         )
-
       } else if (is.null(selectedMetab())) {
-        div(
-          class = "alert alert-dismissible alert-danger",
-          "You must select a metabolite to visualize your results with pathview!"
+        tagList(
+          h3(class = "mb-4", "Pathway view"),
+          div(
+            class = "alert alert-dismissible alert-danger",
+            "You must select a metabolite to visualize your results with pathview!"
+          )
         )
-
       } else {
         shinycssloaders::withSpinner(
           ui_element = imageOutput("pathwayView"),
           type = 8,
-          color = "#303E4E"
+          color = bs_get_variables(metabridgeTheme, "blue")
         )
       }
-    )
+    })
   })
 }
 

@@ -9,7 +9,7 @@ suppressPackageStartupMessages({
 
 # Load data ----------------------------------------------------------
 
-load("data/example_data.RData")
+load("example_data/example_data.RData")
 
 # Last update was in January/February 2023
 load("data/metaCyc_data_v26.RData")

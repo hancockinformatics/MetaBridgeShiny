@@ -1,9 +1,10 @@
 #' mapKEGGPathways
 #'
-#' @param idType ID type/format being used in the mapping
-#' @param selectedRow Row which is selected/highlighted by the user
-#' @param summaryTable Summary table prodiced by earlier mapping
-#' @param fullTable Full table...?
+#' @param idType Selected ID type used for mapping
+#' @param selectedRow Highlighted row from the user with the metabolite to get
+#'   mapping info for
+#' @param summaryTable Summary table of metabolite mapping
+#' @param fullTable Complete results table from metabolite mapping
 #'
 #' @return Mapped pathways returned if mapping with KEGG.
 #'
@@ -49,12 +50,13 @@ mapKEGGPathways <- function(
 }
 
 
-#' MapMetaCycPathways
+#' mapMetaCycPathways
 #'
-#' @param idType ID type being used in the mapping
-#' @param selectedRow Row selected or highlighted by the user
-#' @param summaryTable Summary table produced in earlier mapping step
-#' @param fullTable
+#' @param idType Selected ID type used for mapping
+#' @param selectedRow Highlighted row from the user with the metabolite to get
+#'   mapping info for
+#' @param summaryTable Summary table of metabolite mapping
+#' @param fullTable Complete results table from metabolite mapping
 #'
 #' @return Mapped pathways as determined by mapping with MetaCyc.
 #'
@@ -100,16 +102,14 @@ mapMetaCycPathways <- function(
 }
 
 
-
-
 #' generalPathwayMapping
 #'
-#' @param db Selected databse, one of KEGG or MetaCyc
+#' @param db Selected database, one of KEGG or MetaCyc
 #' @param idType Selected ID type used for mapping
 #' @param selectedRow Highlighted row from the user with the metabolite to get
-#'                    mapping info for
-#' @param summaryTable Summary table; the output of the earlier mnapping step
-#' @param fullTable
+#'   mapping info for
+#' @param summaryTable Summary table of metabolite mapping
+#' @param fullTable Complete results table from metabolite mapping
 #'
 #' @return Mapped pathways to be returned to the user.
 #'
