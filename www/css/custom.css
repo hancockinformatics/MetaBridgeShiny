@@ -32,7 +32,7 @@
   line-height: 18px;
 }
 
-/* Make Tutorial Images Responsive */
+/* Make tutorial images responsive */
 .tutorial img {
   max-width: 100%;
   max-height: 100%;
@@ -42,4 +42,39 @@
 .tutorial {
   float: none;
   margin: 0 auto;
+}
+
+/* Customize shiny notifications */
+#shiny-notification-panel {
+  width: 450px;
+  margin-right: 24px;
+  margin-bottom: 24px;
+}
+.shiny-progress-notification .progress-text .progress-message {
+  font-size: 110%;
+  font-weight: normal;
+  color: var(--bs-secondary-text-emphasis);
+}
+.shiny-notification-close {
+  font-size: 32px;
+  padding-right: 4px;
+}
+.shiny-notification {
+  background: var(--bs-gray-200);
+  color: var(--bs-gray-900);
+  opacity: 1;
+  font-size: 1.1rem;
+  border: 0;
+}
+.shiny-notification-message {
+  color: var(--bs-white);
+  background: var(--bs-success);
+}
+.shiny-notification-warning {
+  color: var(--bs-white);
+  background: var(--bs-warning);
+}
+.shiny-notification-error {
+  color: var(--bs-white);
+  background: var(--bs-danger);
 }
