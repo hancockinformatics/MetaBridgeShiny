@@ -23,6 +23,56 @@ cleanReactions <- function(metabTable) {
 }
 
 
+#' depEntry
+#'
+#' @param link Link to a website
+#' @param name Name for the link
+#' @param description Short description to accompany the link
+#'
+#' @return HTML wrapping up a dependency entry
+#'
+depEntry <- function(link, name, description) {
+  tagList(
+    tags$dt(
+      a(
+        href = link,
+        target = "_blank",
+        rel = "noopener noreferrer",
+        name
+      )
+    ),
+    tags$dd(description)
+  )
+}
+
+
+#' depWrapper
+#'
+#' @param x A tibble of dependencies to wrap up into the UI
+#'
+#' @return A div which splits the dependency entries into two columns
+#'
+depWrapper <- function(x) {
+  col_1 <- seq(1, ceiling(nrow(x) / 2))
+  col_2 <- seq(max(col_1) + 1, nrow(x))
+
+  tagList(
+    div(
+      class = "row align-items-start",
+      style = "font-size: 1.1em; font-weight: 300",
+      div(
+        class = "col",
+        tags$dl(purrr::pmap(x[col_1, ], depEntry))
+      ),
+      div(
+        class = "col",
+        tags$dl(purrr::pmap(x[col_2, ], depEntry))
+      )
+    )
+  )
+}
+
+
 #' mappingAlert
 #'
 #' @param message Message to return to the user

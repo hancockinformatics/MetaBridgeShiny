@@ -12,9 +12,42 @@
   display: none;
 }
 
-/* Add padding between inline checkboxes*/
-.checkbox-inline {
-  padding-right: 12px;
+/* XL-sized buttons */
+.btn-xl, .btn-group-xl > .btn {
+  --bs-btn-padding-y: 0.5rem;
+  --bs-btn-padding-x: 1rem;
+  --bs-btn-font-size: 1.5rem;
+  --bs-btn-border-radius: var(--bs-border-radius-lg);
+}
+
+/* We wrap a div around the content within jumbotron to use a background image
+within the background fill of the hero element */
+@media only screen and (max-width: 767px) {
+  .logoWrapper-home {
+    background: url('../img/logo_background.svg') no-repeat center top;
+    background-size: 900px;
+  }
+
+  .logoWrapper-about {
+    background-image: url('../img/logo_background.svg');
+    background-repeat: no-repeat;
+    background-position: right top;
+    background-size: 900px;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .logoWrapper-home {
+    background: url('../img/logo_background.svg') no-repeat right;
+    background-size: 900px;
+  }
+
+  .logoWrapper-about {
+    background-image: url('../img/logo_background.svg');
+    background-repeat: no-repeat;
+    background-position: right top;
+    background-size: 900px;
+  }
 }
 
 /* Fix padding for the navbar */

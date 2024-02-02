@@ -19,11 +19,3 @@ load("data/kegg_data_r105.RData")
 k03_keggGenes <- k03_keggGenes %>%
   select(-KEGG) %>%
   unique()
-
-
-# Load functions ----------------------------------------------------------
-
-purrr::walk(
-  .x = list.files("functions/", full.names = TRUE),
-  .f = ~source(.x)
-)
