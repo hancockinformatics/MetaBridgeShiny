@@ -1,4 +1,4 @@
-[<img src="www/logo_blue_small.svg" align="right" top=0 height="75px"/>](https://metabridge.org)
+[<img src="www/img/logo_blue_small.svg" align="right" top=0 height="75px"/>](https://metabridge.org)
 
 # **MetaBridge**
 
@@ -20,7 +20,7 @@ integrative analysis pipeline using
 [MetaBridge](https://metabridge.org), and 
 [NetworkAnalyst](https://www.networkanalyst.ca/) is outlined below:
 
-![](./metabridge_workflow.svg)
+![](www/img/metabridge_workflow.svg)
 
 ## Tutorial
 To learn how to use MetaBridge as part of a network-based integrative analysis

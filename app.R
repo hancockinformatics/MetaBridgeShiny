@@ -43,7 +43,7 @@ dependencyTibble <- dplyr::tibble(
 
 # UI ----------------------------------------------------------------------
 
-metabridge_ui <- page_fluid(
+metabridgeUI <- page_fluid(
   title = "MetaBridge",
   theme = metabridgeTheme,
   useShinyjs(),
@@ -91,13 +91,13 @@ metabridge_ui <- page_fluid(
               class = "mx-auto fs-4 text-muted",
               p(
                 "Welcome to MetaBridge, a user-friendly web tool for ",
-                "network-based integrative analysis of metabolomics data. Here ",
-                "you can upload a list of metabolite IDs and identify the ",
-                "directly interacting enzymes for network integration."
+                "network-based integrative analysis of metabolomics data. ",
+                "Here you can upload a list of metabolite IDs and identify ",
+                "the directly interacting enzymes for network integration."
               ),
               p(
-                "To start, you'll want a set of metabolites as HMDB or KEGG IDs. ",
-                "We recommend",
+                "To start, you'll want a set of metabolites as HMDB or KEGG ",
+                "IDs. We recommend",
                 a(
                   "MetaboAnalyst",
                   href = "http://www.metaboanalyst.ca",
@@ -121,10 +121,11 @@ metabridge_ui <- page_fluid(
                 "integration with data from other omics types."
               ),
               p(
-                "Click the button below to get started! If you'd like to learn ",
-                "more about how MetaBridge can be used, check our Tutorial. For ",
-                "more information, including where to report bugs or problems ",
-                "and how to cite MetaBridge, please refer to the About page."
+                "Click the button below to get started! If you'd like to ",
+                "learn more about how MetaBridge can be used, check our ",
+                "Tutorial. For more information, including where to report ",
+                "bugs or problems and how to cite MetaBridge, please refer to ",
+                "the About page."
               ),
 
               div(
@@ -404,21 +405,21 @@ metabridge_ui <- page_fluid(
               class = "mx-auto fs-4 text-muted",
 
               HTML(paste0(
-                "<p>MetaBridge was created by Samuel Hinshaw, and is maintained ",
-                "by Travis Blimkie at the ",
-                "<a href='http://cmdr.ubc.ca/bobh' target='blank' rel='noopener ",
-                "noreferrer'>REW Hancock Laboratory</a>",
+                "<p>MetaBridge was created by Samuel Hinshaw, and is ",
+                "maintained  by Travis Blimkie at the ",
+                "<a href='http://cmdr.ubc.ca/bobh' target='blank' ",
+                "rel='noopener noreferrer'>REW Hancock Laboratory</a>",
                 " at The University of British Columbia. It was originally ",
                 "published in <i>Bioinformatics</i> (doi: ",
                 "<a href='https://doi.org/10.1093/bioinformatics/bty331' ",
                 "target='blank' rel='noopener noreferrer'>",
                 "10.1093/bioinformatics/bty331</a>",
                 "); please cite this paper when using MetaBridge in your ",
-                "analyses. We also have a protocol for MetaBridge published in ",
-                "<i>Current Protocols in Bioinformatics</i>. It covers how to ",
-                "prepare data for input to MetaBridge, and includes an example ",
-                "of building a protein-protein interaction network from ",
-                "MetaBridge results using ",
+                "analyses. We also have a protocol for MetaBridge published ",
+                "in <i>Current Protocols in Bioinformatics</i>. It covers how ",
+                "to prepare data for input to MetaBridge, and includes an ",
+                "example of building a protein-protein interaction network ",
+                "from MetaBridge results using ",
                 "<a href='https://networkanalyst.ca' target='blank' ",
                 "rel='noopener noreferrer'>NetworkAnalyst</a>",
                 ". The article is available at doi: ",
@@ -428,9 +429,9 @@ metabridge_ui <- page_fluid(
               )),
 
               p(
-                "The example data used by MetaBridge is based on results from a ",
-                "metabolomics study of pediatric sepsis published by Mickiewicz ",
-                "et al., available ",
+                "The example data used by MetaBridge is based on results from ",
+                "a metabolomics study of pediatric sepsis published by ",
+                "Mickiewicz et al., available ",
                 a(
                   "here",
                   href = "https://www.atsjournals.org/doi/full/10.1164/rccm.201209-1726OC",
@@ -481,7 +482,7 @@ metabridge_ui <- page_fluid(
 
 # Server ------------------------------------------------------------------
 
-metabridge_server <- function(input, output, session) {
+metabridgeServer <- function(input, output, session) {
 
 
   # Initialize ------------------------------------------------------------
@@ -1053,4 +1054,4 @@ metabridge_server <- function(input, output, session) {
   })
 }
 
-shinyApp(metabridge_ui, metabridge_server)
+shinyApp(metabridgeUI, metabridgeServer)
