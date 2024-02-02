@@ -8,6 +8,10 @@
   pointer-events: auto;
 }
 
+.btn-hidden {
+  display: none;
+}
+
 /* Add padding between inline checkboxes*/
 .checkbox-inline {
   padding-right: 12px;

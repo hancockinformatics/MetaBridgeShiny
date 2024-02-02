@@ -7,8 +7,6 @@ suppressPackageStartupMessages({
   library(dplyr)
 })
 
-source("deferred.R")
-
 metabridgeTheme <- bs_theme(version = 5, preset = "flatly")
 
 
@@ -20,6 +18,7 @@ metabridge_ui <- page_fluid(
   useShinyjs(),
 
   tags$head(
+    tags$script(src = "js/client.js"),
     tags$link(rel = "stylesheet", type = "text/css", href = "css/custom.css"),
     tags$link(
       rel = "icon",
@@ -98,27 +97,24 @@ metabridge_ui <- page_fluid(
             div(
               actionButton(
                 inputId = "getStarted",
-                class = "btn-primary btn-lg px-4 me-md-2",
-                label = "Get started",
-                width = "155px"
-              ) %>% tooltip("Let's go!", placement = "bottom"),
+                class = "btn-primary btn-lg px-4 me-md-2 disabled",
+                icon = icon("circle-notch", class = "fa fa-spin"),
+                label = "Initializing...",
+                width = "200px"
+              ),
+
               actionButton(
                 inputId = "tutorial",
-                class = "btn-success btn-lg px-4 me-md-2",
+                class = "btn-success btn-lg px-4 me-md-2 btn-hidden",
                 label = "Tutorial",
-                width = "155px"
-              ) %>% tooltip(
-                "Learn how to use MetaBridge for integrative analysis",
-                placement = "bottom"
+                width = "200px"
               ),
+
               actionButton(
                 inputId = "about",
-                class = "btn-info btn-lg px-4 me-md-2",
+                class = "btn-info btn-lg px-4 me-md-2 btn-hidden",
                 label = "About",
-                width = "155px"
-              ) %>% tooltip(
-                "Learn more about MetaBridge",
-                placement = "bottom"
+                width = "200px"
               )
             )
           )
@@ -518,6 +514,11 @@ metabridge_server <- function(input, output, session) {
 
 
   # Initialize ------------------------------------------------------------
+
+  observeEvent(input$sessionInitialized, {
+    source("deferred.R")
+    runjs("handlers.initGetStarted();")
+  }, ignoreInit = TRUE, once = TRUE)
 
   metaboliteObject <- reactiveVal()
   mappedMetabolites <- reactiveVal()
