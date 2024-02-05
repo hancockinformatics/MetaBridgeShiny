@@ -9,8 +9,14 @@ suppressPackageStartupMessages({
 
 metabridgeTheme <- bs_theme(version = 5, preset = "flatly")
 
+metabridgeVersion <- gsub(
+  x = grep("^Version\\: ", readLines("DESCRIPTION"), value = TRUE),
+  pattern = "^Version\\: ",
+  replacement = ""
+)
+
 # Dependencies
-dependencyTibble <- dplyr::tibble(
+dependencyTibble <- tibble(
   link = c(
     "https://metacyc.org/",
     "https://www.genome.jp/kegg/",
@@ -121,6 +127,7 @@ metabridgeUI <- page_fluid(
                 "integration with data from other omics types."
               ),
               p(
+                class = "mb-4",
                 "Click the button below to get started! If you'd like to ",
                 "learn more about how MetaBridge can be used, check our ",
                 "Tutorial. For more information, including where to report ",
@@ -320,10 +327,10 @@ metabridgeUI <- page_fluid(
     ),
 
 
-    # |- Pathview ---------------------------------------------------------
+    # |- Visualize --------------------------------------------------------
 
     nav_panel(
-      title = "Pathview",
+      title = "Visualize",
       value = "vizPanel",
       card(
         min_height = "88vh",
@@ -479,7 +486,15 @@ metabridgeUI <- page_fluid(
       href = "https://github.com/hancockinformatics/ShinyABCi",
       target = "_blank",
       rel = "noopener noreferrer"
-    ))
+    )),
+
+    # Divider
+    nav_item(tagList(
+      div(class = "vr d-none d-sm-flex h-100 mx-sm-2 text-white"),
+      hr(class = "d-lg-none my-2 text-white-50")
+    )),
+
+    nav_item(metabridgeVersion, style = "color: var(--bs-nav-link-color)")
   )
 )
 
@@ -855,7 +870,7 @@ metabridgeServer <- function(input, output, session) {
   )
 
 
-  # Switch to Pathview --------------------------------------------------
+  # Switch to Visualize -------------------------------------------------
 
   output$continueToViz <- renderUI({
     if (!is.null(mappedMetabolites())) {
@@ -867,7 +882,7 @@ metabridgeServer <- function(input, output, session) {
           strong("Visualize your results"),
           HTML(
             "<p>If you chose <b>KEGG</b> as the database to map your ",
-            "metabolites, you can visualize your results with Pathview. ",
+            "metabolites, you can Visualize your results with Pathview. ",
             "Select a metabolite from the top table, then click the button ",
             "below to see the pathways it's involved in.</p>"
           ),
@@ -899,7 +914,7 @@ metabridgeServer <- function(input, output, session) {
   })
 
 
-  # Pathview tab ----------------------------------------------------------
+  # Visualize tab ---------------------------------------------------------
 
   selectedRowAttrs <- reactiveValues(
     "selectedCompound" = NULL,
