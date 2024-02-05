@@ -190,15 +190,19 @@ metabridgeUI <- page_fluid(
             width = "500px",
             open = NA,
 
-            p(
-              "Select a plain-text spreadsheet (a file ending in csv, txt, or ",
+            HTML(paste0(
+              "<p>Select a plain-text spreadsheet (a file ending in csv, txt, or ",
               "tsv) containing your metabolites in a single column. You can ",
               "also try our example data using",
               tooltip(
-                actionLink(inputId = "tryExamples", "this link."),
-                "Try an example dataset from MetaboAnalyst"
-              )
-            ),
+                actionLink(
+                  inputId = "tryExamples",
+                  label = "this link",
+                  .noWS = "after"
+                ),
+                "Load an example dataset from MetaboAnalyst"
+              ), ".</p>"
+            )),
 
             fileInput(
               inputId = "metaboliteUpload",
@@ -231,7 +235,7 @@ metabridgeUI <- page_fluid(
               "<p>MetaBridge supports mapping with HMDB or KEGG metabolite ",
               "IDs. Please ensure the ID selected here matches the column ",
               "<b><u>highlighted in blue</u></b> before clicking the <b>",
-              "Proceed</b> button."
+              "Proceed to mapping</b> button."
             ),
             radioButtons(
               inputId = "idType",
@@ -247,7 +251,7 @@ metabridgeUI <- page_fluid(
                 inputId = "continueToMap",
                 class = "btn-primary",
                 icon = icon("check"),
-                label = "Proceed to Mapping",
+                label = "Proceed to mapping",
                 width = "100%"
               ) %>% tooltip("Continue to the mapping step")
             )
@@ -880,7 +884,7 @@ metabridgeServer <- function(input, output, session) {
               inputId = "visualizeButton",
               class = "btn-primary",
               icon = icon("eye"),
-              label = "Visualize",
+              label = "Visualize with Pathview",
               width = "100%"
             ) %>% tooltip("Select a metabolite from the summary table to visualize"))
           }
@@ -889,10 +893,10 @@ metabridgeServer <- function(input, output, session) {
     }
   })
 
-  observeEvent(
-    input$visualizeButton,
+  observeEvent(input$visualizeButton, {
     nav_select(id = "navbarLayout", selected = "vizPanel")
-  )
+    removeNotification(id = "mappingAlert")
+  })
 
 
   # Pathview tab ----------------------------------------------------------
