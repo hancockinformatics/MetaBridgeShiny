@@ -91,6 +91,14 @@ mappingAlert <- function(message, suggest, status) {
     "success" = "message"
   )
 
+  n_header <- switch(
+    status,
+    "error" = "Error",
+    "empty" = "Error",
+    "warn" = "Warning",
+    "success" = "Success"
+  )
+
   n_action <-
     if (!is.null(suggest)) {
       actionLink(inputId = "remap", label = suggest)
@@ -103,9 +111,12 @@ mappingAlert <- function(message, suggest, status) {
   showNotification(
     id = "mappingAlert",
     type = n_type,
-    duration = 20,
+    duration = ifelse(n_type == "success", 10, 20),
     action = n_action,
-    n_ui
+    ui = HTML(paste0(
+      "<h4 class='alert-heading'><b>", n_header, "</b></h4>",
+      "<p class='mb-0'>", n_ui, "</p>"
+    ))
   )
 }
 
