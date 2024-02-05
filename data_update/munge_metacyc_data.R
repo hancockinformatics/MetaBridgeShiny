@@ -4,8 +4,7 @@
 
 # Load packages -----------------------------------------------------------
 
-library(tidyverse)
-import::from(splitstackshape, cSplit, .into = "")
+library(dplyr)
 
 
 # Set paths ---------------------------------------------------------------
@@ -25,7 +24,7 @@ metaCycDBLinks_0 <- read_tsv(file.path(updateDir, "1-compounds-ids.tsv"))
 m01_metaCycDBLinks <- metaCycDBLinks_0 %>%
   rename("KEGG" = Kegg) %>%
   mutate(
-    across(HMDB:KEGG, ~str_remove_all(.x, "^<a href='.*'>|<\\/a>$")),
+    across(HMDB:KEGG, ~stringr::str_remove_all(.x, "^<a href='.*'>|<\\/a>$")),
     across(Compound:KEGG, str_trim)
   )
 
@@ -37,12 +36,12 @@ metaCycCompoundsReactions_0 <-
 
 m02_metaCycCompoundsReactions <- metaCycCompoundsReactions_0 %>%
   select("reaction" = ID, "reactionName" = Name, "compound" = Matches) %>%
-  cSplit(
-    splitCols    = c("compound"),
-    sep          = ", ",
-    direction    = "long",
+  splitstackshape::cSplit(
+    splitCols = c("compound"),
+    sep = ", ",
+    direction = "long",
     type.convert = FALSE,
-    stripWhite   = FALSE
+    stripWhite = FALSE
   ) %>%
   as_tibble()
 
@@ -54,12 +53,12 @@ metaCycReactionsGenes_0 <-
 
 m03_metaCycReactionsGenes <- metaCycReactionsGenes_0 %>%
   select("geneID" = ID, "geneName" = Name, "reaction" = Matches) %>%
-  cSplit(
-    splitCols    = c("reaction"),
-    sep          = ", ",
-    direction    = "long",
+  splitstackshape::cSplit(
+    splitCols = c("reaction"),
+    sep = ", ",
+    direction = "long",
     type.convert = FALSE,
-    stripWhite   = FALSE
+    stripWhite = FALSE
   ) %>%
   as_tibble()
 
@@ -70,7 +69,7 @@ metaCycGeneIDs_0 <- read_tsv(file.path(updateDir, "4-genes-ids.tsv"))
 
 m04_metaCycGeneIDs <- metaCycGeneIDs_0 %>%
   mutate(
-    across(Ensembl:GeneCards, ~str_remove_all(.x, "^<a href='.*'>|<\\/a>$")),
+    across(Ensembl:GeneCards, ~stringr::str_remove_all(.x, "^<a href='.*'>|<\\/a>$")),
     across(everything(), str_trim)
   ) %>%
   rename("geneID" = `Gene Name`, "Symbol" = GeneCards)
@@ -82,12 +81,12 @@ metaCycPathways_0 <- read_tsv(file.path(updateDir, "5-pathways-reactions.tsv"))
 
 m05_metaCycPathways <- metaCycPathways_0 %>%
   select("pathwayID" = ID, "pathwayName" = Name, "reaction" = Matches) %>%
-  cSplit(
-    splitCols    = c("reaction"),
-    sep          = ", ",
-    direction    = "long",
+  splitstackshape::cSplit(
+    splitCols = c("reaction"),
+    sep = ", ",
+    direction = "long",
     type.convert = FALSE,
-    stripWhite   = FALSE
+    stripWhite = FALSE
   ) %>%
   as_tibble()
 
@@ -100,6 +99,6 @@ save(
   m03_metaCycReactionsGenes,
   m04_metaCycGeneIDs,
   m05_metaCycPathways,
-  file = glue::glue("data/metaCyc_data_{metacycVersion}.RData")
+  file = paste0("data/metaCyc_data_", metacycVersion, ".RData")
 )
 
