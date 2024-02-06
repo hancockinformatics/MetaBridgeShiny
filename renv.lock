@@ -478,17 +478,6 @@
       ],
       "Hash": "ce88d13c0b10fe88a37d9c59dba2d7f9"
     },
-    "data.table": {
-      "Package": "data.table",
-      "Version": "1.15.0",
-      "Source": "Repository",
-      "Repository": "RSPM",
-      "Requirements": [
-        "R",
-        "methods"
-      ],
-      "Hash": "cfbbb4aed6e78cd45f17123a9ec9981a"
-    },
     "digest": {
       "Package": "digest",
       "Version": "0.6.34",
@@ -1028,16 +1017,6 @@
       ],
       "Hash": "d65e35823c817f09f4de424fcdfa812a"
     },
-    "rprojroot": {
-      "Package": "rprojroot",
-      "Version": "2.0.4",
-      "Source": "Repository",
-      "Repository": "RSPM",
-      "Requirements": [
-        "R"
-      ],
-      "Hash": "4c8415e0ec1e29f3f4f6fc108bef0144"
-    },
     "sass": {
       "Package": "sass",
       "Version": "0.4.8",
@@ -1122,17 +1101,6 @@
         "R"
       ],
       "Hash": "5f5a7629f956619d519205ec475fe647"
-    },
-    "splitstackshape": {
-      "Package": "splitstackshape",
-      "Version": "1.4.8",
-      "Source": "Repository",
-      "Repository": "RSPM",
-      "Requirements": [
-        "R",
-        "data.table"
-      ],
-      "Hash": "69b26ceb9f7976f347049b4d470c2d65"
     },
     "stringi": {
       "Package": "stringi",

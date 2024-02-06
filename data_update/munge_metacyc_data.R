@@ -1,7 +1,3 @@
-
-# MetaCyc data was last updated on January 18th, 2022, using MetaCyc v25.5
-
-
 # Load packages -----------------------------------------------------------
 
 library(dplyr)
@@ -9,17 +5,19 @@ library(dplyr)
 
 # Set paths ---------------------------------------------------------------
 
-rootDir    <- rprojroot::find_rstudio_root_file()
-updateDir  <- file.path(rootDir, "database_updates")
-exampleDir <- file.path(rootDir, "example_data")
-dataDir    <- file.path(rootDir, "data")
+updateDir <- "data_update"
+exampleDir <- "example_data"
+dataDir <- "data"
 
 metacycVersion <- "v26"
 
 
 # 1. MetaCyc Compounds ----------------------------------------------------
 
-metaCycDBLinks_0 <- read_tsv(file.path(updateDir, "1-compounds-ids.tsv"))
+metaCycDBLinks_0 <- read.delim(
+  file.path(updateDir, "1-compounds-ids.tsv"),
+  sep = "\t"
+)
 
 m01_metaCycDBLinks <- metaCycDBLinks_0 %>%
   rename("KEGG" = Kegg) %>%
@@ -31,41 +29,37 @@ m01_metaCycDBLinks <- metaCycDBLinks_0 %>%
 
 # 2. MetaCyc Reactions ----------------------------------------------------
 
-metaCycCompoundsReactions_0 <-
-  read_tsv(file.path(updateDir, "2-compounds-reactions.tsv"))
+metaCycCompoundsReactions_0 <- read.delim(
+  file.path(updateDir, "2-compounds-reactions.tsv"),
+  sep = "\t",
+  quote = ""
+)
 
 m02_metaCycCompoundsReactions <- metaCycCompoundsReactions_0 %>%
   select("reaction" = ID, "reactionName" = Name, "compound" = Matches) %>%
-  splitstackshape::cSplit(
-    splitCols = c("compound"),
-    sep = ", ",
-    direction = "long",
-    type.convert = FALSE,
-    stripWhite = FALSE
-  ) %>%
+  tidyr::separate_longer_delim(cols = compound, delim = ", ") %>%
   as_tibble()
 
 
 # 3. MetaCyc Genes --------------------------------------------------------
 
-metaCycReactionsGenes_0 <-
-  read_tsv(file.path(updateDir, '3-reactions-genes.tsv'))
+metaCycReactionsGenes_0 <- read.delim(
+  file.path(updateDir, '3-reactions-genes.tsv'),
+  sep = "\t"
+)
 
 m03_metaCycReactionsGenes <- metaCycReactionsGenes_0 %>%
   select("geneID" = ID, "geneName" = Name, "reaction" = Matches) %>%
-  splitstackshape::cSplit(
-    splitCols = c("reaction"),
-    sep = ", ",
-    direction = "long",
-    type.convert = FALSE,
-    stripWhite = FALSE
-  ) %>%
+  tidyr::separate_longer_delim(cols = reaction, delim = ", ") %>%
   as_tibble()
 
 
 # 4. Map to Gene IDs ------------------------------------------------------
 
-metaCycGeneIDs_0 <- read_tsv(file.path(updateDir, "4-genes-ids.tsv"))
+metaCycGeneIDs_0 <- read.delim(
+  file.path(updateDir, "4-genes-ids.tsv"),
+  sep = "\t"
+)
 
 m04_metaCycGeneIDs <- metaCycGeneIDs_0 %>%
   mutate(
@@ -77,17 +71,14 @@ m04_metaCycGeneIDs <- metaCycGeneIDs_0 %>%
 
 # 5. Map to Pathways ------------------------------------------------------
 
-metaCycPathways_0 <- read_tsv(file.path(updateDir, "5-pathways-reactions.tsv"))
+metaCycPathways_0 <- read.delim(
+  file.path(updateDir, "5-pathways-reactions.tsv"),
+  sep = "\t"
+)
 
 m05_metaCycPathways <- metaCycPathways_0 %>%
   select("pathwayID" = ID, "pathwayName" = Name, "reaction" = Matches) %>%
-  splitstackshape::cSplit(
-    splitCols = c("reaction"),
-    sep = ", ",
-    direction = "long",
-    type.convert = FALSE,
-    stripWhite = FALSE
-  ) %>%
+  tidyr::separate_longer_delim(cols = reaction, delim = ", ") %>%
   as_tibble()
 
 
