@@ -11,8 +11,8 @@ suppressPackageStartupMessages({
 
 load("example_data/example_data.RData")
 
-# Last update was in January/February 2023
-load("data/metaCyc_data_v26.RData")
+# Last update was in February 2024
+load("data/metaCyc_data_v27.RData")
 load("data/kegg_data_r105.RData")
 
 # Keep only enzyme-gene relationships
