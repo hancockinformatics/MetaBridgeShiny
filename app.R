@@ -49,453 +49,435 @@ dependencyTibble <- tibble(
 
 # UI ----------------------------------------------------------------------
 
-metabridgeUI <- page_fluid(
-  title = "MetaBridge",
+metabridgeUI <- page_navbar(
+  id = "navbarLayout",
+  window_title = "MetaBridge",
   theme = metabridgeTheme,
-  useShinyjs(),
-
-  tags$head(
+  bg = bs_get_variables(metabridgeTheme, "primary"),
+  inverse = FALSE,
+  header = tags$head(
     tags$script(src = "js/client.js"),
     tags$link(rel = "stylesheet", type = "text/css", href = "css/custom.css"),
     tags$link(
       rel = "icon",
-      type = "image/png",
-      sizes = "32x32",
       href = "img/favicon-32x32.png"
     ),
-    tags$link(
-      rel = "icon",
-      type = "image/png",
-      sizes = "16x16",
-      href = "img/favicon-16x16.png"
-    )
+    useShinyjs()
   ),
 
-  page_navbar(
-    id = "navbarLayout",
-    nav_item(HTML("<img src='img/logo_white.svg' alt='' height='28'>")),
+  nav_item(HTML("<img src='img/logo_white.svg' alt='' height='28'>")),
 
 
-    # |- Welcome ----------------------------------------------------------
+  # |- Welcome ----------------------------------------------------------
 
-    nav_panel(
-      value = "welcomePanel",
-      title = "MetaBridge",
+  nav_panel(
+    value = "welcomePanel",
+    title = "MetaBridge",
 
+    div(
+      class = "mx-2 my-2",
       div(
-        class = "mx-2 my-2",
+        class = "p-5 bg-body-tertiary rounded-3",
+
         div(
-          class = "p-5 bg-body-tertiary rounded-3",
-
-          div(
-            class = "logoWrapper-home",
-            h1(
-              class = "display-3 fw-bold text-body-emphasis",
-              "Welcome"
-            ),
-            div(
-              class = "mx-auto fs-4 text-muted",
-              p(
-                "Welcome to MetaBridge, a user-friendly web tool for ",
-                "network-based integrative analysis of metabolomics data. ",
-                "Here you can upload a list of metabolite IDs and identify ",
-                "the directly interacting enzymes for network integration."
-              ),
-              p(
-                "To start, you'll want a set of metabolites as HMDB or KEGG ",
-                "IDs. We recommend",
-                a(
-                  "MetaboAnalyst",
-                  href = "http://www.metaboanalyst.ca",
-                  target = "_blank",
-                  rel = "noopener noreferrer"
-                ),
-                "for metabolomics data processing and ID conversion, if ",
-                "you have only compound names."
-              ),
-              p(
-                "With the output of MetaBridge, you can create a ",
-                "protein-protein interaction network using your metabolomics ",
-                "data. We suggest",
-                a(
-                  "NetworkAnalyst",
-                  href = "http://www.networkanalyst.ca",
-                  target = "_blank",
-                  rel = "noopener noreferrer"
-                ),
-                "for generation of these networks, and for network-based ",
-                "integration with data from other omics types."
-              ),
-              p(
-                class = "mb-4",
-                "Click the button below to get started! If you'd like to ",
-                "learn more about how MetaBridge can be used, check our ",
-                "Tutorial. For more information, including where to report ",
-                "bugs or problems and how to cite MetaBridge, please refer to ",
-                "the About page."
-              ),
-
-              div(
-                actionButton(
-                  inputId = "getStarted",
-                  class = "btn-primary btn-xl px-4 me-md-2 disabled",
-                  icon = icon("circle-notch", class = "fa fa-spin"),
-                  label = "Loading...",
-                  width = "200px"
-                ) %>%
-                  tooltip(
-                    "Let's go!",
-                    placement = "bottom"
-                  ),
-
-                actionButton(
-                  inputId = "tutorial",
-                  class = "btn-success btn-xl px-4 me-md-2 btn-hidden",
-                  label = "Tutorial",
-                  width = "200px"
-                ) %>% tooltip(
-                  "See how to use MetaBridge for integrative analysis",
-                  placement = "bottom"
-                ),
-
-                actionButton(
-                  inputId = "about",
-                  class = "btn-info btn-xl px-4 me-md-2 btn-hidden",
-                  label = "About",
-                  width = "200px"
-                ) %>%
-                  tooltip(
-                    "Learn more about MetaBridge",
-                    placement = "bottom"
-                  )
-              )
-            )
-          )
-        ),
-        div(
-          style = "position:fixed; bottom:0px; padding-bottom:10px",
-          HTML(
-            "<a href='http://cmdr.ubc.ca/bobh/'>",
-            "<img src='img/hancock-lab-logo.svg'></a>"
-          )
-        )
-      )
-    ),
-
-
-    # |- Upload -------------------------------------------------------------
-
-    nav_panel(
-      title = "Upload",
-      value = "uploadPanel",
-      card(
-        height = "88vh",
-        layout_sidebar(
-          sidebar = sidebar(
-            title = "Upload your metabolites",
-            class = "d-flex",
-            width = "500px",
-            open = NA,
-
-            HTML(paste0(
-              "<p>Select a plain-text spreadsheet (a file ending in csv, txt, or ",
-              "tsv) containing your metabolites in a single column. You can ",
-              "also try our example data using",
-              tooltip(
-                actionLink(
-                  inputId = "tryExamples",
-                  label = "this link",
-                  .noWS = "after"
-                ),
-                "Load an example dataset from MetaboAnalyst"
-              ), ".</p>"
-            )),
-
-            fileInput(
-              inputId = "metaboliteUpload",
-              label = NULL,
-              buttonLabel = list(icon("upload"), "Browse..."),
-              accept = c("csv", ".csv", "tsv", ".tsv", "txt", ".txt")
-            ),
-
-            strong("Does your data contain column names?"),
-            checkboxInput(
-              inputId = "header",
-              label = "My data has a header",
-              value = TRUE
-            ),
-
-            br(),
-
-            strong("How is your data separated?"),
-            radioButtons(
-              inputId = "sep",
-              label = NULL,
-              choices = c(Comma = ",", Tab = "\t", Semicolon = ";"),
-              selected = ","
-            ),
-
-            br(),
-
-            strong("Select an ID Type"),
-            HTML(
-              "<p>MetaBridge supports mapping with HMDB or KEGG metabolite ",
-              "IDs. Please ensure the ID selected here matches the column ",
-              "<b><u>highlighted in blue</u></b> before clicking the <b>",
-              "Proceed to mapping</b> button."
-            ),
-            radioButtons(
-              inputId = "idType",
-              label = NULL,
-              choices = c("HMDB", "KEGG"),
-              selected = character(0)
-            ),
-
-            br(),
-
-            disabled(
-              actionButton(
-                inputId = "continueToMap",
-                class = "btn-primary",
-                icon = icon("check"),
-                label = "Proceed to mapping",
-                width = "100%"
-              ) %>% tooltip("Continue to the mapping step")
-            )
-          ),
-          uiOutput("uploadedTablePanel")
-        )
-      )
-    ),
-
-
-    # |- Map --------------------------------------------------------------
-
-    nav_panel(
-      title = "Map",
-      value = "mapPanel",
-      card(
-        min_height = "88vh",
-        layout_sidebar(
-          sidebar = sidebar(
-            title = "Map your metabolites",
-            id = "mapPanelSidebar",
-            class = "d-flex",
-            width = "500px",
-            open = NA,
-
-            p(
-              "Select one of the database options below. MetaCyc has higher ",
-              "quality annotations, but KEGG may yield more hits, and will ",
-              "also allow you to visualize your results with ",
-              a(
-                "Pathview",
-                href = "https://bioconductor.org/packages/release/bioc/html/pathview.html",
-                target = "_blank",
-                rel = "noopener noreferrer",
-                .noWS = "after"
-              ),
-              "."
-            ),
-
-            radioButtons(
-              inputId = "dbChosen",
-              label = NULL,
-              choices = c("MetaCyc", "KEGG"),
-              selected = "MetaCyc"
-            ),
-
-            disabled(
-              actionButton(
-                inputId = "mapButton",
-                class = "btn-info",
-                icon = icon("arrows-alt"),
-                label = "Map metabolites",
-                width = 200
-              ) %>%
-                tooltip("Map your metabolites to the selected database")
-            ),
-            uiOutput("downloadPanel"),
-            uiOutput("continueToViz")
-          ),
-          div(
-            uiOutput("mappingSummaryPanel"),
-            uiOutput("mappedMetabolitePanel")
-          )
-        )
-      )
-    ),
-
-
-    # |- Visualize --------------------------------------------------------
-
-    nav_panel(
-      title = "Visualize",
-      value = "vizPanel",
-      card(
-        min_height = "88vh",
-        layout_sidebar(
-          sidebar = sidebar(
-            title = "Visualize with Pathview",
-            class = "sidebar d-flex",
-            width = "500px",
-            open = NA,
-            p(
-              "To visualize pathways, upload data, and map the metabolites ",
-              "with KEGG. Then you can return here to see the pathway images."
-            ),
-            uiOutput("pathwayPanel")
-          ),
-          uiOutput("vizPanelUI")
-        )
-      )
-    ),
-
-
-    # |- Tutorial ---------------------------------------------------------
-
-    nav_panel(
-      title = "Tutorial",
-      value = "tutorialPanel",
-
-      div(
-        class = "mx-2 my-2",
-        div(
-          class = "bg-body-tertiary rounded-3 p-5 mb-4",
+          class = "logoWrapper-home",
           h1(
             class = "display-3 fw-bold text-body-emphasis",
-            "Tutorial"
+            "Welcome"
           ),
-          h3("Network-based integrative analysis with MetaBridge"),
           div(
             class = "mx-auto fs-4 text-muted",
             p(
-              "This page covers a sample workflow for integrating your ",
-              "metabolomics data with transcriptomics or proteomics data ",
-              "using network-based approaches. You can also view this ",
-              "information on our ",
+              "Welcome to MetaBridge, a user-friendly web tool for ",
+              "network-based integrative analysis of metabolomics data. ",
+              "Here you can upload a list of metabolite IDs and identify ",
+              "the directly interacting enzymes for network integration."
+            ),
+            p(
+              "To start, you'll want a set of metabolites as HMDB or KEGG ",
+              "IDs. We recommend",
               a(
-                "GitHub page",
-                href = paste0(
-                  "https://github.com/hancockinformatics/MetaBridgeShiny/blob/",
-                  "master/tutorial/tutorial.md"
+                "MetaboAnalyst",
+                href = "http://www.metaboanalyst.ca",
+                target = "_blank",
+                rel = "noopener noreferrer"
+              ),
+              "for metabolomics data processing and ID conversion, if ",
+              "you have only compound names."
+            ),
+            p(
+              "With the output of MetaBridge, you can create a ",
+              "protein-protein interaction network using your metabolomics ",
+              "data. We suggest",
+              a(
+                "NetworkAnalyst",
+                href = "http://www.networkanalyst.ca",
+                target = "_blank",
+                rel = "noopener noreferrer"
+              ),
+              "for generation of these networks, and for network-based ",
+              "integration with data from other omics types."
+            ),
+            p(
+              class = "mb-4",
+              "Click the button below to get started! If you'd like to ",
+              "learn more about how MetaBridge can be used, check our ",
+              "Tutorial. For more information, including where to report ",
+              "bugs or problems and how to cite MetaBridge, please refer to ",
+              "the About page."
+            ),
+
+            div(
+              actionButton(
+                inputId = "getStarted",
+                class = "btn-primary btn-xl px-4 me-md-2 disabled",
+                icon = icon("circle-notch", class = "fa fa-spin"),
+                label = "Loading...",
+                width = "200px"
+              ) %>%
+                tooltip(
+                  "Let's go!",
+                  placement = "bottom"
                 ),
+
+              actionButton(
+                inputId = "tutorial",
+                class = "btn-success btn-xl px-4 me-md-2 btn-hidden",
+                label = "Tutorial",
+                width = "200px"
+              ) %>% tooltip(
+                "See how to use MetaBridge for integrative analysis",
+                placement = "bottom"
+              ),
+
+              actionButton(
+                inputId = "about",
+                class = "btn-info btn-xl px-4 me-md-2 btn-hidden",
+                label = "About",
+                width = "200px"
+              ) %>%
+                tooltip(
+                  "Learn more about MetaBridge",
+                  placement = "bottom"
+                )
+            )
+          )
+        )
+      ),
+      div(
+        style = "position:fixed; bottom:0px; padding-bottom:10px",
+        HTML(
+          "<a href='http://cmdr.ubc.ca/bobh/'>",
+          "<img src='img/hancock-lab-logo.svg'></a>"
+        )
+      )
+    )
+  ),
+
+
+  # |- Upload -------------------------------------------------------------
+
+  nav_panel(
+    title = "Upload",
+    value = "uploadPanel",
+    layout_sidebar(
+      sidebar = sidebar(
+        title = "Upload your metabolites",
+        class = "d-flex",
+        width = "500px",
+        open = NA,
+
+        HTML(paste0(
+          "<p>Select a plain-text spreadsheet (a file ending in csv, txt, or ",
+          "tsv) containing your metabolites in a single column. You can ",
+          "also try our example data using",
+          tooltip(
+            actionLink(
+              inputId = "tryExamples",
+              label = "this link",
+              .noWS = "after"
+            ),
+            "Load an example dataset from MetaboAnalyst"
+          ), ".</p>"
+        )),
+
+        fileInput(
+          inputId = "metaboliteUpload",
+          label = NULL,
+          buttonLabel = list(icon("upload"), "Browse..."),
+          accept = c("csv", ".csv", "tsv", ".tsv", "txt", ".txt")
+        ),
+
+        strong("Does your data contain column names?"),
+        checkboxInput(
+          inputId = "header",
+          label = "My data has a header",
+          value = TRUE
+        ),
+
+        br(),
+
+        strong("How is your data separated?"),
+        radioButtons(
+          inputId = "sep",
+          label = NULL,
+          choices = c(Comma = ",", Tab = "\t", Semicolon = ";"),
+          selected = ","
+        ),
+
+        hr(),
+
+        strong("Select an ID Type"),
+        HTML(
+          "<p>MetaBridge supports mapping with HMDB or KEGG metabolite ",
+          "IDs. Please ensure the ID selected here matches the column ",
+          "<b><u>highlighted in blue</u></b> before clicking the <b>",
+          "Proceed to mapping</b> button."
+        ),
+        radioButtons(
+          inputId = "idType",
+          label = NULL,
+          choices = c("HMDB", "KEGG"),
+          selected = character(0)
+        ),
+
+        br(),
+
+        disabled(
+          actionButton(
+            inputId = "continueToMap",
+            class = "btn-primary",
+            icon = icon("check"),
+            label = "Proceed to mapping",
+            width = "100%"
+          ) %>% tooltip("Continue to the mapping step")
+        )
+      ),
+      uiOutput("uploadedTablePanel")
+    )
+  ),
+
+
+  # |- Map --------------------------------------------------------------
+
+  nav_panel(
+    title = "Map",
+    value = "mapPanel",
+    layout_sidebar(
+      sidebar = sidebar(
+        title = "Map your metabolites",
+        id = "mapPanelSidebar",
+        class = "d-flex",
+        width = "500px",
+        open = NA,
+
+        p(
+          "Select one of the database options below. MetaCyc has higher ",
+          "quality annotations, but KEGG may yield more hits, and will ",
+          "also allow you to visualize your results with ",
+          a(
+            "Pathview",
+            href = "https://bioconductor.org/packages/release/bioc/html/pathview.html",
+            target = "_blank",
+            rel = "noopener noreferrer",
+            .noWS = "after"
+          ),
+          "."
+        ),
+
+        radioButtons(
+          inputId = "dbChosen",
+          label = NULL,
+          choices = c("MetaCyc", "KEGG"),
+          selected = "MetaCyc"
+        ),
+
+        disabled(
+          actionButton(
+            inputId = "mapButton",
+            class = "btn-info",
+            icon = icon("arrows-alt"),
+            label = "Map metabolites",
+            width = 200
+          ) %>%
+            tooltip("Map your metabolites to the selected database")
+        ),
+        uiOutput("downloadPanel"),
+        uiOutput("continueToViz")
+      ),
+      div(
+        uiOutput("mappingSummaryPanel"),
+        uiOutput("mappedMetabolitePanel")
+      )
+    )
+  ),
+
+
+  # |- Visualize --------------------------------------------------------
+
+  nav_panel(
+    title = "Visualize",
+    value = "vizPanel",
+    layout_sidebar(
+      sidebar = sidebar(
+        title = "Visualize with Pathview",
+        class = "sidebar d-flex",
+        width = "500px",
+        open = NA,
+        p(
+          "To visualize pathways, upload data, and map the metabolites ",
+          "with KEGG. Then you can return here to see the pathway images."
+        ),
+        uiOutput("pathwayPanel")
+      ),
+      uiOutput("vizPanelUI")
+    )
+  ),
+
+
+  # |- Tutorial ---------------------------------------------------------
+
+  nav_panel(
+    title = "Tutorial",
+    value = "tutorialPanel",
+
+    div(
+      class = "mx-2 my-2",
+      div(
+        class = "bg-body-tertiary rounded-3 p-5 mb-4",
+        h1(
+          class = "display-3 fw-bold text-body-emphasis",
+          "Tutorial"
+        ),
+        h3("Network-based integrative analysis with MetaBridge"),
+        div(
+          class = "mx-auto fs-4 text-muted",
+          p(
+            "This page covers a sample workflow for integrating your ",
+            "metabolomics data with transcriptomics or proteomics data ",
+            "using network-based approaches. You can also view this ",
+            "information on our ",
+            a(
+              "GitHub page",
+              href = paste0(
+                "https://github.com/hancockinformatics/MetaBridgeShiny/blob/",
+                "master/tutorial/tutorial.md"
+              ),
+              target = "_blank",
+              rel = "noopener noreferrer",
+              .noWS = "after"
+            ),
+            "."
+          )
+        )
+      ),
+      div(
+        class = "container tutorial",
+        includeMarkdown("tutorial/tutorial.md")
+      )
+    )
+  ),
+
+
+  # |- About ------------------------------------------------------------
+
+  nav_panel(
+    title = "About",
+    value = "aboutPanel",
+
+    div(
+      class = "mx-2 my-2",
+      div(
+        class = "bg-body-tertiary rounded-3 p-5 mb-4",
+        div(
+          class = "logoWrapper-about",
+          h1(
+            class = "display-3 fw-bold text-body-emphasis",
+            "About"
+          ),
+          div(
+            class = "mx-auto fs-4 text-muted",
+
+            HTML(paste0(
+              "<p>MetaBridge was created by Samuel Hinshaw, and is ",
+              "maintained  by Travis Blimkie at the ",
+              "<a href='http://cmdr.ubc.ca/bobh' target='blank' ",
+              "rel='noopener noreferrer'>REW Hancock Laboratory</a>",
+              " at The University of British Columbia. It was originally ",
+              "published in <i>Bioinformatics</i> (doi: ",
+              "<a href='https://doi.org/10.1093/bioinformatics/bty331' ",
+              "target='blank' rel='noopener noreferrer'>",
+              "10.1093/bioinformatics/bty331</a>",
+              "); please cite this paper when using MetaBridge in your ",
+              "analyses. We also have a protocol for MetaBridge published ",
+              "in <i>Current Protocols in Bioinformatics</i>. It covers how ",
+              "to prepare data for input to MetaBridge, and includes an ",
+              "example of building a protein-protein interaction network ",
+              "from MetaBridge results using ",
+              "<a href='https://networkanalyst.ca' target='blank' ",
+              "rel='noopener noreferrer'>NetworkAnalyst</a>",
+              ". The article is available at doi: ",
+              "<a href='https://doi.org/10.1002/cpbi.98' target='blank' ",
+              "rel='noopener noreferrer'>10.1002/cpbi.98</a>",
+              ".</p>"
+            )),
+
+            p(
+              "The example data used by MetaBridge is based on results from ",
+              "a metabolomics study of pediatric sepsis published by ",
+              "Mickiewicz et al., available ",
+              a(
+                "here",
+                href = "https://www.atsjournals.org/doi/full/10.1164/rccm.201209-1726OC",
                 target = "_blank",
                 rel = "noopener noreferrer",
                 .noWS = "after"
               ),
               "."
-            )
-          )
-        ),
-        div(
-          class = "container tutorial",
-          includeMarkdown("tutorial/tutorial.md")
+            ),
+
+            p(
+              "If you encounter any bugs or run into other troubles, please ",
+              "post an issue at the ",
+              a(
+                "GitHub page",
+                href = "https://github.com/hancockinformatics/MetaBridgeShiny/issues",
+                target = "_blank",
+                rel = "noopener noreferrer",
+                .noWS = "after"
+              ),
+              ". Be sure to include detailed information on the error you ",
+              "received, and the input you used, if possible."
+            ),
+
+            p("MetaBridge uses the following databases and packages:")
+          ),
+          div(depWrapper(dependencyTibble))
         )
       )
-    ),
+    )
+  ),
 
 
-    # |- About ------------------------------------------------------------
+  # |- Right side items -------------------------------------------------
 
-    nav_panel(
-      title = "About",
-      value = "aboutPanel",
+  nav_spacer(),
 
-      div(
-        class = "mx-2 my-2",
-        div(
-          class = "bg-body-tertiary rounded-3 p-5 mb-4",
-          div(
-            class = "logoWrapper-about",
-            h1(
-              class = "display-3 fw-bold text-body-emphasis",
-              "About"
-            ),
-            div(
-              class = "mx-auto fs-4 text-muted",
+  nav_item(a(
+    icon("github"),
+    "GitHub",
+    href = "https://github.com/hancockinformatics/ShinyABCi",
+    target = "_blank",
+    rel = "noopener noreferrer"
+  )),
 
-              HTML(paste0(
-                "<p>MetaBridge was created by Samuel Hinshaw, and is ",
-                "maintained  by Travis Blimkie at the ",
-                "<a href='http://cmdr.ubc.ca/bobh' target='blank' ",
-                "rel='noopener noreferrer'>REW Hancock Laboratory</a>",
-                " at The University of British Columbia. It was originally ",
-                "published in <i>Bioinformatics</i> (doi: ",
-                "<a href='https://doi.org/10.1093/bioinformatics/bty331' ",
-                "target='blank' rel='noopener noreferrer'>",
-                "10.1093/bioinformatics/bty331</a>",
-                "); please cite this paper when using MetaBridge in your ",
-                "analyses. We also have a protocol for MetaBridge published ",
-                "in <i>Current Protocols in Bioinformatics</i>. It covers how ",
-                "to prepare data for input to MetaBridge, and includes an ",
-                "example of building a protein-protein interaction network ",
-                "from MetaBridge results using ",
-                "<a href='https://networkanalyst.ca' target='blank' ",
-                "rel='noopener noreferrer'>NetworkAnalyst</a>",
-                ". The article is available at doi: ",
-                "<a href='https://doi.org/10.1002/cpbi.98' target='blank' ",
-                "rel='noopener noreferrer'>10.1002/cpbi.98</a>",
-                ".</p>"
-              )),
+  # Divider
+  nav_item(tagList(
+    div(class = "vr d-none d-sm-flex h-100 mx-sm-2 text-white"),
+    hr(class = "d-lg-none my-2 text-white-50")
+  )),
 
-              p(
-                "The example data used by MetaBridge is based on results from ",
-                "a metabolomics study of pediatric sepsis published by ",
-                "Mickiewicz et al., available ",
-                a(
-                  "here",
-                  href = "https://www.atsjournals.org/doi/full/10.1164/rccm.201209-1726OC",
-                  target = "_blank",
-                  rel = "noopener noreferrer",
-                  .noWS = "after"
-                ),
-                "."
-              ),
-
-              p(
-                "If you encounter any bugs or run into other troubles, please ",
-                "post an issue at the ",
-                a(
-                  "GitHub page",
-                  href = "https://github.com/hancockinformatics/MetaBridgeShiny/issues",
-                  target = "_blank",
-                  rel = "noopener noreferrer",
-                  .noWS = "after"
-                ),
-                ". Be sure to include detailed information on the error you ",
-                "received, and the input you used, if possible."
-              ),
-
-              p("MetaBridge uses the following databases and packages:")
-            ),
-            div(depWrapper(dependencyTibble))
-          )
-        )
-      )
-    ),
-
-
-    # |- Right side items -------------------------------------------------
-
-    nav_spacer(),
-
-    nav_item(a(
-      icon("github"),
-      "GitHub",
-      href = "https://github.com/hancockinformatics/ShinyABCi",
-      target = "_blank",
-      rel = "noopener noreferrer"
-    )),
-
-    # Divider
-    nav_item(tagList(
-      div(class = "vr d-none d-sm-flex h-100 mx-sm-2 text-white"),
-      hr(class = "d-lg-none my-2 text-white-50")
-    )),
-
-    nav_item(metabridgeVersion, style = "color: var(--bs-nav-link-color)")
-  )
+  nav_item(metabridgeVersion, style = "color: var(--bs-nav-link-color)")
 )
 
 
@@ -611,7 +593,7 @@ metabridgeServer <- function(input, output, session) {
     style = "bootstrap",
     options = list(
       scrollX = "100%",
-      scrollY = "60vh",
+      scrollY = "90vh",
       scrollCollapse = TRUE,
       paging  = FALSE,
       dom = "tir"
