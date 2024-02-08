@@ -50,16 +50,6 @@
   }
 }
 
-/* Fix padding for the navbar */
-.container-fluid {
-  padding-left: 0;
-  padding-right: 0;
-}
-.navbar, .tab-content {
-  padding-left: 0;
-  padding-right: 16px;
-}
-
 /* Increase size of the progress bar when uploading files */
 .progress {
   height: 20px;

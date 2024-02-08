@@ -1048,7 +1048,7 @@ metabridgeServer <- function(input, output, session) {
         shinycssloaders::withSpinner(
           ui_element = imageOutput("pathwayView"),
           type = 8,
-          color = bs_get_variables(metabridgeTheme, "blue")
+          color = bs_get_variables(metabridgeTheme, "primary")
         )
       }
     })
