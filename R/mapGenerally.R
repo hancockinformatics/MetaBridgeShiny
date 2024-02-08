@@ -1,7 +1,7 @@
 #' mapMetaCyc
 #'
 #' @param importDF Input data from the user
-#' @param col Selcted column to be used for mapping
+#' @param col Selected column to be used for mapping
 #' @param idType ID type of the selected column
 #'
 #' @return Table of mapped metabolites, done via MetaCyc
@@ -349,11 +349,6 @@ mapKEGG <- function(importDF, col, idType) {
 
   mappingDF <- tryCatch(
     {
-      # The return value in this chunk is the actual value that will be returned
-      # in case there is no condition (e.g. warning or error). You don't need to
-      # state the return value via `return()` as code in the "try" part is not
-      # wrapped insided a function (unlike that for the condition handlers for
-      # warnings and error below)
 
       this <- tibble(
         !!(namedIDtype) := extract2(importDF, col) %>%
