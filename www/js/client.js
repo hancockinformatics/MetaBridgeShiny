@@ -18,3 +18,9 @@ const handlers = {
 $(document).on("shiny:sessioninitialized", () => {
   handlers.lazyLoadPackages(1);
 });
+
+window.onbeforeunload = () => {
+  if (document.getElementById("shiny-disconnected-overlay") === null) {
+    return "Are you sure you want to leave?";
+  }
+};

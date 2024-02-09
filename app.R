@@ -239,9 +239,9 @@ metabridgeUI <- page_navbar(
           strong("Select an ID Type"),
           HTML(
             "<p>MetaBridge supports mapping with HMDB or KEGG metabolite ",
-            "IDs. Please ensure the ID selected here matches the column ",
-            "<b><u>highlighted in blue</u></b> before clicking the <b>",
-            "Proceed to mapping</b> button."
+            "IDs. Once you've uploaded your data, please ensure the ID ",
+            "selected here matches the column <b><u>highlighted in blue",
+            "</u></b> before clicking the <b>Proceed to mapping</b> button."
           ),
           radioButtons(
             inputId = "idType",
