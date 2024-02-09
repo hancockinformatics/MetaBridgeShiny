@@ -340,42 +340,7 @@ metabridgeUI <- page_navbar(
   nav_panel(
     title = "Tutorial",
     value = "tutorialPanel",
-
-    div(
-      class = "mx-2 my-2",
-      div(
-        class = "bg-body-tertiary rounded-3 p-5 mb-4",
-        h1(
-          class = "display-3 fw-bold text-body-emphasis",
-          "Tutorial"
-        ),
-        h3("Network-based integrative analysis with MetaBridge"),
-        div(
-          class = "mx-auto fs-4 text-muted",
-          p(
-            "This page covers a sample workflow for integrating your ",
-            "metabolomics data with transcriptomics or proteomics data ",
-            "using network-based approaches. You can also view this ",
-            "information on our ",
-            a(
-              "GitHub page",
-              href = paste0(
-                "https://github.com/hancockinformatics/MetaBridgeShiny/blob/",
-                "master/tutorial/tutorial.md"
-              ),
-              target = "_blank",
-              rel = "noopener noreferrer",
-              .noWS = "after"
-            ),
-            "."
-          )
-        )
-      ),
-      div(
-        class = "container tutorial",
-        includeMarkdown("tutorial/tutorial.md")
-      )
-    )
+    includeHTML("www/tutorial/tutorial.html")
   ),
 
 
@@ -428,7 +393,7 @@ metabridgeUI <- page_navbar(
               "Mickiewicz et al., available ",
               a(
                 "here",
-                href = "https://www.atsjournals.org/doi/full/10.1164/rccm.201209-1726OC",
+                href = "https://atsjournals.org/doi/full/10.1164/rccm.201209-1726OC",
                 target = "_blank",
                 rel = "noopener noreferrer",
                 .noWS = "after"

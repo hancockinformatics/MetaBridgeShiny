@@ -1,0 +1,214 @@
+<!DOCTYPE HTML>
+
+<div class="mx-2 my-2">
+  <div class="bg-body-tertiary rounded-3 p-5 mb-4">
+    <h1 class="display-3 fw-bold text-body-emphasis">Tutorial</h1>
+    <h3>Network-based integrative analysis with MetaBridge</h3>
+    <div class="mx-auto fs-4 text-muted">
+      <p>
+        This page covers a sample workflow for integrating your metabolomics
+        data with transcriptomics or proteomics data using network-based
+        approaches.
+      </p>
+    </div>
+  </div>
+
+
+  <div class="container tutorial">
+    <h2>1. Metabolite Preprocessing (Optional)</h2>
+    <p>
+      To get started with MetaBridge, you'll need to upload your list of
+      compounds as HMDB or KEGG IDs. If you are starting with raw metabolomics
+      data (i.e. compounds names, such as glucose), you will need to preprocess
+      your metabolites with your method of choice to obtain their corresponding
+      HMDB or KEGG IDs. We recommend <a href="http://metaboanalyst.ca"
+      target="_blank" rel="noopener noreferrer">MetaboAnalyst</a> for metabolite
+      preprocessing and ID mapping, available by selecting  "Other Utilities"
+      then "Compound ID Conversion."
+    </p>
+    <img src="tutorial/serve/s0.png">
+
+
+    <h2>MetaBridge mapping</h2>
+    <h3>2a. Upload metabolites</h3>
+    <p>
+      Navigate to <a href="https://metabridge.org" target="_blank"
+      rel="noopener noreferrer">MetaBridge</a> and upload the file containing
+      your metabolite IDs. Then, select the column to be used in the mapping and
+      the matching ID type (HMDB or KEGG). We'll use KEGG IDs for this tutorial.
+    </p>
+    <img src="tutorial/serve/s1.png">
+
+
+    <h3>2b. Map metabolites</h3>
+    <p>
+      Choose a database to map against, and view your mapping results. Here,
+      we've mapped our metabolites via KEGG, to maximize the number of genes
+      MetaBridge returns.
+    </p>
+    <img src="tutorial/serve/s2.png">
+
+
+    <h3>2c. Download Results</h3>
+    <p>
+      Use the button to download your full mapping results from MetaBridge - the
+      table below shows the first few rows from our mapped data.
+    </p>
+    <table class="table table-bordered table-hover">
+      <thead class="table-primary">
+        <tr>
+          <th>Compound</th>
+          <th>KEGG</th>
+          <th>HMDB</th>
+          <th>Enzyme</th>
+          <th>Enzyme Name</th>
+          <th>Gene Name</th>
+          <th>Entrez</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Urea</td>
+          <td>C00086</td>
+          <td>HMDB00294</td>
+          <td>3.5.3.1</td>
+          <td>arginase</td>
+          <td>ARG1</td>
+          <td>383</td>
+        </tr>
+        <tr>
+          <td>Urea</td>
+          <td>C00086</td>
+          <td>HMDB00294</td>
+          <td>3.5.3.1</td>
+          <td>arginase</td>
+          <td>ARG2</td>
+          <td>384</td>
+        </tr>
+        <tr>
+          <td>Urea</td>
+          <td>C00086</td>
+          <td>HMDB00294</td>
+          <td>3.5.3.4</td>
+          <td>allantoicase</td>
+          <td>ALLC</td>
+          <td>55821</td>
+        </tr>
+        <tr>
+          <td>Urea</td>
+          <td>C00086</td>
+          <td>HMDB00294</td>
+          <td>3.5.3.11</td>
+          <td>agmatinase</td>
+          <td>AGMAT</td>
+          <td>79814</td>
+        </tr>
+        <tr>
+          <td>Pyruvate</td>
+          <td>C00022</td>
+          <td>HMDB00243</td>
+          <td>1.1.1.27</td>
+          <td>L-lactate dehydrogenase</td>
+          <td>LDHAL6A</td>
+          <td>160287</td>
+        </tr>
+      </tbody>
+    </table>
+
+
+    <h2>3. NetworkAnalyst</h2>
+    <h3>3a. Upload mapped genes</h3>
+    <p>
+      Visit <a href="https://networkanalyst.ca)" target="_blank"
+      rel="noopener noreferrer">NetworkAnalyst</a> and select [Gene List Input]
+      from among the possible options.
+    </p>
+    <img src="tutorial/serve/s3.png">
+
+    <p>Follow the steps below to upload your gene lists to NetworkAnalyst:</p>
+    <ul>
+      <li>Paste in the genes that you received from MetaBridge</li>
+      <li>
+        Repeat this for each gene or protein list you wish to integrate,
+        separating each list with a `//` as instructed
+      </li>
+    </ul>
+    <img src="tutorial/serve/s45.png">
+
+    <p>
+      For this tutorial, we've uploaded two gene lists - our mapped metabolites
+      from MetaBridge, and the
+      <a href="https://sciencedirect.com/science/article/pii/S235239641400005X"
+      target="_blank" rel="noopener noreferrer">endotoxin tolerance
+      signature</a>.
+    </p>
+    <p>
+      Once you have uploaded all of your gene/protein lists, select "Homo
+      sapiens" as the organism, and "Official gene symbol" as the ID type.
+    </p>
+    <p>
+      Next, click [Proceed], then choose [Generic PPI] which will open a dialog
+      box. At the top, select "Union of all lists" to create the combined
+      network, then choose the literature-curated IMEX Interactome as your
+      protein-protein interaction (PPI) database. Click [OK], then [Proceed]
+      to continue.
+    </p>
+    <img src="tutorial/serve/s6.png">
+
+
+    <h3>3b. Network creation</h3>
+    <p>
+      Now, a PPI network will be generated based on the data you have uploaded.
+      Depending on the size of the dataset you have uploaded, you may wish to
+      choose a different network type from the list of options on the lefthand
+      side. Generally, we recommend using a minimum-connected PPI network.
+      However, if your data are particularly sparse, you may need to use
+      first-order interaction networks, whereas if your dataset is particularly
+      large, you may wish to use a zero-order interaction network. Typically,
+      we aim for a network containing a few hundred nodes. Try the different
+      options and see how the number of nodes/edges change, then pick the
+      appropriate type and [Proceed] to visualization.
+    </p>
+    <img src="tutorial/serve/s7.png">
+    <p>
+      Below, you will find an example of each minimum-connected network
+      generated from the two individual gene lists, and the combined list.
+    </p>
+    <ol>
+      <li>
+        Minimum-connected PPI network from our MetaBridge-mapped metabolites.
+      </li>
+      <img src="tutorial/serve/s8.png">
+      <li>
+        Minimum-connected PPI network from the endotoxin tolerance signature.
+      </li>
+      <img src="tutorial/serve/s9.png">
+      <li>
+        Minimum-connected PPI network from combined gene list.
+      </li>
+      <img src="tutorial/serve/s10.png">
+    </ol>
+
+
+    <h3>3c. Analyze the Networks</h3>
+    <p>
+      For each network you create, you can extract various information and
+      perform a few different analyses. For example, you can use the [Function
+      Explorer] panel on the right side to perform pathway enrichment on the
+      current network using a number of databases, such as Reactome or KEGG.
+      On the lefthand side, you can use the [Node Explorer] to view information
+      about individual nodes of the network, and [Save] the entire node list as
+      a CSV file for further analysis outside of NetworkAnalyst.
+    </p>
+    <p>
+      You can also tweak the network appearance in a number of ways. By
+      increasing the node size, more labels will be added to the nodes in your
+      network. Or you can paste in your original lists to the [Batch Selection]
+      panel on the right, and colour-code each node of the network based on its
+      original data source (e.g. from metabolomics or transcriptomics). Then,
+      you can download your network as an image (e.g. PNG or SVG) or network
+      file (e.g. graphML or JSON).
+    </p>
+    <img src="tutorial/serve/s11.png">
+  </div>
+</div>
