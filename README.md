@@ -12,6 +12,7 @@ available data from [MetaCyc](https://metacyc.org/) and
 pathways and reactions in which the metabolite is involved.
 
 ## Usage
+
 MetaBridge supports integrative multi-omic analyses by identifying the enzymes
 that directly interact with your metabolites of interest, providing genes which
 may then be easily integrated with results from other omics methods. An example
@@ -23,19 +24,22 @@ integrative analysis pipeline using
 ![](www/img/metabridge_workflow.svg)
 
 ## Tutorial
+
 To learn how to use MetaBridge as part of a network-based integrative analysis
-workflow, please read our [tutorial](./tutorial/tutorial.md). For a more
-detailed guide on using MetaBridge you can read our
-[publication](https://doi.org/10.1002/cpbi.98) in *Current Protocols in
-Bioinformatics*.
+workflow, please read the tutorial provided at 
+[MetaBridge](https://metabridge.org). For a more detailed guide on using 
+MetaBridge you can read our [publication](https://doi.org/10.1002/cpbi.98) in
+*Current Protocols in Bioinformatics*.
 
 ## Help & Bug Reporting
+
 If you encounter problems when using MetaBridge, please create an 
 [issue](https://github.com/hancockinformatics/MetaBridgeShiny/issues) on our
 Github page, including detailed information on your input and any errors or 
 messages you received (screenshots encouraged).
 
 ## Publications
+
 When using MetaBridge for your own analysis, please cite one of the following:
 
 * [MetaBridge: enabling network-based integrative analysis via direct protein
@@ -46,15 +50,18 @@ When using MetaBridge for your own analysis, please cite one of the following:
   Bioinformatics*, 2020.
 
 ## Authors
+
 MetaBridge was developed by Samuel Hinshaw, as part of his work at the [REW
 Hancock Laboratory](http://cmdr.ubc.ca/bobh/) at the University of British
 Columbia. Further updates and ongoing maintenance are done by Travis Blimkie, a
 current member of the Hancock Lab.
 
 ## License
+
 Source code for MetaBridge is available under  [GNU General Public License
 v3](https://github.com/hancockinformatics/MetaBridgeShiny/blob/master/LICENSE).
 
 ## Versioning
+
 This app utilizes SemVer as outlined
 [here](https://semver.org/spec/v2.0.0.html).
