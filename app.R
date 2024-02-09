@@ -16,7 +16,7 @@ metabridgeVersion <- gsub(
 )
 
 # Dependencies
-dependencyTibble <- tibble(
+dependencyTable <- tibble(
   link = c(
     "https://metacyc.org/",
     "https://www.genome.jp/kegg/",
@@ -417,7 +417,7 @@ metabridgeUI <- page_navbar(
 
             p("MetaBridge uses the following databases and packages:")
           ),
-          div(depWrapper(dependencyTibble))
+          div(wrapList(dependencyTable))
         )
       )
     )
@@ -838,7 +838,7 @@ metabridgeServer <- function(input, output, session) {
               inputId = "visualizeButton",
               class = "btn-primary",
               icon = icon("eye"),
-              label = "Visualize",
+              label = "Visualize with Pathview",
               width = "100%"
             )
           } else {

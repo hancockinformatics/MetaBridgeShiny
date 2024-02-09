@@ -23,7 +23,7 @@ cleanReactions <- function(metabTable) {
 }
 
 
-#' depEntry
+#' listItem
 #'
 #' @param link Link to a website
 #' @param name Name for the link
@@ -31,7 +31,7 @@ cleanReactions <- function(metabTable) {
 #'
 #' @return HTML wrapping up a dependency entry
 #'
-depEntry <- function(link, name, description) {
+listItem <- function(link, name, description) {
   tagList(
     tags$dt(
       a(
@@ -46,13 +46,13 @@ depEntry <- function(link, name, description) {
 }
 
 
-#' depWrapper
+#' wrapList
 #'
 #' @param x A tibble of dependencies to wrap up into the UI
 #'
 #' @return A div which splits the dependency entries into two columns
 #'
-depWrapper <- function(x) {
+wrapList <- function(x) {
   col_1 <- seq(1, ceiling(nrow(x) / 2))
   col_2 <- seq(max(col_1) + 1, nrow(x))
 
@@ -62,11 +62,11 @@ depWrapper <- function(x) {
       style = "font-size: 1.1em; font-weight: 300",
       div(
         class = "col",
-        tags$dl(purrr::pmap(x[col_1, ], depEntry))
+        tags$dl(purrr::pmap(x[col_1, ], listItem))
       ),
       div(
         class = "col",
-        tags$dl(purrr::pmap(x[col_2, ], depEntry))
+        tags$dl(purrr::pmap(x[col_2, ], listItem))
       )
     )
   )
