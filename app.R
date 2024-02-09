@@ -7,7 +7,11 @@ suppressPackageStartupMessages({
   library(dplyr)
 })
 
-metabridgeTheme <- bs_theme(version = 5, preset = "flatly")
+metabridgeTheme <- bs_theme(
+  version = 5,
+  preset = "flatly",
+  "bslib-sidebar-bg" = "white"
+)
 
 metabridgeVersion <- gsub(
   x = grep("^Version\\: ", readLines("DESCRIPTION"), value = TRUE),
@@ -182,75 +186,78 @@ metabridgeUI <- page_navbar(
     value = "uploadPanel",
     layout_sidebar(
       sidebar = sidebar(
-        title = "Upload your metabolites",
         class = "d-flex",
         width = "500px",
         open = NA,
 
-        HTML(paste0(
-          "<p>Select a plain-text spreadsheet (a file ending in csv, txt, or ",
-          "tsv) containing your metabolites in a single column. You can ",
-          "also try our example data using",
-          tooltip(
-            actionLink(
-              inputId = "tryExamples",
-              label = "this link",
-              .noWS = "after"
-            ),
-            "Load an example dataset from MetaboAnalyst"
-          ), ".</p>"
-        )),
+        wellPanel(
+          h1(class = "sidebar-title", "Upload your metabolites"),
+          HTML(paste0(
+            "<p class='mt-2'>Select a plain-text spreadsheet (a file ending ",
+            "in csv, txt, or tsv) containing your metabolites in a single ",
+            "column. You can also try our example data using",
+            tooltip(
+              actionLink(
+                inputId = "tryExamples",
+                label = "this link",
+                .noWS = "after"
+              ),
+              "Load an example dataset from MetaboAnalyst"
+            ), ".</p>"
+          )),
 
-        fileInput(
-          inputId = "metaboliteUpload",
-          label = NULL,
-          buttonLabel = list(icon("upload"), "Browse..."),
-          accept = c("csv", ".csv", "tsv", ".tsv", "txt", ".txt")
+          fileInput(
+            inputId = "metaboliteUpload",
+            label = NULL,
+            buttonLabel = list(icon("upload"), "Browse..."),
+            accept = c("csv", ".csv", "tsv", ".tsv", "txt", ".txt")
+          ),
+
+          strong("Does your data contain column names?"),
+          div(
+            class = "mt-1",
+            checkboxInput(
+              inputId = "header",
+              label = "My data has a header",
+              value = TRUE
+            )
+          ),
+
+          strong("How is your data separated?"),
+          div(
+            class = "mt-1",
+            radioButtons(
+              inputId = "sep",
+              label = NULL,
+              choices = c(Comma = ",", Tab = "\t", Semicolon = ";"),
+              selected = ","
+            )
+          )
         ),
 
-        strong("Does your data contain column names?"),
-        checkboxInput(
-          inputId = "header",
-          label = "My data has a header",
-          value = TRUE
-        ),
-
-        br(),
-
-        strong("How is your data separated?"),
-        radioButtons(
-          inputId = "sep",
-          label = NULL,
-          choices = c(Comma = ",", Tab = "\t", Semicolon = ";"),
-          selected = ","
-        ),
-
-        hr(),
-
-        strong("Select an ID Type"),
-        HTML(
-          "<p>MetaBridge supports mapping with HMDB or KEGG metabolite ",
-          "IDs. Please ensure the ID selected here matches the column ",
-          "<b><u>highlighted in blue</u></b> before clicking the <b>",
-          "Proceed to mapping</b> button."
-        ),
-        radioButtons(
-          inputId = "idType",
-          label = NULL,
-          choices = c("HMDB", "KEGG"),
-          selected = character(0)
-        ),
-
-        br(),
-
-        disabled(
-          actionButton(
-            inputId = "continueToMap",
-            class = "btn-primary",
-            icon = icon("check"),
-            label = "Proceed to mapping",
-            width = "100%"
-          ) %>% tooltip("Continue to the mapping step")
+        wellPanel(
+          strong("Select an ID Type"),
+          HTML(
+            "<p>MetaBridge supports mapping with HMDB or KEGG metabolite ",
+            "IDs. Please ensure the ID selected here matches the column ",
+            "<b><u>highlighted in blue</u></b> before clicking the <b>",
+            "Proceed to mapping</b> button."
+          ),
+          radioButtons(
+            inputId = "idType",
+            label = NULL,
+            choices = c("HMDB", "KEGG"),
+            selected = character(0)
+          ),
+          disabled(
+            actionButton(
+              inputId = "continueToMap",
+              class = "btn-primary",
+              icon = icon("check"),
+              label = "Proceed to mapping",
+              width = "100%"
+            ) %>% tooltip("Continue to the mapping step")
+          )
         )
       ),
       uiOutput("uploadedTablePanel")
@@ -265,42 +272,45 @@ metabridgeUI <- page_navbar(
     value = "mapPanel",
     layout_sidebar(
       sidebar = sidebar(
-        title = "Map your metabolites",
         id = "mapPanelSidebar",
         class = "d-flex",
         width = "500px",
         open = NA,
 
-        p(
-          "Select one of the database options below. MetaCyc has higher ",
-          "quality annotations, but KEGG may yield more hits, and will ",
-          "also allow you to visualize your results with ",
-          a(
-            "Pathview",
-            href = "https://bioconductor.org/packages/release/bioc/html/pathview.html",
-            target = "_blank",
-            rel = "noopener noreferrer",
-            .noWS = "after"
+        wellPanel(
+          h1(class = "sidebar-title", "Map your metabolites"),
+          p(
+            class = "mt-2",
+            "Select one of the database options below. MetaCyc has higher ",
+            "quality annotations, but KEGG may yield more hits, and will ",
+            "also allow you to visualize your results with ",
+            a(
+              "Pathview",
+              href = "https://bioconductor.org/packages/release/bioc/html/pathview.html",
+              target = "_blank",
+              rel = "noopener noreferrer",
+              .noWS = "after"
+            ),
+            "."
           ),
-          "."
-        ),
 
-        radioButtons(
-          inputId = "dbChosen",
-          label = NULL,
-          choices = c("MetaCyc", "KEGG"),
-          selected = "MetaCyc"
-        ),
+          radioButtons(
+            inputId = "dbChosen",
+            label = NULL,
+            choices = c("MetaCyc", "KEGG"),
+            selected = "MetaCyc"
+          ),
 
-        disabled(
-          actionButton(
-            inputId = "mapButton",
-            class = "btn-info",
-            icon = icon("arrows-alt"),
-            label = "Map metabolites",
-            width = 200
-          ) %>%
-            tooltip("Map your metabolites to the selected database")
+          disabled(
+            actionButton(
+              inputId = "mapButton",
+              class = "btn-info",
+              icon = icon("arrows-alt"),
+              label = "Map metabolites",
+              width = 200
+            ) %>%
+              tooltip("Map your metabolites to the selected database")
+          )
         ),
         uiOutput("downloadPanel"),
         uiOutput("continueToViz")
@@ -320,15 +330,19 @@ metabridgeUI <- page_navbar(
     value = "vizPanel",
     layout_sidebar(
       sidebar = sidebar(
-        title = "Visualize with Pathview",
         class = "sidebar d-flex",
         width = "500px",
         open = NA,
-        p(
-          "To visualize pathways, upload data, and map the metabolites ",
-          "with KEGG. Then you can return here to see the pathway images."
-        ),
-        uiOutput("pathwayPanel")
+
+        wellPanel(
+          h1(class = "sidebar-title", "Visualize with Pathview"),
+          p(
+            class = "mt-2",
+            "To visualize pathways, upload data, and map the metabolites ",
+            "with KEGG. Then you can return here to see the pathway images."
+          ),
+          uiOutput("pathwayPanel")
+        )
       ),
       uiOutput("vizPanelUI")
     )
@@ -558,7 +572,7 @@ metabridgeServer <- function(input, output, session) {
     style = "bootstrap",
     options = list(
       scrollX = "100%",
-      scrollY = "90vh",
+      scrollY = "67vh",
       scrollCollapse = TRUE,
       paging  = FALSE,
       dom = "tir"
@@ -768,8 +782,7 @@ metabridgeServer <- function(input, output, session) {
 
   output$downloadPanel <- renderUI({
     if (!is.null(mappedMetabolites())) {
-      tagList(
-        hr(),
+      wellPanel(
         strong("Download your results"),
         p(
           "Use the button below to download your full mapping results as ",
@@ -824,8 +837,7 @@ metabridgeServer <- function(input, output, session) {
       if (is.null(databaseChosen()) | databaseChosen() == "MetaCyc") {
         return(NULL)
       } else {
-        tagList(
-          hr(),
+        wellPanel(
           strong("Visualize your results"),
           HTML(
             "<p>If you chose <b>KEGG</b> as the database to map your ",
