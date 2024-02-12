@@ -31,8 +31,8 @@ dependencyTable <- tibble(
     "https://doi.org/10.1093/bioinformatics/btt285"
   ),
   name = c(
-    "MetaCyc v26",
-    "KEGG Release 105",
+    "MetaCyc v27",
+    "KEGG Release 109",
     "Shiny",
     "shinycssloaders",
     "shinyjs",
