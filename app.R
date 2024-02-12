@@ -234,31 +234,7 @@ metabridgeUI <- page_navbar(
             )
           )
         ),
-
-        wellPanel(
-          strong("Select an ID Type"),
-          HTML(
-            "<p>MetaBridge supports mapping with HMDB or KEGG metabolite ",
-            "IDs. Once you've uploaded your data, please ensure the ID ",
-            "selected here matches the column <b><u>highlighted in blue",
-            "</u></b> before clicking the <b>Proceed to mapping</b> button."
-          ),
-          radioButtons(
-            inputId = "idType",
-            label = NULL,
-            choices = c("HMDB", "KEGG"),
-            selected = character(0)
-          ),
-          disabled(
-            actionButton(
-              inputId = "continueToMap",
-              class = "btn-primary",
-              icon = icon("check"),
-              label = "Proceed to mapping",
-              width = "100%"
-            ) %>% tooltip("Continue to the mapping step")
-          )
-        )
+        uiOutput("idTypePanel")
       ),
       uiOutput("uploadedTablePanel")
     )
@@ -589,6 +565,37 @@ metabridgeServer <- function(input, output, session) {
 
 
   # Column selection ------------------------------------------------------
+
+  output$idTypePanel <- renderUI({
+    if (!is.null(metaboliteObject())) {
+      wellPanel(
+        strong("Select an ID Type"),
+        HTML(
+          "<p>MetaBridge supports mapping with HMDB or KEGG metabolite ",
+          "IDs. Once you've uploaded your data, please ensure the ID ",
+          "selected here matches the column <b><u>highlighted in blue",
+          "</u></b> before clicking the <b>Proceed to mapping</b> button."
+        ),
+        radioButtons(
+          inputId = "idType",
+          label = NULL,
+          choices = c("HMDB", "KEGG"),
+          selected = character(0)
+        ),
+        disabled(
+          actionButton(
+            inputId = "continueToMap",
+            class = "btn-primary",
+            icon = icon("check"),
+            label = "Proceed to mapping",
+            width = "100%"
+          ) %>% tooltip("Continue to the mapping step")
+        )
+      )
+    } else {
+      NULL
+    }
+  })
 
   observeEvent({
     input$uploadedDataTable_columns_selected
