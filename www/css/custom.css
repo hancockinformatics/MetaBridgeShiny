@@ -77,14 +77,10 @@
   margin-right: 24px;
   margin-bottom: 24px;
 }
-.shiny-progress-notification .progress-text .progress-message {
-  font-size: 110%;
-  font-weight: normal;
-  color: var(--bs-secondary-text-emphasis);
-}
 .shiny-notification-close {
   font-size: 32px;
   padding-right: 4px;
+  color: var(--bs-white);
 }
 .shiny-notification {
   background: var(--bs-gray-200);
