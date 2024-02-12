@@ -19,7 +19,7 @@ visualizePathview <- function(pathway, genes, cpd) {
   })
 
   filename_original <- paste0("hsa", pathway, ".pathview.png")
-  filename_new <- paste0("pathways_results/", filename_original)
+  filename_new <- paste0("pathways/results/", filename_original)
 
   file.rename(from = filename_original, to = filename_new)
   message("INFO: Pathway file was renamed/moved.\n")
