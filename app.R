@@ -910,7 +910,16 @@ metabridgeServer <- function(input, output, session) {
   output$pathwayPanel <- renderUI({
 
     if (!is.null(mappingObject())) {
-      if (nrow(selectedRowAttrs$pathwaysOfSelectedCompound) == 0) {
+      if (is.null(selectedRowAttrs$selectedCompound)) {
+        div(
+          strong("No compound selected"),
+          p(
+            "You must select a compound in the",
+            actionLink(inputId = "back_to_map", "Map tab"),
+            "to see its pathways."
+          )
+        )
+      } else if (nrow(selectedRowAttrs$pathwaysOfSelectedCompound) == 0) {
         div(
           strong(paste0(
             "Pathways for ",
@@ -956,23 +965,12 @@ metabridgeServer <- function(input, output, session) {
     }
   })
 
+  observeEvent(input$back_to_map, nav_select("navbarLayout", selected = "mapPanel"))
+
 
   # Render Pathview image -------------------------------------------------
 
   output$pathwayView <- renderImage({
-    if (is.null(input$pathwaysPicked)) {
-      return(
-        list(
-          src = "./logo_background.svg",
-          class = "card-img-top",
-          contentType = "image/svg",
-          width = 512,
-          height = 512,
-          alt = "pathway placeholder"
-        )
-      )
-    }
-
     pathwayNameIDcol <- as.name("namedPway")
     selectedPathway <- quo(input$pathwaysPicked)
 
@@ -996,7 +994,9 @@ metabridgeServer <- function(input, output, session) {
   }, deleteFile = TRUE)
 
   observeEvent(input$pathwaysPicked, {
+
     output$vizPanelUI <- renderUI({
+
       if (is.null(databaseChosen())) {
         tagList(
           h3(class = "mb-4", "Pathway view"),
