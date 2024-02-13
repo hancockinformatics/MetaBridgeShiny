@@ -309,13 +309,13 @@ metabridgeUI <- page_navbar(
         class = "sidebar d-flex",
         width = "500px",
         open = NA,
-
         wellPanel(
           h1(class = "sidebar-title", "Visualize with Pathview"),
           p(
             class = "mt-2",
-            "To visualize pathways, upload data, and map the metabolites ",
-            "with KEGG. Then you can return here to see the pathway images."
+            "To visualize pathways, upload some data, and map the metabolites ",
+            "with the KEGG database. Then you can return here to see the ",
+            "pathway images."
           ),
           uiOutput("pathwayPanel")
         )
@@ -915,57 +915,59 @@ metabridgeServer <- function(input, output, session) {
   # Pathway selection UI --------------------------------------------------
 
   output$pathwayPanel <- renderUI({
-
     if (!is.null(mappingObject())) {
-      if (is.null(selectedRowAttrs$selectedCompound)) {
-        div(
-          strong("No compound selected"),
-          p(
-            "You must select a compound in the",
-            actionLink(inputId = "back_to_map", "Map tab"),
-            "to see its pathways."
+
+      if (databaseChosen() == "KEGG") {
+
+        if (is.null(selectedRowAttrs$selectedCompound)) {
+          tagList(
+            strong("No compound selected"),
+            p(
+              "You must select a compound in the", map_tab, "to see its pathways."
+            )
           )
-        )
-      } else if (nrow(selectedRowAttrs$pathwaysOfSelectedCompound) == 0) {
-        div(
-          strong(paste0(
-            "Pathways for ",
-            selectedRowAttrs$selectedCompoundName
-          )),
-          p("No pathways found for this compound.")
-        )
-      } else if (databaseChosen() == "KEGG") {
-        div(
-          strong(paste0(
-            "Pathways for ",
-            stringr::str_to_title(selectedRowAttrs$selectedCompoundName)
-          )),
-          HTML(
-            "<p>Note that each pathway may take some time to process. For each ",
-            "pathway, only the compound selected is shown, but <b>ALL</b> ",
-            "mapped genes are highlighted.</p>"
-          ),
-          selectInput(
-            inputId = "pathwaysPicked",
-            label = NULL,
-            choices = selectedRowAttrs$pathwaysOfSelectedCompound$namedPway
+        } else if (nrow(selectedRowAttrs$pathwaysOfSelectedCompound) == 0) {
+          tagList(
+            strong(paste0(
+              "Pathways for ",
+              stringr::str_to_title(selectedRowAttrs$selectedCompoundName)
+            )),
+            p("No pathways were found for this compound.")
           )
-        )
+        } else {
+          tagList(
+            strong(paste0(
+              "Pathways for ",
+              stringr::str_to_title(selectedRowAttrs$selectedCompoundName)
+            )),
+            HTML(
+              "<p>Note that each pathway may take some time to process. For ",
+              "each pathway, only the compound selected is shown, but ",
+              "<b>ALL</b> mapped genes are highlighted.</p>"
+            ),
+            selectInput(
+              inputId = "pathwaysPicked",
+              label = NULL,
+              choices = selectedRowAttrs$pathwaysOfSelectedCompound$namedPway
+            )
+          )
+        }
       } else if (databaseChosen() == "MetaCyc") {
-        div(
-          strong(paste0(
-            "Pathways for ",
-            selectedRowAttrs$selectedCompoundName
-          )),
-          HTML(
-            "<p>Note that each pathway may take some time to process. For each ",
-            "pathway, only the compound selected is shown, but <b>ALL</b> ",
-            "mapped genes are highlighted.</p>"
-          ),
-          selectInput(
-            inputId = "pathwaysPicked",
-            label = NULL,
-            choices = selectedRowAttrs$pathwaysOfSelectedCompound$pathwayName
+        tagList(
+          strong("Mapping database error"),
+          p(
+            "You must map with the KEGG database to enable visualization ",
+            "with Pathview. Click to return to the ",
+            actionLink(inputId = "back_to_map", "Map tab", .noWS = "after"),
+            "."
+          )
+        )
+      } else {
+        tagList(
+          strong("Pathway mapping error"),
+          p(
+            "Something went wrong with the metabolite or pathway mapping. ",
+            "Please check your inputs and try again."
           )
         )
       }
