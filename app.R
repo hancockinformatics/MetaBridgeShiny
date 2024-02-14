@@ -60,13 +60,10 @@ metabridgeUI <- page_navbar(
   bg = bs_get_variables(metabridgeTheme, "primary"),
   inverse = FALSE,
   header = tags$head(
+    useShinyjs(),
     tags$script(src = "js/client.js"),
-    tags$link(rel = "stylesheet", type = "text/css", href = "css/custom.css"),
-    tags$link(
-      rel = "icon",
-      href = "img/favicon-32x32.png"
-    ),
-    useShinyjs()
+    tags$link(rel = "stylesheet", href = "css/custom.css"),
+    tags$link(rel = "icon", href = "img/favicon.png")
   ),
 
   nav_item(HTML("<img src='img/logo_white.svg' alt='' height='28'>")),
@@ -257,15 +254,13 @@ metabridgeUI <- page_navbar(
           h1(class = "sidebar-title", "Map your metabolites"),
           p(
             class = "mt-2",
-            "Select one of the database options below. MetaCyc has higher ",
-            "quality annotations, but KEGG may yield more hits, and will ",
-            "also allow you to visualize your results with ",
+            "Select one of the databases below. MetaCyc has higher quality ",
+            "annotations, but KEGG may yield more hits, and will also allow ",
+            "you to visualize your results with ",
             a(
               "Pathview",
-              href = "https://bioconductor.org/packages/release/bioc/html/pathview.html",
-              target = "_blank",
-              rel = "noopener noreferrer",
-              .noWS = "after"
+              href = "https://bioconductor.org/packages/pathview",
+              target = "_blank", rel = "noopener noreferrer", .noWS = "after"
             ),
             "."
           ),
@@ -554,9 +549,6 @@ metabridgeServer <- function(input, output, session) {
       dom = "tir"
     )
   )
-
-
-  # Output input table view -----------------------------------------------
 
   output$uploadedTablePanel <- renderUI(div(
     uiOutput("uploadSuccess"),
@@ -861,13 +853,18 @@ metabridgeServer <- function(input, output, session) {
               width = "100%"
             )
           } else {
-            disabled(actionButton(
-              inputId = "visualizeButton",
-              class = "btn-primary",
-              icon = icon("eye"),
-              label = "Visualize with Pathview",
-              width = "100%"
-            ) %>% tooltip("Select a metabolite from the summary table to visualize"))
+            disabled(
+              actionButton(
+                inputId = "visualizeButton",
+                class = "btn-primary",
+                icon = icon("eye"),
+                label = "Visualize with Pathview",
+                width = "100%"
+              ) %>%
+                tooltip(
+                  "Select a metabolite from the summary table to visualize"
+                )
+            )
           }
         )
       }
@@ -914,6 +911,8 @@ metabridgeServer <- function(input, output, session) {
 
   # Pathway selection UI --------------------------------------------------
 
+  map_tab <- actionLink(inputId = "back_to_map", "Map tab", .noWS = "after")
+
   output$pathwayPanel <- renderUI({
     if (!is.null(mappingObject())) {
 
@@ -923,7 +922,7 @@ metabridgeServer <- function(input, output, session) {
           tagList(
             strong("No compound selected"),
             p(
-              "You must select a compound in the", map_tab, "to see its pathways."
+              "You must select a compound in the", map_tab, " to see its pathways."
             )
           )
         } else if (nrow(selectedRowAttrs$pathwaysOfSelectedCompound) == 0) {
@@ -957,9 +956,7 @@ metabridgeServer <- function(input, output, session) {
           strong("Mapping database error"),
           p(
             "You must map with the KEGG database to enable visualization ",
-            "with Pathview. Click to return to the ",
-            actionLink(inputId = "back_to_map", "Map tab", .noWS = "after"),
-            "."
+            "with Pathview. Click to return to the ", map_tab, "."
           )
         )
       } else {
