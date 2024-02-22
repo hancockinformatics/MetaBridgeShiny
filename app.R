@@ -65,7 +65,6 @@ metabridgeUI <- page_navbar(
     tags$link(rel = "stylesheet", href = "css/custom.css"),
     tags$link(rel = "icon", href = "img/favicon.png")
   ),
-
   nav_item(HTML("<img src='img/logo_white.svg' alt='' height='28'>")),
 
 
@@ -458,15 +457,15 @@ metabridgeServer <- function(input, output, session) {
 
   observeEvent(
     input$getStarted,
-    nav_select(id = "navbarLayout", selected = "uploadPanel")
+    nav_select("navbarLayout", selected = "uploadPanel")
   )
   observeEvent(
     input$tutorial,
-    nav_select(id = "navbarLayout", selected = "tutorialPanel")
+    nav_select("navbarLayout", selected = "tutorialPanel")
   )
   observeEvent(
     input$about,
-    nav_select(id = "navbarLayout", selected = "aboutPanel")
+    nav_select("navbarLayout", selected = "aboutPanel")
   )
 
 

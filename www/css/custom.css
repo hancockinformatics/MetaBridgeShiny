@@ -50,6 +50,10 @@
   }
 }
 
+.navbar, .tab-content {
+  padding-right: 16px;
+}
+
 /* Increase size of the progress bar when uploading files */
 .progress {
   height: 20px;
