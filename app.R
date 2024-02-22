@@ -308,9 +308,9 @@ metabridgeUI <- page_navbar(
           h1(class = "sidebar-title", "Visualize with Pathview"),
           p(
             class = "mt-2",
-            "To visualize pathways, upload some data, and map the metabolites ",
-            "with the KEGG database. Then you can return here to see the ",
-            "pathway images."
+            "To visualize pathways, upload some data and map the metabolites ",
+            "with the KEGG database. Select a compound from the results ",
+            "summary table, and you'll be able to visualize its pathways."
           ),
           uiOutput("pathwayPanel")
         )
@@ -887,9 +887,8 @@ metabridgeServer <- function(input, output, session) {
   )
 
   observeEvent(input$mappingSummaryTable_rows_selected, {
-    pathwayMappingAttrs <- generalPathwayMapping(
-      db = databaseChosen(),
-      idType = idTypeChosen(),
+    pathwayMappingAttrs <- mapPathways(
+      idType = "KEGG",
       selectedRow = selectedMetab(),
       summaryTable = mappingSummary$table,
       fullTable = mappingObject()$data
