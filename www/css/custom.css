@@ -101,3 +101,6 @@
   color: var(--bs-white);
   background: var(--bs-danger);
 }
+.shiny-notification-content-action a {
+  color: var(--bs-white);
+}
