@@ -13,10 +13,8 @@ generateSummaryTable <- function(mappingObject, idType, dbChosen) {
   } else if (mappingObject$status == "error" | mappingObject$status == "empty") {
     return(mappingObject$data)
 
-
   # Summary if MetaCyc was the selected database
   } else if (dbChosen == "MetaCyc") {
-
     table <- mappingObject$data %>%
       group_by(Compound, HMDB, KEGG) %>%
       summarize(
@@ -33,7 +31,6 @@ generateSummaryTable <- function(mappingObject, idType, dbChosen) {
 
   # Summary table if KEGG was the chosen database
   } else if (dbChosen == "KEGG") {
-
     table <- mappingObject$data %>%
       group_by(Compound, KEGG, HMDB) %>%
       summarize(
@@ -94,8 +91,6 @@ generateMetaCycMetabTable <- function(
 }
 
 
-
-
 #' generateKEGGMetabTable
 #'
 #' @param mappingObject Full results from the metabolite mapping
@@ -140,8 +135,6 @@ generateKEGGMetabTable <- function(
     return(filteredMappedMetaboliteTable)
   }
 }
-
-
 
 
 #' hyperlinkTable

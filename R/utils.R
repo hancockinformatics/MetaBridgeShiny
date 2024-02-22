@@ -46,32 +46,6 @@ listItem <- function(link, name, description) {
 }
 
 
-#' wrapList
-#'
-#' @param x A tibble of dependencies to wrap up into the UI
-#'
-#' @return A div which splits the dependency entries into two columns
-#'
-wrapList <- function(x) {
-  col_1 <- seq(1, ceiling(nrow(x) / 2))
-  col_2 <- seq(max(col_1) + 1, nrow(x))
-
-  tagList(
-    div(
-      class = "row align-items-start",
-      style = "font-size: 1.1em; font-weight: 300",
-      div(
-        class = "col",
-        tags$dl(purrr::pmap(x[col_1, ], listItem))
-      ),
-      div(
-        class = "col",
-        tags$dl(purrr::pmap(x[col_2, ], listItem))
-      )
-    )
-  )
-}
-
 
 #' mappingAlert
 #'
@@ -157,23 +131,37 @@ matchHMDB <- function(hmdbID) {
 
 #' notEmpty
 #'
-#' @param vector Input vector to be cleaned
+#' @param x Input vector to be cleaned
 #'
-#' @return Vector stripped of any empty values.
+#' @return Vector stripped of any empty values
 #'
-notEmpty <- function(vector) {
-  vector <- vector[!grepl(x = vector, pattern = "^$")]
-  return(vector)
+notEmpty <- function(x) {
+  x[!grepl(x = x, pattern = "^$")]
 }
 
 
-#' notNAs
+#' wrapList
 #'
-#' @param vector Input vector to be cleaned
+#' @param x A tibble of dependencies to wrap up into the UI
 #'
-#' @return Vector stripped of any NA values.
+#' @return A div which splits the dependency entries into two columns
 #'
-notNAs <- function(vector) {
-  vector <- vector[!is.na(vector)]
-  return(vector)
+wrapList <- function(x) {
+  col_1 <- seq(1, ceiling(nrow(x) / 2))
+  col_2 <- seq(max(col_1) + 1, nrow(x))
+
+  tagList(
+    div(
+      class = "row align-items-start",
+      style = "font-size: 1.1em; font-weight: 300",
+      div(
+        class = "col",
+        tags$dl(purrr::pmap(x[col_1, ], listItem))
+      ),
+      div(
+        class = "col",
+        tags$dl(purrr::pmap(x[col_2, ], listItem))
+      )
+    )
+  )
 }

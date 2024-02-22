@@ -14,7 +14,6 @@ mapPathways <- function(
     summaryTable,
     fullTable
 ) {
-
   # To be treated like a variable
   namedIDType <- as.name(idType)
   KEGGname <- as.name("KEGG")
