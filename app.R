@@ -992,7 +992,7 @@ metabridgeServer <- function(input, output, session) {
     return(list(
       src = filename,
       contentType = "image/png",
-      width = 1000,
+      width = "95%",
       alt = paste0("Pathway map of KEGG pathway ", input$pathwaysPicked)
     ))
   }, deleteFile = TRUE)
@@ -1027,7 +1027,7 @@ metabridgeServer <- function(input, output, session) {
         )
       } else {
         shinycssloaders::withSpinner(
-          ui_element = imageOutput("pathwayView"),
+          ui_element = imageOutput("pathwayView", inline = TRUE),
           type = 8,
           color = bs_get_variables(metabridgeTheme, "primary")
         )
