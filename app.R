@@ -10,7 +10,7 @@ suppressPackageStartupMessages({
 metabridgeTheme <- bs_theme(
   version = 5,
   preset = "flatly",
-  "bslib-sidebar-bg" = "white"
+  "bslib-sidebar-bg" = "var(--bs-bg)"
 )
 
 metabridgeVersion <- gsub(
@@ -130,10 +130,10 @@ metabridgeUI <- page_navbar(
             div(
               actionButton(
                 inputId = "getStarted",
-                class = "btn-primary btn-xl px-4 me-md-2 disabled",
+                class = "btn-primary btn-lg px-4 me-md-2 disabled",
                 icon = icon("circle-notch", class = "fa fa-spin"),
-                label = "Loading...",
-                width = "200px"
+                label = "Loading..."
+                # width = "160px"
               ) %>%
                 tooltip(
                   "Let's go!",
@@ -142,9 +142,9 @@ metabridgeUI <- page_navbar(
 
               actionButton(
                 inputId = "tutorial",
-                class = "btn-success btn-xl px-4 me-md-2 btn-hidden",
-                label = "Tutorial",
-                width = "200px"
+                class = "btn-success btn-lg px-4 me-md-2 btn-hidden",
+                label = "Tutorial"
+                # width = "150px"
               ) %>% tooltip(
                 "See how to use MetaBridge for integrative analysis",
                 placement = "bottom"
@@ -152,9 +152,9 @@ metabridgeUI <- page_navbar(
 
               actionButton(
                 inputId = "about",
-                class = "btn-info btn-xl px-4 me-md-2 btn-hidden",
-                label = "About",
-                width = "200px"
+                class = "btn-info btn-lg px-4 me-md-2 btn-hidden",
+                label = "About"
+                # width = "150px"
               ) %>%
                 tooltip(
                   "Learn more about MetaBridge",
@@ -411,6 +411,8 @@ metabridgeUI <- page_navbar(
   # |- Right side items -------------------------------------------------
 
   nav_spacer(),
+
+  nav_item(input_dark_mode()),
 
   nav_item(a(
     icon("github"),
