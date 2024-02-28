@@ -33,11 +33,11 @@ dependencyTable <- tibble(
   name = c(
     "MetaCyc v27",
     "KEGG Release 109",
-    "Shiny",
+    "shiny",
     "shinycssloaders",
     "shinyjs",
-    "Tidyverse",
-    "Pathview"
+    "tidyverse",
+    "pathview"
   ),
   description = c(
     "Curated database for human metabolomic data.",
@@ -417,7 +417,7 @@ metabridgeUI <- page_navbar(
   nav_item(a(
     icon("github"),
     "GitHub",
-    href = "https://github.com/hancockinformatics/ShinyABCi",
+    href = "https://github.com/hancockinformatics/MetaBridgeShiny",
     target = "_blank",
     rel = "noopener noreferrer"
   )),
@@ -953,10 +953,10 @@ metabridgeServer <- function(input, output, session) {
         }
       } else if (databaseChosen() == "MetaCyc") {
         tagList(
-          strong("Mapping database error"),
+          strong("Incorrect mapping database"),
           p(
-            "You must map with the KEGG database to enable visualization ",
-            "with Pathview. Click to return to the ", map_tab, "."
+            "You must use the KEGG database to enable visualization with ",
+            "Pathview; click to return to the ", map_tab, "."
           )
         )
       } else {
