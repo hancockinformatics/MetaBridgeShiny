@@ -399,7 +399,7 @@ metabridgeUI <- page_navbar(
               "received, and the input you used, if possible."
             ),
 
-            p("MetaBridge uses the following databases and packages:")
+            p(strong("MetaBridge uses the following databases and packages:"))
           ),
           div(wrapList(dependencyTable))
         )
