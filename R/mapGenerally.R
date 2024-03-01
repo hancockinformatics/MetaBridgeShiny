@@ -487,11 +487,6 @@ mapKEGG <- function(importDF, col, idType) {
     }
   )
 
-  message("INFO: mapKEGG step 3 (enzymes):")
-  message(paste(
-    "\t", keggEnzymesOfInterest[names(keggEnzymesOfInterest) != "data"], collapse = "\n"
-  ))
-
   # Mapping to genes
   keggGenesOfInterest <- tryCatch(
     {
