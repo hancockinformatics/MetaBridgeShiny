@@ -1,0 +1,110 @@
+/* Remove bottom margin from sidebar titles */
+.bslib-sidebar-layout .sidebar-title {
+  margin-bottom: 0;
+}
+
+/* Allow disabled buttons to have tooltips */
+.btn:disabled, .btn.disabled, fieldset:disabled .btn {
+  pointer-events: auto;
+}
+
+.btn-hidden {
+  display: none;
+}
+
+/* XL-sized buttons */
+.btn-xl, .btn-group-xl > .btn {
+  --bs-btn-padding-y: 0.5rem;
+  --bs-btn-padding-x: 1rem;
+  --bs-btn-font-size: 1.5rem;
+  --bs-btn-border-radius: var(--bs-border-radius-lg);
+}
+
+/* We wrap a div around the content within jumbotron to use a background */
+/* image within the background fill of the hero element */
+@media only screen and (max-width: 767px) {
+  .logoWrapper-home {
+    background: url('../img/logo_background.svg') no-repeat center top;
+    background-size: 900px;
+  }
+
+  .logoWrapper-about {
+    background-image: url('../img/logo_background.svg');
+    background-repeat: no-repeat;
+    background-position: right top;
+    background-size: 900px;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .logoWrapper-home {
+    background: url('../img/logo_background.svg') no-repeat right;
+    background-size: 900px;
+  }
+
+  .logoWrapper-about {
+    background-image: url('../img/logo_background.svg');
+    background-repeat: no-repeat;
+    background-position: right top;
+    background-size: 900px;
+  }
+}
+
+.navbar, .tab-content {
+  padding-right: 16px;
+}
+
+/* Increase size of the progress bar when uploading files */
+.progress {
+  height: 20px;
+}
+.progress .progress-bar {
+  font-size: 15px;
+  line-height: 18px;
+}
+
+/* Make tutorial images responsive */
+.tutorial img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+/* Center tutorial div/column */
+.tutorial {
+  float: none;
+  margin: 0 auto;
+}
+
+/* Customize shiny notifications */
+#shiny-notification-panel {
+  width: 450px;
+  margin-right: 24px;
+  margin-bottom: 24px;
+}
+.shiny-notification-close {
+  font-size: 32px;
+  padding-right: 4px;
+  color: var(--bs-white);
+}
+.shiny-notification {
+  background: var(--bs-gray-200);
+  color: var(--bs-gray-900);
+  opacity: 1;
+  font-size: 1.1rem;
+  border: 0;
+}
+.shiny-notification-message {
+  color: var(--bs-white);
+  background: var(--bs-success);
+}
+.shiny-notification-warning {
+  color: var(--bs-white);
+  background: var(--bs-warning);
+}
+.shiny-notification-error {
+  color: var(--bs-white);
+  background: var(--bs-danger);
+}
+.shiny-notification-content-action a {
+  color: var(--bs-white);
+}
