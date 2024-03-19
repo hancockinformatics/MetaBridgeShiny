@@ -60,6 +60,7 @@ metabridgeUI <- page_navbar(
   bg = bs_get_variables(metabridgeTheme, "primary"),
   inverse = FALSE,
   header = tags$head(
+    includeHTML("www/google_analytics.html"),
     useShinyjs(),
     tags$script(src = "js/client.js"),
     tags$link(rel = "stylesheet", href = "css/custom.css"),
