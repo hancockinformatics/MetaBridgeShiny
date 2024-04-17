@@ -523,7 +523,8 @@ metabridgeServer <- function(input, output, session) {
       HTML(
         "<p>If your data has loaded correctly, click a column to <b><u>",
         "highlight it in blue</u></b>, select the matching ID type in the ",
-        "lower left box, then continue via the <b>Proceed</b> button.</p>"
+        "lower left box, then continue via the <b>Proceed to mapping</b> ",
+        "button.</p>"
       )
     )
   })
@@ -565,10 +566,11 @@ metabridgeServer <- function(input, output, session) {
       wellPanel(
         strong("Select an ID Type"),
         HTML(
-          "<p>MetaBridge supports mapping with HMDB or KEGG metabolite ",
-          "IDs. Once you've uploaded your data, please ensure the ID ",
-          "selected here matches the column <b><u>highlighted in blue",
-          "</u></b> before clicking the <b>Proceed to mapping</b> button."
+          "<p>MetaBridge supports mapping with HMDB or KEGG metabolite IDs. ",
+          "Once you've uploaded your data, select the IDs to use for mapping ",
+          "by clicking anywhere inside the column. Then, select the ",
+          "appropriate option below before clicking the <b>Proceed to ",
+          "mapping</b> button."
         ),
         radioButtons(
           inputId = "idType",
