@@ -85,12 +85,12 @@ mappingAlert <- function(message, suggest, status) {
   showNotification(
     id = "mappingAlert",
     type = n_type,
-    duration = ifelse(n_type == "success", 5, 20),
+    duration = ifelse(n_type == "message", 5, 10),
     ui = HTML(paste0(
       "<h4 class='alert-heading'><b>", n_header, "</b></h4>",
       "<p class='mb-0'>", n_ui, "</p>"
     )),
-    action = n_action,
+    action = n_action
   )
 }
 
