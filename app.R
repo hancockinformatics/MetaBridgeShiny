@@ -24,6 +24,7 @@ dependencyTable <- tibble(
   link = c(
     "https://metacyc.org/",
     "https://www.genome.jp/kegg/",
+    "https://rstudio.github.io/bslib/",
     "https://shiny.rstudio.com/",
     "https://github.com/andrewsali/shinycssloaders",
     "https://deanattali.com/shinyjs/",
@@ -33,6 +34,7 @@ dependencyTable <- tibble(
   name = c(
     "MetaCyc v27",
     "KEGG Release 109",
+    "bslib",
     "shiny",
     "shinycssloaders",
     "shinyjs",
@@ -42,6 +44,7 @@ dependencyTable <- tibble(
   description = c(
     "Curated database for human metabolomic data.",
     "Large database containing multiple data types.",
+    "A modern UI toolkit for Shiny based on Bootstrap.",
     "Web application framework for R.",
     "Animated loaders for Shiny outputs.",
     "Improve the user experience of your Shiny apps in seconds.",
@@ -90,9 +93,9 @@ metabridgeUI <- page_navbar(
             class = "mx-auto fs-4 text-muted",
             p(
               "Welcome to MetaBridge, a user-friendly web tool for ",
-              "network-based integrative analysis of metabolomics data. ",
-              "Here you can upload a list of metabolite IDs and identify ",
-              "the directly interacting enzymes for network integration."
+              "network-based integrative analysis of metabolomics data. Here ",
+              "you can upload a list of metabolite IDs and identify the ",
+              "directly interacting enzymes for network integration."
             ),
             p(
               "To start, you'll want a set of metabolites as HMDB or KEGG ",
@@ -103,8 +106,8 @@ metabridgeUI <- page_navbar(
                 target = "_blank",
                 rel = "noopener noreferrer"
               ),
-              "for metabolomics data processing and ID conversion, if ",
-              "you have only compound names."
+              "for metabolomics data processing and ID conversion, if you ",
+              "have only compound names."
             ),
             p(
               "With the output of MetaBridge, you can create a ",
@@ -121,11 +124,10 @@ metabridgeUI <- page_navbar(
             ),
             p(
               class = "mb-4",
-              "Click the button below to get started! If you'd like to ",
-              "learn more about how MetaBridge can be used, check our ",
-              "Tutorial. For more information, including where to report ",
-              "bugs or problems and how to cite MetaBridge, please refer to ",
-              "the About page."
+              "Click the button below to get started! If you'd like to learn ",
+              "more about how MetaBridge can be used, check our Tutorial. For ",
+              "more information, including where to report bugs or problems ",
+              "and how to cite MetaBridge, please refer to the About page."
             ),
 
             div(
@@ -134,7 +136,6 @@ metabridgeUI <- page_navbar(
                 class = "btn-primary btn-lg px-4 me-md-2 disabled",
                 icon = icon("circle-notch", class = "fa fa-spin"),
                 label = "Loading..."
-                # width = "160px"
               ) %>%
                 tooltip(
                   "Let's go!",
@@ -145,7 +146,6 @@ metabridgeUI <- page_navbar(
                 inputId = "tutorial",
                 class = "btn-success btn-lg px-4 me-md-2 btn-hidden",
                 label = "Tutorial"
-                # width = "150px"
               ) %>% tooltip(
                 "See how to use MetaBridge for integrative analysis",
                 placement = "bottom"
@@ -155,7 +155,6 @@ metabridgeUI <- page_navbar(
                 inputId = "about",
                 class = "btn-info btn-lg px-4 me-md-2 btn-hidden",
                 label = "About"
-                # width = "150px"
               ) %>%
                 tooltip(
                   "Learn more about MetaBridge",
