@@ -250,9 +250,8 @@ metabridgeUI <- page_navbar(
         open = NA,
 
         wellPanel(
-          h1(class = "sidebar-title", "Map your metabolites"),
+          h1(class = "sidebar-title mb-2", "Map your metabolites"),
           p(
-            class = "mt-2",
             "Select one of the databases below. MetaCyc has higher quality ",
             "annotations, but KEGG may yield more hits, and will also allow ",
             "you to visualize your results with ",
@@ -563,7 +562,7 @@ metabridgeServer <- function(input, output, session) {
   output$idTypePanel <- renderUI({
     if (!is.null(metaboliteObject())) {
       wellPanel(
-        strong("Select an ID Type"),
+        h1(class = "sidebar-title mb-2", "Select an ID type"),
         HTML(
           "<p>MetaBridge supports mapping with HMDB or KEGG metabolite IDs. ",
           "Once you've uploaded your data, select the IDs to use for mapping ",
@@ -785,7 +784,7 @@ metabridgeServer <- function(input, output, session) {
   output$downloadPanel <- renderUI({
     if (!is.null(mappedMetabolites())) {
       wellPanel(
-        strong("Download your results"),
+        h1(class = "sidebar-title mb-2", "Download your results"),
         p(
           "Use the button below to download your full mapping results as ",
           "a tab-delimited text file."
@@ -840,7 +839,7 @@ metabridgeServer <- function(input, output, session) {
         return(NULL)
       } else {
         wellPanel(
-          strong("Visualize your results"),
+          h1(class = "sidebar-title mb-2", "Visualize your results"),
           HTML(
             "<p>If you chose <b>KEGG</b> as the database to map your ",
             "metabolites, you can Visualize your results with Pathview. ",
