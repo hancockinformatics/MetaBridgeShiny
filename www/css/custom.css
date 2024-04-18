@@ -8,6 +8,7 @@
   pointer-events: auto;
 }
 
+/* Hidden buttons */
 .btn-hidden {
   display: none;
 }
@@ -18,6 +19,14 @@
   --bs-btn-padding-x: 1rem;
   --bs-btn-font-size: 1.5rem;
   --bs-btn-border-radius: var(--bs-border-radius-lg);
+}
+
+/*Reduce font size in datatable elements */
+.dataTable {
+  font-size: 0.85em;
+}
+.dataTables_info {
+  font-size: 0.9em;
 }
 
 /* We wrap a div around the content within jumbotron to use a background */
@@ -50,6 +59,7 @@
   }
 }
 
+/* Fix padding to be consistent on left and right sides */
 .navbar, .tab-content {
   padding-right: 16px;
 }
