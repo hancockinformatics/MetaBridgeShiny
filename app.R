@@ -21,30 +21,30 @@ metabridgeVersion <- gsub(
 
 # Dependencies
 dependencyTable <- tibble(
-  link = c(
-    "https://metacyc.org/",
-    "https://www.genome.jp/kegg/",
-    "https://rstudio.github.io/bslib/",
-    "https://shiny.rstudio.com/",
-    "https://github.com/andrewsali/shinycssloaders",
-    "https://deanattali.com/shinyjs/",
-    "https://www.tidyverse.org/",
-    "https://doi.org/10.1093/bioinformatics/btt285"
-  ),
   name = c(
-    "MetaCyc v27",
-    "KEGG Release 109",
     "bslib",
+    "KEGG Release 109",
+    "MetaCyc v27",
     "shiny",
     "shinycssloaders",
     "shinyjs",
     "tidyverse",
     "pathview"
   ),
+  link = c(
+    "https://rstudio.github.io/bslib/",
+    "https://www.genome.jp/kegg/",
+    "https://metacyc.org/",
+    "https://shiny.rstudio.com/",
+    "https://github.com/andrewsali/shinycssloaders",
+    "https://deanattali.com/shinyjs/",
+    "https://www.tidyverse.org/",
+    "https://doi.org/10.1093/bioinformatics/btt285"
+  ),
   description = c(
-    "Curated database for human metabolomic data.",
-    "Large database containing multiple data types.",
     "A modern UI toolkit for Shiny based on Bootstrap.",
+    "Large database containing multiple data types.",
+    "Curated database for human metabolomic data.",
     "Web application framework for R.",
     "Animated loaders for Shiny outputs.",
     "Improve the user experience of your Shiny apps in seconds.",
