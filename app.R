@@ -167,7 +167,8 @@ metabridgeUI <- page_navbar(
       div(
         style = "position:fixed; bottom:0px; padding-bottom:10px",
         HTML(
-          "<a href='http://cmdr.ubc.ca/bobh/'>",
+          "<a href='http://cmdr.ubc.ca/bobh/'",
+          "target='blank' rel='noopener noreferrer'>",
           "<img src='img/hancock-lab-logo.svg'></a>"
         )
       )
