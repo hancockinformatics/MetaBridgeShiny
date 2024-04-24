@@ -16,9 +16,9 @@ pathways and reactions in which the metabolite is involved.
 MetaBridge supports integrative multi-omic analyses by identifying the enzymes
 that directly interact with your metabolites of interest, providing genes which
 may then be easily integrated with results from other omics methods. An example
-integrative analysis pipeline using 
-[MetaboAnalyst](https://www.metaboanalyst.ca/MetaboAnalyst/ModuleView.xhtml),
-[MetaBridge](https://metabridge.org), and 
+integrative analysis pipeline using
+[MetaboAnalyst](https://www.metaboanalyst.ca/),
+[MetaBridge](https://metabridge.org), and
 [NetworkAnalyst](https://www.networkanalyst.ca/) is outlined below:
 
 ![](www/img/metabridge_workflow.svg)
