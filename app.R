@@ -69,7 +69,7 @@ metabridgeUI <- page_navbar(
     tags$link(rel = "stylesheet", href = "css/custom.css"),
     tags$link(rel = "icon", href = "img/favicon.png")
   ),
-  nav_item(HTML("<img src='img/logo_white.svg' alt='' height='28'>")),
+  nav_item(HTML("<img src='img/logo_white.svg' alt='M' height='28'>")),
 
 
   # |- Welcome ----------------------------------------------------------
@@ -348,8 +348,8 @@ metabridgeUI <- page_navbar(
             class = "mx-auto fs-4 text-muted",
 
             HTML(paste0(
-              "<p>MetaBridge was created by Samuel Hinshaw, and is ",
-              "maintained  by Travis Blimkie at the ",
+              "<p>MetaBridge was created by Samuel Hinshaw, and is maintained ",
+              "by Travis Blimkie at the ",
               "<a href='http://cmdr.ubc.ca/bobh' target='blank' ",
               "rel='noopener noreferrer'>REW Hancock Laboratory</a>",
               " at The University of British Columbia. It was originally ",
@@ -358,11 +358,11 @@ metabridgeUI <- page_navbar(
               "target='blank' rel='noopener noreferrer'>",
               "10.1093/bioinformatics/bty331</a>",
               "); please cite this paper when using MetaBridge in your ",
-              "analyses. We also have a protocol for MetaBridge published ",
-              "in <i>Current Protocols in Bioinformatics</i>. It covers how ",
-              "to prepare data for input to MetaBridge, and includes an ",
-              "example of building a protein-protein interaction network ",
-              "from MetaBridge results using ",
+              "analyses. We also have a protocol for MetaBridge published in ",
+              "<i>Current Protocols in Bioinformatics</i>. It covers how to ",
+              "prepare data for input to MetaBridge, and includes an example ",
+              "of building a protein-protein interaction network from ",
+              "MetaBridge results using ",
               "<a href='https://networkanalyst.ca' target='blank' ",
               "rel='noopener noreferrer'>NetworkAnalyst</a>",
               ". The article is available at doi: ",
@@ -684,7 +684,7 @@ metabridgeServer <- function(input, output, session) {
 
     if (is.null(mappingObject())) {
       return(NULL)
-    } else if (mappingObject()$status == "error" | mappingObject()$status == "empty") {
+    } else if (mappingObject()$status %in% c("error", "empty")) {
       return(NULL)
     } else {
       return(
@@ -710,7 +710,7 @@ metabridgeServer <- function(input, output, session) {
     selectedMetab()
     input$mapButton
   }, {
-    if (mappingObject()$status == "error" | mappingObject()$status == "empty") {
+    if (mappingObject()$status %in% c("error", "empty")) {
       mappingObject()$data %>% mappedMetaboliteTable()
 
     } else if (databaseChosen() == "KEGG") {
@@ -765,9 +765,7 @@ metabridgeServer <- function(input, output, session) {
     div(
       if (is.null(mappingObject())) {
         return(NULL)
-      } else if (
-        mappingObject()$status == "error" | mappingObject()$status == "empty"
-      ) {
+      } else if (mappingObject()$status %in% c("error", "empty")) {
         tags$h3("Intermediate Results")
       } else {
         tagList(
@@ -923,9 +921,7 @@ metabridgeServer <- function(input, output, session) {
         if (is.null(selectedRowAttrs$selectedCompound)) {
           tagList(
             strong("No compound selected"),
-            p(
-              "You must select a compound in the", map_tab, " to see its pathways."
-            )
+            p("You must select a compound in the ", map_tab, " to see its pathways.")
           )
         } else if (nrow(selectedRowAttrs$pathwaysOfSelectedCompound) == 0) {
           tagList(
