@@ -21,27 +21,30 @@ metabridgeVersion <- gsub(
 
 # Dependencies
 dependencyTable <- tibble(
-  link = c(
-    "https://metacyc.org/",
-    "https://www.genome.jp/kegg/",
-    "https://shiny.rstudio.com/",
-    "https://github.com/andrewsali/shinycssloaders",
-    "https://deanattali.com/shinyjs/",
-    "https://www.tidyverse.org/",
-    "https://doi.org/10.1093/bioinformatics/btt285"
-  ),
   name = c(
-    "MetaCyc v27",
+    "bslib",
     "KEGG Release 109",
+    "MetaCyc v27",
     "shiny",
     "shinycssloaders",
     "shinyjs",
     "tidyverse",
     "pathview"
   ),
+  link = c(
+    "https://rstudio.github.io/bslib/",
+    "https://www.genome.jp/kegg/",
+    "https://metacyc.org/",
+    "https://shiny.rstudio.com/",
+    "https://github.com/andrewsali/shinycssloaders",
+    "https://deanattali.com/shinyjs/",
+    "https://www.tidyverse.org/",
+    "https://doi.org/10.1093/bioinformatics/btt285"
+  ),
   description = c(
-    "Curated database for human metabolomic data.",
+    "A modern UI toolkit for Shiny based on Bootstrap.",
     "Large database containing multiple data types.",
+    "Curated database for human metabolomic data.",
     "Web application framework for R.",
     "Animated loaders for Shiny outputs.",
     "Improve the user experience of your Shiny apps in seconds.",
@@ -66,7 +69,7 @@ metabridgeUI <- page_navbar(
     tags$link(rel = "stylesheet", href = "css/custom.css"),
     tags$link(rel = "icon", href = "img/favicon.png")
   ),
-  nav_item(HTML("<img src='img/logo_white.svg' alt='' height='28'>")),
+  nav_item(HTML("<img src='img/logo_white.svg' alt='M' height='28'>")),
 
 
   # |- Welcome ----------------------------------------------------------
@@ -90,9 +93,9 @@ metabridgeUI <- page_navbar(
             class = "mx-auto fs-4 text-muted",
             p(
               "Welcome to MetaBridge, a user-friendly web tool for ",
-              "network-based integrative analysis of metabolomics data. ",
-              "Here you can upload a list of metabolite IDs and identify ",
-              "the directly interacting enzymes for network integration."
+              "network-based integrative analysis of metabolomics data. Here ",
+              "you can upload a list of metabolite IDs and identify the ",
+              "directly interacting enzymes for network integration."
             ),
             p(
               "To start, you'll want a set of metabolites as HMDB or KEGG ",
@@ -103,8 +106,8 @@ metabridgeUI <- page_navbar(
                 target = "_blank",
                 rel = "noopener noreferrer"
               ),
-              "for metabolomics data processing and ID conversion, if ",
-              "you have only compound names."
+              "for metabolomics data processing and ID conversion, if you ",
+              "have only compound names."
             ),
             p(
               "With the output of MetaBridge, you can create a ",
@@ -121,11 +124,10 @@ metabridgeUI <- page_navbar(
             ),
             p(
               class = "mb-4",
-              "Click the button below to get started! If you'd like to ",
-              "learn more about how MetaBridge can be used, check our ",
-              "Tutorial. For more information, including where to report ",
-              "bugs or problems and how to cite MetaBridge, please refer to ",
-              "the About page."
+              "Click the button below to get started! If you'd like to learn ",
+              "more about how MetaBridge can be used, check our Tutorial. For ",
+              "more information, including where to report bugs or problems ",
+              "and how to cite MetaBridge, please refer to the About page."
             ),
 
             div(
@@ -134,7 +136,6 @@ metabridgeUI <- page_navbar(
                 class = "btn-primary btn-lg px-4 me-md-2 disabled",
                 icon = icon("circle-notch", class = "fa fa-spin"),
                 label = "Loading..."
-                # width = "160px"
               ) %>%
                 tooltip(
                   "Let's go!",
@@ -145,7 +146,6 @@ metabridgeUI <- page_navbar(
                 inputId = "tutorial",
                 class = "btn-success btn-lg px-4 me-md-2 btn-hidden",
                 label = "Tutorial"
-                # width = "150px"
               ) %>% tooltip(
                 "See how to use MetaBridge for integrative analysis",
                 placement = "bottom"
@@ -155,7 +155,6 @@ metabridgeUI <- page_navbar(
                 inputId = "about",
                 class = "btn-info btn-lg px-4 me-md-2 btn-hidden",
                 label = "About"
-                # width = "150px"
               ) %>%
                 tooltip(
                   "Learn more about MetaBridge",
@@ -168,7 +167,8 @@ metabridgeUI <- page_navbar(
       div(
         style = "position:fixed; bottom:0px; padding-bottom:10px",
         HTML(
-          "<a href='http://cmdr.ubc.ca/bobh/'>",
+          "<a href='http://cmdr.ubc.ca/bobh/'",
+          "target='blank' rel='noopener noreferrer'>",
           "<img src='img/hancock-lab-logo.svg'></a>"
         )
       )
@@ -251,9 +251,8 @@ metabridgeUI <- page_navbar(
         open = NA,
 
         wellPanel(
-          h1(class = "sidebar-title", "Map your metabolites"),
+          h1(class = "sidebar-title mb-2", "Map your metabolites"),
           p(
-            class = "mt-2",
             "Select one of the databases below. MetaCyc has higher quality ",
             "annotations, but KEGG may yield more hits, and will also allow ",
             "you to visualize your results with ",
@@ -349,8 +348,8 @@ metabridgeUI <- page_navbar(
             class = "mx-auto fs-4 text-muted",
 
             HTML(paste0(
-              "<p>MetaBridge was created by Samuel Hinshaw, and is ",
-              "maintained  by Travis Blimkie at the ",
+              "<p>MetaBridge was created by Samuel Hinshaw, and is maintained ",
+              "by Travis Blimkie at the ",
               "<a href='http://cmdr.ubc.ca/bobh' target='blank' ",
               "rel='noopener noreferrer'>REW Hancock Laboratory</a>",
               " at The University of British Columbia. It was originally ",
@@ -359,11 +358,11 @@ metabridgeUI <- page_navbar(
               "target='blank' rel='noopener noreferrer'>",
               "10.1093/bioinformatics/bty331</a>",
               "); please cite this paper when using MetaBridge in your ",
-              "analyses. We also have a protocol for MetaBridge published ",
-              "in <i>Current Protocols in Bioinformatics</i>. It covers how ",
-              "to prepare data for input to MetaBridge, and includes an ",
-              "example of building a protein-protein interaction network ",
-              "from MetaBridge results using ",
+              "analyses. We also have a protocol for MetaBridge published in ",
+              "<i>Current Protocols in Bioinformatics</i>. It covers how to ",
+              "prepare data for input to MetaBridge, and includes an example ",
+              "of building a protein-protein interaction network from ",
+              "MetaBridge results using ",
               "<a href='https://networkanalyst.ca' target='blank' ",
               "rel='noopener noreferrer'>NetworkAnalyst</a>",
               ". The article is available at doi: ",
@@ -451,7 +450,8 @@ metabridgeServer <- function(input, output, session) {
   mappingSummary <- reactiveValues(table = NULL, dbChosen = NULL)
   mappedMetaboliteTable <- reactiveVal()
   databaseChosen <- reactiveVal()
-  selectedMetab <- reactiveVal()
+  selectedMetabIndex <- reactiveVal()
+  selectedMetabName <- reactiveVal()
   idTypeChosen <- reactiveVal()
   columnPicked <- reactiveVal()
 
@@ -523,7 +523,8 @@ metabridgeServer <- function(input, output, session) {
       HTML(
         "<p>If your data has loaded correctly, click a column to <b><u>",
         "highlight it in blue</u></b>, select the matching ID type in the ",
-        "lower left box, then continue via the <b>Proceed</b> button.</p>"
+        "lower left box, then continue via the <b>Proceed to mapping</b> ",
+        "button.</p>"
       )
     )
   })
@@ -563,12 +564,13 @@ metabridgeServer <- function(input, output, session) {
   output$idTypePanel <- renderUI({
     if (!is.null(metaboliteObject())) {
       wellPanel(
-        strong("Select an ID Type"),
+        h1(class = "sidebar-title mb-2", "Select an ID type"),
         HTML(
-          "<p>MetaBridge supports mapping with HMDB or KEGG metabolite ",
-          "IDs. Once you've uploaded your data, please ensure the ID ",
-          "selected here matches the column <b><u>highlighted in blue",
-          "</u></b> before clicking the <b>Proceed to mapping</b> button."
+          "<p>MetaBridge supports mapping with HMDB or KEGG metabolite IDs. ",
+          "Once you've uploaded your data, select the IDs to use for mapping ",
+          "by clicking anywhere inside the column. Then, select the ",
+          "appropriate option below before clicking the <b>Proceed to ",
+          "mapping</b> button."
         ),
         radioButtons(
           inputId = "idType",
@@ -683,12 +685,12 @@ metabridgeServer <- function(input, output, session) {
 
     if (is.null(mappingObject())) {
       return(NULL)
-    } else if (mappingObject()$status == "error" | mappingObject()$status == "empty") {
+    } else if (mappingObject()$status %in% c("error", "empty")) {
       return(NULL)
     } else {
       return(
         tagList(
-          h3(paste0("Mapping summary: ", databaseChosen())),
+          h3(paste0(databaseChosen(), " mapping summary")),
           DT::dataTableOutput("mappingSummaryTable")
         )
       )
@@ -696,20 +698,29 @@ metabridgeServer <- function(input, output, session) {
   })
 
   observeEvent(
-    input$mappingSummaryTable_rows_selected,
-    selectedMetab(input$mappingSummaryTable_rows_selected)
+    input$mappingSummaryTable_rows_selected, {
+      selectedMetabIndex(input$mappingSummaryTable_rows_selected)
+      selectedMetabName(
+        mappingSummary$table[input$mappingSummaryTable_rows_selected, 1]
+      )
+    }
   )
 
-  observeEvent(input$mapButton, selectedMetab(NULL))
+  observeEvent(
+    input$mapButton, {
+      selectedMetabIndex(NULL)
+      selectedMetabName(NULL)
+    }
+  )
 
 
   # Single-metabolite table -----------------------------------------------
 
   observeEvent({
-    selectedMetab()
+    selectedMetabIndex()
     input$mapButton
   }, {
-    if (mappingObject()$status == "error" | mappingObject()$status == "empty") {
+    if (mappingObject()$status %in% c("error", "empty")) {
       mappingObject()$data %>% mappedMetaboliteTable()
 
     } else if (databaseChosen() == "KEGG") {
@@ -719,7 +730,7 @@ metabridgeServer <- function(input, output, session) {
         generateKEGGMetabTable(
           mappingObject(),
           mappingSummary$table,
-          selectedMetab(),
+          selectedMetabIndex(),
           idTypeChosen()
         ) %>% mappedMetaboliteTable()
       }
@@ -731,7 +742,7 @@ metabridgeServer <- function(input, output, session) {
         generateMetaCycMetabTable(
           mappingObject(),
           mappingSummary$table,
-          selectedMetab(),
+          selectedMetabIndex(),
           idTypeChosen()
         ) %>% mappedMetaboliteTable()
       }
@@ -740,7 +751,7 @@ metabridgeServer <- function(input, output, session) {
 
   output$mappedMetaboliteTable <- DT::renderDataTable(
     {
-      if (is.null(mappingObject()) | is.null(selectedMetab())) {
+      if (is.null(mappingObject()) | is.null(selectedMetabIndex())) {
         return(data.frame())
 
       } else if (mappingObject()$status == "success") {
@@ -762,16 +773,20 @@ metabridgeServer <- function(input, output, session) {
 
   output$mappedMetabolitePanel <- renderUI({
     div(
-      if (is.null(mappingObject())) {
+      if ( any(is.null(mappingObject()), is.null(selectedMetabIndex())) ) {
         return(NULL)
-      } else if (
-        mappingObject()$status == "error" | mappingObject()$status == "empty"
-      ) {
-        tags$h3("Intermediate Results")
+      } else if (mappingObject()$status %in% c("error", "empty")) {
+        tagList(
+          tags$hr(),
+          tags$h3("Intermediate Results")
+        )
       } else {
         tagList(
           tags$hr(),
-          tags$h3("Per-metabolite results")
+          tags$h3(paste0(
+            "Per-metabolite results for ",
+            stringr::str_to_title(selectedMetabName())
+          ))
         )
       },
       DT::dataTableOutput("mappedMetaboliteTable")
@@ -784,7 +799,7 @@ metabridgeServer <- function(input, output, session) {
   output$downloadPanel <- renderUI({
     if (!is.null(mappedMetabolites())) {
       wellPanel(
-        strong("Download your results"),
+        h1(class = "sidebar-title mb-2", "Download your results"),
         p(
           "Use the button below to download your full mapping results as ",
           "a tab-delimited text file."
@@ -839,14 +854,14 @@ metabridgeServer <- function(input, output, session) {
         return(NULL)
       } else {
         wellPanel(
-          strong("Visualize your results"),
+          h1(class = "sidebar-title mb-2", "Visualize your results"),
           HTML(
             "<p>If you chose <b>KEGG</b> as the database to map your ",
             "metabolites, you can Visualize your results with Pathview. ",
             "Select a metabolite from the top table, then click the button ",
             "below to see the pathways it's involved in.</p>"
           ),
-          if (databaseChosen() == "KEGG" & !is.null(selectedMetab())) {
+          if (databaseChosen() == "KEGG" & !is.null(selectedMetabIndex())) {
             actionButton(
               inputId = "visualizeButton",
               class = "btn-primary",
@@ -891,7 +906,7 @@ metabridgeServer <- function(input, output, session) {
   observeEvent(input$mappingSummaryTable_rows_selected, {
     pathwayMappingAttrs <- mapPathways(
       idType = "KEGG",
-      selectedRow = selectedMetab(),
+      selectedRow = selectedMetabIndex(),
       summaryTable = mappingSummary$table,
       fullTable = mappingObject()$data
     )
@@ -922,9 +937,7 @@ metabridgeServer <- function(input, output, session) {
         if (is.null(selectedRowAttrs$selectedCompound)) {
           tagList(
             strong("No compound selected"),
-            p(
-              "You must select a compound in the", map_tab, " to see its pathways."
-            )
+            p("You must select a compound in the ", map_tab, " to see its pathways.")
           )
         } else if (nrow(selectedRowAttrs$pathwaysOfSelectedCompound) == 0) {
           tagList(
@@ -1020,7 +1033,7 @@ metabridgeServer <- function(input, output, session) {
             "You must map via KEGG to visualize your results with pathview!"
           )
         )
-      } else if (is.null(selectedMetab())) {
+      } else if (is.null(selectedMetabIndex())) {
         tagList(
           h3(class = "mb-4", "Pathway view"),
           div(
