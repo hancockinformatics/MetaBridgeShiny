@@ -450,7 +450,8 @@ metabridgeServer <- function(input, output, session) {
   mappingSummary <- reactiveValues(table = NULL, dbChosen = NULL)
   mappedMetaboliteTable <- reactiveVal()
   databaseChosen <- reactiveVal()
-  selectedMetab <- reactiveVal()
+  selectedMetabIndex <- reactiveVal()
+  selectedMetabName <- reactiveVal()
   idTypeChosen <- reactiveVal()
   columnPicked <- reactiveVal()
 
@@ -689,7 +690,7 @@ metabridgeServer <- function(input, output, session) {
     } else {
       return(
         tagList(
-          h3(paste0("Mapping summary: ", databaseChosen())),
+          h3(paste0(databaseChosen(), " mapping summary")),
           DT::dataTableOutput("mappingSummaryTable")
         )
       )
@@ -697,17 +698,26 @@ metabridgeServer <- function(input, output, session) {
   })
 
   observeEvent(
-    input$mappingSummaryTable_rows_selected,
-    selectedMetab(input$mappingSummaryTable_rows_selected)
+    input$mappingSummaryTable_rows_selected, {
+      selectedMetabIndex(input$mappingSummaryTable_rows_selected)
+      selectedMetabName(
+        mappingSummary$table[input$mappingSummaryTable_rows_selected, 1]
+      )
+    }
   )
 
-  observeEvent(input$mapButton, selectedMetab(NULL))
+  observeEvent(
+    input$mapButton, {
+      selectedMetabIndex(NULL)
+      selectedMetabName(NULL)
+    }
+  )
 
 
   # Single-metabolite table -----------------------------------------------
 
   observeEvent({
-    selectedMetab()
+    selectedMetabIndex()
     input$mapButton
   }, {
     if (mappingObject()$status %in% c("error", "empty")) {
@@ -720,7 +730,7 @@ metabridgeServer <- function(input, output, session) {
         generateKEGGMetabTable(
           mappingObject(),
           mappingSummary$table,
-          selectedMetab(),
+          selectedMetabIndex(),
           idTypeChosen()
         ) %>% mappedMetaboliteTable()
       }
@@ -732,7 +742,7 @@ metabridgeServer <- function(input, output, session) {
         generateMetaCycMetabTable(
           mappingObject(),
           mappingSummary$table,
-          selectedMetab(),
+          selectedMetabIndex(),
           idTypeChosen()
         ) %>% mappedMetaboliteTable()
       }
@@ -741,7 +751,7 @@ metabridgeServer <- function(input, output, session) {
 
   output$mappedMetaboliteTable <- DT::renderDataTable(
     {
-      if (is.null(mappingObject()) | is.null(selectedMetab())) {
+      if (is.null(mappingObject()) | is.null(selectedMetabIndex())) {
         return(data.frame())
 
       } else if (mappingObject()$status == "success") {
@@ -763,14 +773,20 @@ metabridgeServer <- function(input, output, session) {
 
   output$mappedMetabolitePanel <- renderUI({
     div(
-      if (is.null(mappingObject())) {
+      if ( any(is.null(mappingObject()), is.null(selectedMetabIndex())) ) {
         return(NULL)
       } else if (mappingObject()$status %in% c("error", "empty")) {
-        tags$h3("Intermediate Results")
+        tagList(
+          tags$hr(),
+          tags$h3("Intermediate Results")
+        )
       } else {
         tagList(
           tags$hr(),
-          tags$h3("Per-metabolite results")
+          tags$h3(paste0(
+            "Per-metabolite results for ",
+            stringr::str_to_title(selectedMetabName())
+          ))
         )
       },
       DT::dataTableOutput("mappedMetaboliteTable")
@@ -845,7 +861,7 @@ metabridgeServer <- function(input, output, session) {
             "Select a metabolite from the top table, then click the button ",
             "below to see the pathways it's involved in.</p>"
           ),
-          if (databaseChosen() == "KEGG" & !is.null(selectedMetab())) {
+          if (databaseChosen() == "KEGG" & !is.null(selectedMetabIndex())) {
             actionButton(
               inputId = "visualizeButton",
               class = "btn-primary",
@@ -890,7 +906,7 @@ metabridgeServer <- function(input, output, session) {
   observeEvent(input$mappingSummaryTable_rows_selected, {
     pathwayMappingAttrs <- mapPathways(
       idType = "KEGG",
-      selectedRow = selectedMetab(),
+      selectedRow = selectedMetabIndex(),
       summaryTable = mappingSummary$table,
       fullTable = mappingObject()$data
     )
@@ -1017,7 +1033,7 @@ metabridgeServer <- function(input, output, session) {
             "You must map via KEGG to visualize your results with pathview!"
           )
         )
-      } else if (is.null(selectedMetab())) {
+      } else if (is.null(selectedMetabIndex())) {
         tagList(
           h3(class = "mb-4", "Pathway view"),
           div(
