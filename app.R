@@ -72,7 +72,7 @@ metabridgeUI <- page_navbar(
   nav_item(HTML("<img src='img/logo_white.svg' alt='M' height='28'>")),
 
 
-  # |- Welcome ----------------------------------------------------------
+  # * Welcome ----------------------------------------------------------
 
   nav_panel(
     value = "welcomePanel",
@@ -176,7 +176,7 @@ metabridgeUI <- page_navbar(
   ),
 
 
-  # |- Upload -------------------------------------------------------------
+  # * Upload -------------------------------------------------------------
 
   nav_panel(
     title = "Upload",
@@ -238,7 +238,7 @@ metabridgeUI <- page_navbar(
   ),
 
 
-  # |- Map --------------------------------------------------------------
+  # * Map --------------------------------------------------------------
 
   nav_panel(
     title = "Map",
@@ -293,7 +293,7 @@ metabridgeUI <- page_navbar(
   ),
 
 
-  # |- Visualize --------------------------------------------------------
+  # * Visualize --------------------------------------------------------
 
   nav_panel(
     title = "Visualize",
@@ -319,7 +319,7 @@ metabridgeUI <- page_navbar(
   ),
 
 
-  # |- Tutorial ---------------------------------------------------------
+  # * Tutorial ---------------------------------------------------------
 
   nav_panel(
     title = "Tutorial",
@@ -328,7 +328,7 @@ metabridgeUI <- page_navbar(
   ),
 
 
-  # |- About ------------------------------------------------------------
+  # * About ------------------------------------------------------------
 
   nav_panel(
     title = "About",
@@ -391,11 +391,11 @@ metabridgeUI <- page_navbar(
   ),
 
 
-  # |- Right side items -------------------------------------------------
+  # * Right side items -------------------------------------------------
 
   nav_spacer(),
 
-  nav_item(input_dark_mode()),
+  nav_item(input_dark_mode(style = "--text-1:white")),
 
   nav_item(a(
     icon("github"),
