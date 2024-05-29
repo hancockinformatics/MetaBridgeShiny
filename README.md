@@ -52,13 +52,13 @@ When using MetaBridge for your own analysis, please cite one of the following:
 ## Authors
 
 MetaBridge was developed by Samuel Hinshaw, as part of his work at the [REW
-Hancock Laboratory](http://cmdr.ubc.ca/bobh/) at the University of British
+Hancock Laboratory](https://cmdr.ubc.ca/bobh/) at the University of British
 Columbia. Further updates and ongoing maintenance are done by Travis Blimkie, a
 current member of the Hancock Lab.
 
 ## License
 
-Source code for MetaBridge is available under  [GNU General Public License
+Source code for MetaBridge is available under [GNU General Public License
 v3](https://github.com/hancockinformatics/MetaBridgeShiny/blob/master/LICENSE).
 
 ## Versioning
