@@ -167,7 +167,7 @@ metabridgeUI <- page_navbar(
       div(
         style = "position:fixed; bottom:0px; padding-bottom:10px",
         HTML(
-          "<a href='http://cmdr.ubc.ca/bobh/'",
+          "<a href='https://cmdr.ubc.ca/bobh/'",
           "target='blank' rel='noopener noreferrer'>",
           "<img src='img/hancock-lab-logo.svg'></a>"
         )
@@ -349,7 +349,7 @@ metabridgeUI <- page_navbar(
 
             HTML(r"(
               <p>MetaBridge was created by Samuel Hinshaw, and is maintained
-              by Travis Blimkie at the <a href='http://cmdr.ubc.ca/bobh'
+              by Travis Blimkie at the <a href='https://cmdr.ubc.ca/bobh'
               target='blank' rel='noopener noreferrer'>REW Hancock
               Laboratory</a> at The University of British Columbia. It was
               originally published in <i>Bioinformatics</i> (doi: <a href=
