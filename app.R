@@ -60,8 +60,10 @@ metabridgeUI <- page_navbar(
   id = "navbarLayout",
   window_title = "MetaBridge",
   theme = metabridgeTheme,
-  bg = bs_get_variables(metabridgeTheme, "primary"),
-  inverse = FALSE,
+  navbar_options = navbar_options(
+    bg = bs_get_variables(metabridgeTheme, "primary"),
+    theme = "light"
+  ),
   header = tags$head(
     includeHTML("www/google_analytics.html"),
     useShinyjs(),
@@ -395,8 +397,6 @@ metabridgeUI <- page_navbar(
 
   nav_spacer(),
 
-  nav_item(input_dark_mode(style = "--text-1:white")),
-
   nav_item(a(
     icon("github"),
     "GitHub",
@@ -404,6 +404,14 @@ metabridgeUI <- page_navbar(
     target = "_blank",
     rel = "noopener noreferrer"
   )),
+
+  # Divider
+  nav_item(tagList(
+    div(class = "vr d-none d-sm-flex h-100 mx-sm-2 text-white"),
+    hr(class = "d-lg-none my-2 text-white-50")
+  )),
+
+  nav_item(input_dark_mode(style = "--text-1:white")),
 
   # Divider
   nav_item(tagList(
