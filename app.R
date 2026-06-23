@@ -169,9 +169,9 @@ metabridgeUI <- page_navbar(
       div(
         style = "position:fixed; bottom:0px; padding-bottom:10px",
         HTML(
-          "<a href='https://cmdr.ubc.ca/bobh/'",
+          "<a href='https://sfu-lee-lab.github.io/Lee_Lab_Webpage/'",
           "target='blank' rel='noopener noreferrer'>",
-          "<img src='img/hancock-lab-logo.svg'></a>"
+          "<img src='img/lee_lab_logo_v3_simplified.svg'></a>"
         )
       )
     )
@@ -350,19 +350,21 @@ metabridgeUI <- page_navbar(
             class = "mx-auto fs-4 text-muted",
 
             HTML(r"(
-              <p>MetaBridge was created by Samuel Hinshaw, and is maintained
-              by Travis Blimkie at the <a href='https://cmdr.ubc.ca/bobh'
-              target='blank' rel='noopener noreferrer'>REW Hancock
-              Laboratory</a> at The University of British Columbia. It was
-              originally published in <i>Bioinformatics</i> (doi: <a href=
-              'https://doi.org/10.1093/bioinformatics/bty331' target='blank'
-              rel='noopener noreferrer'>10.1093/bioinformatics/bty331</a>);
-              please cite this paper when using MetaBridge in your analyses.
-              We also have a protocol for MetaBridge published in <i>Current
-              Protocols in Bioinformatics</i>. It covers how to prepare data
-              for input to MetaBridge, and includes an example of building a
-              protein-protein interaction network from MetaBridge results using
-              <a href='https://networkanalyst.ca' target='blank' rel='noopener
+              <p>MetaBridge was created by Samuel Hinshaw while at the REW 
+              Hancock Lab, and is now maintained by Travis Blimkie at the 
+              <a href='https://sfu-lee-lab.github.io/Lee_Lab_Webpage/' 
+              target='blank' rel='noopener noreferrer'>Lee Lab</a> at Simon 
+              Fraser University. It was originally published in
+              <i>Bioinformatics</i> (doi: 
+              <a href='https://doi.org/10.1093/bioinformatics/bty331' 
+              target='blank' rel='noopener noreferrer'>10.1093/bioinformatics/bty331</a>);
+              please cite this paper when
+              using MetaBridge in your analyses. We also have a protocol for
+              MetaBridge published in <i>Current Protocols in
+              Bioinformatics</i>. It covers how to prepare data for input to
+              MetaBridge, and includes an example of building a protein-protein
+              interaction network from MetaBridge results using <a href=
+              'https://networkanalyst.ca' target='blank' rel='noopener
               noreferrer'>NetworkAnalyst</a>. The article is available at doi:
               <a href='https://doi.org/10.1002/cpbi.98' target='blank'
               rel='noopener noreferrer'>10.1002/cpbi.98</a>.</p>
